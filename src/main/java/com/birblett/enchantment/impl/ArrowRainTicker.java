@@ -3,7 +3,7 @@ package com.birblett.enchantment.impl;
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.entity.EntityDamageFlags;
 import com.birblett.entity.Ticker;
-import com.birblett.interfaces.RangedWeapon;
+import com.birblett.mixin.accessor.RangedWeaponItemAccessor;
 import com.birblett.util.EnchantmentUtils;
 import com.birblett.util.VectorUtils;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -61,15 +61,14 @@ public class ArrowRainTicker extends Ticker {
                 Vec3d spawnPos = VectorUtils.applyDivergence(new Vec3d(0, 1, 0), 0.3).normalize().multiply(10 +
                         this.owner.getRandom().nextBetween(0, 200) / 100.0).add(this.target);
                 Vec3d velocity = VectorUtils.applyDivergence(this.target.subtract(spawnPos).normalize(), 0.03).normalize().multiply(3);
-                ProjectileEntity projectileEntity = ((RangedWeapon) w).createProjectile(this.world, this.owner, this.weaponStack,
+                ProjectileEntity projectileEntity = ((RangedWeaponItemAccessor) w).createProjectile(this.world, this.owner, this.weaponStack,
                         this.projectileStack, true);
                 if (projectileEntity instanceof PersistentProjectileEntity p) {
                     p.setCritical(true);
                     p.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
                 }
                 projectileEntity.noClip = false;
-                EnchantmentHelper.onProjectileSpawned(this.world, this.projectileStack, projectileEntity, (item) -> {
-                });
+                EnchantmentHelper.onProjectileSpawned(this.world, this.projectileStack, projectileEntity, (item) -> {});
                 projectileEntity.setVelocity(velocity);
                 projectileEntity.setPosition(spawnPos);
                 Vec3d p = spawnPos.subtract(velocity);

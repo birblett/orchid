@@ -5,7 +5,7 @@
   "mixins": [
     "EntityMixin_Ticker",
     "accessor.PersistentProjectileAccessor",
-    "accessor.RangedWeaponItemAccess",
+    "accessor.RangedWeaponItemAccessor",
     "events.EntityMixin_Events",
     "events.FishingBobberEntityMixin_Events",
     "events.FishingRodMixin_Events",

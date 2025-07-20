@@ -37,8 +37,10 @@ public class BurstFireTicker extends Ticker {
             } else {
                 speed = 3.0F;
             }
+            int count = this.projectileStack.getCount();
             ((RangedWeaponItemAccessor) weaponStack.getItem()).orchid_shootAll(world, e, this.hand, this.weaponStack,
                     RangedWeaponItemAccessor.orchid_load(this.weaponStack, this.projectileStack, e), speed, 1, true, null);
+            this.projectileStack.setCount(count);
         }
     }
 

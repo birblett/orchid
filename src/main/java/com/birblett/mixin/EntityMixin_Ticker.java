@@ -20,10 +20,10 @@ public abstract class EntityMixin_Ticker implements TickedEntity {
 
     @Shadow public abstract EntityType<?> getType();
 
-    @Unique
-    HashMap<String, Ticker> tickers = new HashMap<>();
-    @Unique
-    ArrayList<Ticker> anonymousTickers = new ArrayList<>();
+    @Unique private final HashMap<String, Ticker> tickers = new HashMap<>();
+    @Unique private final HashMap<String, Ticker> addedTickers = new HashMap<>();
+    @Unique private final ArrayList<Ticker> anonymousTickers = new ArrayList<>();
+    @Unique private final ArrayList<Ticker> addedAnonymousTickers = new ArrayList<>();
 
     @Override
     public Ticker orchid_getTicker(String id) {
@@ -37,11 +37,13 @@ public abstract class EntityMixin_Ticker implements TickedEntity {
 
     @Override
     public void orchid_setTicker(String id, Ticker t) {
+        this.addedTickers.put(id, t);
         this.tickers.put(id, t);
     }
 
     @Override
     public void orchid_addAnonymousTicker(Ticker t) {
+        this.addedAnonymousTickers.add(t);
         this.anonymousTickers.add(t);
     }
 
@@ -60,14 +62,22 @@ public abstract class EntityMixin_Ticker implements TickedEntity {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void handleTickers(CallbackInfo ci) {
-        this.tickers.entrySet().removeIf(e -> {
-            e.getValue().tick();
-            return e.getValue().shouldRemove();
-        });
-        this.anonymousTickers.removeIf(e -> {
-            e.tick();
-            return e.shouldRemove();
-        });
+        if (!this.addedTickers.isEmpty()) {
+            this.tickers.putAll(this.addedTickers);
+            this.addedTickers.clear();
+        }
+        if (!this.tickers.isEmpty()) {
+            this.tickers.forEach((key, t) -> t.tick());
+            this.tickers.entrySet().removeIf(e -> e.getValue().shouldRemove());
+        }
+        if (!this.addedAnonymousTickers.isEmpty()) {
+            this.anonymousTickers.addAll(this.addedAnonymousTickers);
+            this.addedAnonymousTickers.clear();
+        }
+        if (!this.anonymousTickers.isEmpty()) {
+            this.anonymousTickers.forEach(Ticker::tick);
+            this.anonymousTickers.removeIf(Ticker::shouldRemove);
+        }
     }
 
 }

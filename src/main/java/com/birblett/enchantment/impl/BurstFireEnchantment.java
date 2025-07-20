@@ -30,8 +30,8 @@ public class BurstFireEnchantment extends OrchidEnchantWrapper {
             if (shooter instanceof PlayerEntity player) {
                 player.getItemCooldownManager().set(stack, level + 20);
             }
-            ((EntityDamageFlags) entity).orchid_setIgnoreIFrames(true);
         }
+        ((EntityDamageFlags) entity).orchid_setIgnoreIFrames(true);
         return Flow.CONTINUE;
     }
 

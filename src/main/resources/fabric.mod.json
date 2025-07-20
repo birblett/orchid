@@ -1,0 +1,36 @@
+{
+	"schemaVersion": 1,
+	"id": "orchid",
+	"version": "${version}",
+	"name": "Orchid",
+	"description": "Additions to vanilla features in need of some love",
+	"authors": [
+		"birblett"
+	],
+	"contact": {
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/orchid/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.birblett.Orchid"
+		],
+		"fabric-datagen": [
+          "com.birblett.datagen.OrchidDataGenerator"
+		]
+	},
+	"mixins": [
+		"orchid.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.14",
+		"minecraft": "~1.21.7",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

@@ -1,0 +1,30 @@
+{
+  "required": true,
+  "package": "com.birblett.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "EntityMixin_Ticker",
+    "accessor.PersistentProjectileAccessor",
+    "accessor.RangedWeaponItemAccess",
+    "events.EntityMixin_Events",
+    "events.FishingBobberEntityMixin_Events",
+    "events.FishingRodMixin_Events",
+    "events.LivingEntityMixin_Events",
+    "events.PersistentProjectileEntityMixin_Events",
+    "events.ProjectileEntityMixin_Events",
+    "events.RangedWeaponItemMixin_Events",
+    "events.ThrownEntityMixin_Events"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  },
+  "client": [
+    "client.MinecraftClientMixin",
+    "client.render.ProjectileEntityRendererMixin",
+    "client.render.ProjectileEntityRenderStateMixin",
+    "client.render.WorldRendererMixin"
+  ]
+}

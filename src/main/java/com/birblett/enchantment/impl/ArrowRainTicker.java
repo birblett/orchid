@@ -61,7 +61,7 @@ public class ArrowRainTicker extends Ticker {
                 Vec3d spawnPos = VectorUtils.applyDivergence(new Vec3d(0, 1, 0), 0.3).normalize().multiply(10 +
                         this.owner.getRandom().nextBetween(0, 200) / 100.0).add(this.target);
                 Vec3d velocity = VectorUtils.applyDivergence(this.target.subtract(spawnPos).normalize(), 0.03).normalize().multiply(3);
-                ProjectileEntity projectileEntity = ((RangedWeaponItemAccessor) w).createProjectile(this.world, this.owner, this.weaponStack,
+                ProjectileEntity projectileEntity = ((RangedWeaponItemAccessor) w).orchid_createArrowEntity(this.world, this.owner, this.weaponStack,
                         this.projectileStack, true);
                 if (projectileEntity instanceof PersistentProjectileEntity p) {
                     p.setCritical(true);

@@ -8,6 +8,6 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface PersistentProjectileAccessor {
 
     @Invoker("isInGround")
-    boolean inGround();
+    boolean orchid_inGround();
 
 }

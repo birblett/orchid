@@ -17,14 +17,14 @@ import java.util.List;
 public interface RangedWeaponItemAccessor {
 
     @Invoker("createArrowEntity")
-    ProjectileEntity createProjectile(World world, LivingEntity shooter, ItemStack weaponStack, ItemStack projectileStack, boolean critical);
+    ProjectileEntity orchid_createArrowEntity(World world, LivingEntity shooter, ItemStack weaponStack, ItemStack projectileStack, boolean critical);
 
     @Invoker("load")
-    static List<ItemStack> load(ItemStack stack, ItemStack projectileStack, LivingEntity shooter) {
+    static List<ItemStack> orchid_load(ItemStack stack, ItemStack projectileStack, LivingEntity shooter) {
         throw new UnsupportedOperationException();
     };
 
     @Invoker("shootAll")
-    void shootAllProjectiles(ServerWorld world, LivingEntity shooter, Hand hand, ItemStack stack, List<ItemStack> projectiles, float speed, float divergence, boolean critical, @Nullable LivingEntity target);
+    void orchid_shootAll(ServerWorld world, LivingEntity shooter, Hand hand, ItemStack stack, List<ItemStack> projectiles, float speed, float divergence, boolean critical, @Nullable LivingEntity target);
 
 }

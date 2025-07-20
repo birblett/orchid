@@ -86,7 +86,7 @@ public class GrapplingEnchantment extends OrchidEnchantWrapper {
                 EnchantmentUtils.removeTracked(entity, OrchidEnchantments.GRAPPLING);
             } else {
                 if (world instanceof ClientWorld && entity instanceof PersistentProjectileEntity p &&
-                        ((PersistentProjectileAccessor) p).inGround() && entity.getOwner() instanceof PlayerEntity owner) {
+                        ((PersistentProjectileAccessor) p).orchid_inGround() && entity.getOwner() instanceof PlayerEntity owner) {
                     Vec3d diff = entity.getPos().subtract(owner.getPos());
                     double strength = owner.getFinalGravity() * Math.min(Math.max(0, (diff.lengthSquared() - 25) / 8), 1.5) / diff.length();
                     owner.addVelocity(diff.multiply(strength, strength * 2, strength));

@@ -1,5 +1,6 @@
 package com.birblett.enchantment.impl;
 
+import com.birblett.Orchid;
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.enchantment.OrchidEnchantments;
 import com.birblett.entity.Ticker;

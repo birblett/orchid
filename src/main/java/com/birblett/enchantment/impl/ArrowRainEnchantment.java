@@ -1,5 +1,6 @@
 package com.birblett.enchantment.impl;
 
+import com.birblett.Orchid;
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.entity.Ticker;
 import net.minecraft.component.type.AttributeModifierSlot;
@@ -26,7 +27,7 @@ public class ArrowRainEnchantment extends OrchidEnchantWrapper {
 
     @Override
     public Flow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
-        if (critical && flag == Flag.DIRECT && world instanceof ServerWorld) {
+        if (critical && flag != Flag.SUMMON && world instanceof ServerWorld) {
             Ticker.set(entity, ArrowRainTicker.ID, new ArrowRainTicker(stack, projectileStack));
         }
         return Flow.CONTINUE;

@@ -43,7 +43,7 @@ public class StasisEnchantment extends OrchidEnchantWrapper {
             StasisTicker t;
             if (!Ticker.contains(shooter, StasisTicker.ID)) {
                 Hand hand = shooter.getMainHandStack() == stack ? Hand.MAIN_HAND : Hand.OFF_HAND;
-                Ticker.set(shooter, StasisTicker.ID, t = new StasisTicker(shooter, stack, hand));
+                Ticker.set(shooter, StasisTicker.ID, t = new StasisTicker(shooter, stack, projectileStack, hand));
             } else {
                 t = Ticker.get(shooter, StasisTicker.ID);
             }

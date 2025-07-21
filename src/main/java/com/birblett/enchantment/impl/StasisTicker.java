@@ -24,14 +24,16 @@ public class StasisTicker extends Ticker {
 
     private final LivingEntity entity;
     private final ItemStack stack;
+    private final ItemStack projectileStack;
     private final Hand hand;
 
     HashMap<ProjectileEntity, Pair<Vec3d, Boolean>> stasisedProjectiles = new HashMap<>();
 
-    public StasisTicker(LivingEntity entity, ItemStack stack, Hand hand) {
+    public StasisTicker(LivingEntity entity, ItemStack stack, ItemStack projectileStack, Hand hand) {
         super(null, Type.DIRECT);
         this.entity = entity;
         this.stack = stack;
+        this.projectileStack = projectileStack;
         this.hand = hand;
     }
 
@@ -39,6 +41,7 @@ public class StasisTicker extends Ticker {
         super(entity, Type.SUMMON);
         this.entity = null;
         this.stack = null;
+        this.projectileStack = null;
         this.hand = null;
         super.entity = entity;
     }
@@ -65,7 +68,6 @@ public class StasisTicker extends Ticker {
                 if (p.isRemoved()) {
                     continue;
                 }
-                ItemStack stack = p instanceof PersistentProjectileEntity pr ? pr.getItemStack() : ItemStack.EMPTY;
                 EnchantmentUtils.removeTracked(p, OrchidEnchantments.STASIS);
                 Ticker.remove(p, StasisTicker.ID);
                 boolean critical = e.getValue().getRight();
@@ -73,7 +75,7 @@ public class StasisTicker extends Ticker {
                     pr.setCritical(critical);
                 }
                 EnchantmentUtils.stackIterator(this.stack, (ench, level) -> ench.onProjectileFired(this.entity,
-                        e.getKey(), this.stack, stack, world, critical, level, OrchidEnchantWrapper.Flag.SECONDARY));
+                        e.getKey(), this.stack, this.projectileStack, world, critical, level, OrchidEnchantWrapper.Flag.SECONDARY));
             }
             if (remove) {
                 Ticker.remove(this.entity, ID);

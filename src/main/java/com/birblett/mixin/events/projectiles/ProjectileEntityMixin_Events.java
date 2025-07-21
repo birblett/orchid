@@ -1,6 +1,5 @@
-package com.birblett.mixin.events;
+package com.birblett.mixin.events.projectiles;
 
-import com.birblett.Orchid;
 import com.birblett.entity.EnchantmentFlags;
 import com.birblett.entity.ProjectileFlags;
 import com.birblett.util.EnchantmentUtils;
@@ -8,7 +7,6 @@ import com.birblett.util.EntityUtils;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.serialization.Codec;
-import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;

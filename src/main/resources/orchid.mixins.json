@@ -7,14 +7,17 @@
     "accessor.PersistentProjectileAccessor",
     "accessor.RangedWeaponItemAccessor",
     "events.EntityMixin_Events",
-    "events.FishingBobberEntityMixin_Events",
     "events.FishingRodMixin_Events",
     "events.LivingEntityMixin_Events",
-    "events.PersistentProjectileEntityMixin_Events",
     "events.PlayerEntityMixin_Events",
-    "events.ProjectileEntityMixin_Events",
     "events.RangedWeaponItemMixin_Events",
-    "events.ThrownEntityMixin_Events"
+    "events.projectiles.ExplosiveProjectileEntityMixin_Events",
+    "events.projectiles.FireworkRocketEntityMixin_Events",
+    "events.projectiles.FishingBobberEntityMixin_Events",
+    "events.projectiles.LlamaSpitEntityMixin_Events",
+    "events.projectiles.PersistentProjectileEntityMixin_Events",
+    "events.projectiles.ProjectileEntityMixin_Events",
+    "events.projectiles.ThrownEntityMixin_Events"
   ],
   "injectors": {
     "defaultRequire": 1

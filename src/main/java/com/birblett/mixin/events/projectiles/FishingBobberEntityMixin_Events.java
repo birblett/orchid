@@ -1,5 +1,6 @@
-package com.birblett.mixin.events;
+package com.birblett.mixin.events.projectiles;
 
+import com.birblett.entity.EnchantmentFlags;
 import com.birblett.util.EnchantmentUtils;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -11,14 +12,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(FishingBobberEntity.class)
-public abstract class FishingBobberEntityMixin_Events {
+public abstract class FishingBobberEntityMixin_Events implements EnchantmentFlags {
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
-    private void cancelVelocity(CallbackInfo ci) {
-        FishingBobberEntity p = (FishingBobberEntity) (Object) this;
-        if (EnchantmentUtils.projectileIterator(p, (enchant, level) -> enchant.onProjectileTick(p, p.getWorld(), level))) {
-            ci.cancel();
-        }
+    private void tickEvents(CallbackInfo ci) {
+        this.processTick(ci);
     }
 
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/Vec3d;multiply(D)Lnet/minecraft/util/math/Vec3d;", ordinal = 0))

@@ -100,6 +100,14 @@ public class OrchidEnchantWrapper {
         return Flow.CONTINUE;
     }
 
+    public boolean allowProjectileType(LivingEntity entity, ItemStack weapon, ItemStack stack) {
+        return false;
+    }
+
+    public ProjectileEntity getProjectileFromItem(LivingEntity entity, ItemStack weapon, ItemStack stack) {
+        return null;
+    }
+
     public enum Flag {
         DIRECT,
         SECONDARY,

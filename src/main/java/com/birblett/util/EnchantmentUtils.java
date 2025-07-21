@@ -17,6 +17,7 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.mutable.MutableDouble;
+import org.jetbrains.annotations.Nullable;
 import oshi.util.tuples.Triplet;
 
 import java.util.*;
@@ -40,6 +41,15 @@ public class EnchantmentUtils {
     }
 
     public static boolean stackIterator(ItemStack stack, BiFunction<OrchidEnchantWrapper, Integer, OrchidEnchantWrapper.Flow> execute) {
+        return applyEnchants(execute, getSortedItemEnchants(stack));
+    }
+
+    @Nullable
+    public static <T> T stackIteratorGeneric(ItemStack stack, BiFunction<OrchidEnchantWrapper, Integer, T> execute) {
+        return getFirstMatch(execute, getSortedItemEnchants(stack));
+    }
+
+    private static ArrayList<Triplet<Integer, Integer, RegistryKey<Enchantment>>> getSortedItemEnchants(ItemStack stack) {
         // triplet order is priority, level, enchantment
         ArrayList<Triplet<Integer, Integer, RegistryKey<Enchantment>>> enchantments = new ArrayList<>();
         for (RegistryEntry<Enchantment> e : EnchantmentHelper.getEnchantments(stack).getEnchantments()) {
@@ -53,7 +63,7 @@ public class EnchantmentUtils {
                 }
             }
         }
-        return applyEnchants(execute, enchantments);
+        return enchantments;
     }
 
     public static boolean projectileIterator(ProjectileEntity p, BiFunction<OrchidEnchantWrapper, Integer, OrchidEnchantWrapper.Flow> execute) {
@@ -93,6 +103,17 @@ public class EnchantmentUtils {
             lastPrio = t.getA();
         }
         return exit == OrchidEnchantWrapper.Flow.CANCEL_BREAK || exit == OrchidEnchantWrapper.Flow.CANCEL_AFTER;
+    }
+
+    @Nullable
+    private static <T> T getFirstMatch(BiFunction<OrchidEnchantWrapper, Integer, T> execute, ArrayList<Triplet<Integer, Integer, RegistryKey<Enchantment>>> enchantments) {
+        T value = null;
+        for (Triplet<Integer, Integer, RegistryKey<Enchantment>> t : enchantments) {
+           if ((value = execute.apply(OrchidEnchantments.ORCHID_ENCHANTMENTS.get(t.getA()).get(t.getC()), t.getB())) != null) {
+               break;
+           }
+        }
+        return value;
     }
 
     public static boolean onProjectileFired(ItemStack stack, ItemStack projectileStack, ProjectileEntity entity, LivingEntity shooter, ServerWorld world, boolean critical, OrchidEnchantWrapper.Flag f) {

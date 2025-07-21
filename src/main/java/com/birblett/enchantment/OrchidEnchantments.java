@@ -41,6 +41,10 @@ public class OrchidEnchantments {
      * Projectile Enchants
      */
 
+    public static RegistryKey<Enchantment> ADAPTABILITY = new AdaptabilityEnchantment("adaptability", 1, BOW_OR_CROSSBOW_ENCHANTABLE,
+            1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+            AttributeModifierSlot.ANY).key;
+
     public static final RegistryKey<Enchantment> AERODYNAMIC = new AerodynamicEnchantment("aerodynamic", 0, PROJECTILE_ENCHANTABLE,
             1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
             AttributeModifierSlot.ANY).key;

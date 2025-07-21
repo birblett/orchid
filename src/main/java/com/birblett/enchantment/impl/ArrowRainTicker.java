@@ -1,7 +1,7 @@
 package com.birblett.enchantment.impl;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
-import com.birblett.entity.EntityDamageFlags;
+import com.birblett.entity.ProjectileFlags;
 import com.birblett.entity.Ticker;
 import com.birblett.mixin.accessor.RangedWeaponItemAccessor;
 import com.birblett.util.EnchantmentUtils;
@@ -75,7 +75,7 @@ public class ArrowRainTicker extends Ticker {
                 VectorUtils.rotateEntity(projectileEntity, velocity.normalize());
                 this.world.spawnParticles(ParticleTypes.CLOUD, p.x, p.y, p.z, 10, 0, 0, 0, 0.03);
                 Ticker.set(projectileEntity, ID, new ArrowRainTicker(projectileEntity, this.target.add(0, 5, 0)));
-                ((EntityDamageFlags) projectileEntity).orchid_setIgnoreIFrames(true);
+                ProjectileFlags.setIgnoreIFrames(projectileEntity, true);
                 if (EnchantmentUtils.hasEnchant(this.weaponStack, Enchantments.FLAME, this.world)) {
                     projectileEntity.setOnFireFor(1000);
                 }

@@ -1,7 +1,8 @@
 package com.birblett.mixin.events;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
-import com.birblett.entity.EntityDamageFlags;
+import com.birblett.entity.EnchantmentFlags;
+import com.birblett.entity.ProjectileFlags;
 import com.birblett.util.EnchantmentUtils;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -17,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PersistentProjectileEntity.class)
-public abstract class PersistentProjectileEntityMixin_Events implements EntityDamageFlags {
+public abstract class PersistentProjectileEntityMixin_Events implements ProjectileFlags, EnchantmentFlags {
 
     @ModifyExpressionValue(method = "knockback", at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/EnchantmentHelper;modifyKnockback(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/damage/DamageSource;F)F"))
     private float applyEnchantmentKnockback(float original, @Local(argsOnly = true) LivingEntity target) {
@@ -32,10 +33,7 @@ public abstract class PersistentProjectileEntityMixin_Events implements EntityDa
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     private void tickEvents(CallbackInfo ci) {
-        PersistentProjectileEntity p = (PersistentProjectileEntity) (Object) this;
-        if (EnchantmentUtils.projectileIterator(p, (enchant, level) -> enchant.onProjectileTick(p, p.getWorld(), level))) {
-            ci.cancel();
-        }
+        this.processTick(ci);
     }
 
     @WrapOperation(method = "applyDrag", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/Vec3d;multiply(D)Lnet/minecraft/util/math/Vec3d;"))

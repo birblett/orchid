@@ -2,7 +2,7 @@ package com.birblett.enchantment.impl;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.enchantment.OrchidEnchantments;
-import com.birblett.entity.EntityDamageFlags;
+import com.birblett.entity.ProjectileFlags;
 import com.birblett.entity.Ticker;
 import com.birblett.util.EnchantmentUtils;
 import net.minecraft.component.type.AttributeModifierSlot;
@@ -48,7 +48,7 @@ public class StasisEnchantment extends OrchidEnchantWrapper {
             }
             t.addStasisedProjectile(entity, entity.getVelocity(), critical);
             Ticker.set(entity, StasisTicker.ID, new StasisTicker(entity));
-            ((EntityDamageFlags) entity).orchid_setIgnoreIFrames(true);
+            ProjectileFlags.setIgnoreIFrames(entity, true);
             if (entity instanceof PersistentProjectileEntity p) {
                 p.setCritical(false);
             }

@@ -1,7 +1,7 @@
 package com.birblett.enchantment.impl;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
-import com.birblett.entity.EntityDamageFlags;
+import com.birblett.entity.ProjectileFlags;
 import com.birblett.entity.Ticker;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
@@ -31,7 +31,7 @@ public class BurstFireEnchantment extends OrchidEnchantWrapper {
                 player.getItemCooldownManager().set(stack, level + 20);
             }
         }
-        ((EntityDamageFlags) entity).orchid_setIgnoreIFrames(true);
+        ProjectileFlags.setIgnoreIFrames(entity, true);
         return Flow.CONTINUE;
     }
 

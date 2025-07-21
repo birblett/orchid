@@ -1,11 +1,14 @@
 package com.birblett.mixin.events;
 
-import com.birblett.entity.EntityDamageFlags;
+import com.birblett.Orchid;
+import com.birblett.entity.EnchantmentFlags;
+import com.birblett.entity.ProjectileFlags;
 import com.birblett.util.EnchantmentUtils;
 import com.birblett.util.EntityUtils;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.serialization.Codec;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
@@ -18,9 +21,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ProjectileEntity.class)
-public class ProjectileEntityMixin_Events implements EntityDamageFlags {
+public class ProjectileEntityMixin_Events implements ProjectileFlags, EnchantmentFlags {
 
     @Unique boolean ignoresIFrames = false;
+    @Unique int lifeLeft = -1;
+    @Unique long lastProcessedTick = 0;
 
     @Override
     public void orchid_setIgnoreIFrames(boolean b) {
@@ -30,6 +35,34 @@ public class ProjectileEntityMixin_Events implements EntityDamageFlags {
     @Override
     public boolean orchid_ignoresIFrames() {
         return this.ignoresIFrames;
+    }
+
+    @Override
+    public void orchid_setLifeTime(int i) {
+        this.lifeLeft = i;
+    }
+
+    @Override
+    public boolean orchid_isTickProcessed() {
+        long time = ((ProjectileEntity) (Object) this).getWorld().getTime();
+        long lastTime = this.lastProcessedTick;
+        this.lastProcessedTick = time;
+        return time == lastTime;
+    }
+
+    @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
+    private void tickEvents(CallbackInfo ci) {
+        this.processTick(ci);
+    }
+
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;tick()V"))
+    private void tickLife(CallbackInfo ci) {
+        if (this.lifeLeft >= 0) {
+            --this.lifeLeft;
+            if (this.lifeLeft <= 0) {
+                ((ProjectileEntity) (Object) this).discard();
+            }
+        }
     }
 
     @WrapOperation(method = "onCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/ProjectileEntity;onEntityHit(Lnet/minecraft/util/hit/EntityHitResult;)V"))

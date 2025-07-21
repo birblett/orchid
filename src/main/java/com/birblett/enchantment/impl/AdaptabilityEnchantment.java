@@ -8,6 +8,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.entity.projectile.WitherSkullEntity;
+import net.minecraft.entity.projectile.thrown.SnowballEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -24,7 +25,7 @@ public class AdaptabilityEnchantment extends OrchidEnchantWrapper {
 
     @Override
     public boolean allowProjectileType(LivingEntity entity, ItemStack weapon, ItemStack stack) {
-        return stack.isOf(Items.FIRE_CHARGE) || stack.isOf(Items.WITHER_SKELETON_SKULL);
+        return stack.isOf(Items.FIRE_CHARGE) || stack.isOf(Items.WITHER_SKELETON_SKULL) || stack.isOf(Items.SNOWBALL);
     }
 
     @Override
@@ -38,6 +39,9 @@ public class AdaptabilityEnchantment extends OrchidEnchantWrapper {
             p = new WitherSkullEntity(entity.getWorld(), entity, Vec3d.ZERO);
             p.setPosition(entity.getEyePos());
             ProjectileFlags.setLifetime(p, 35);
+        } else if (stack.isOf(Items.SNOWBALL)) {
+            p = new SnowballEntity(entity.getWorld(), entity, stack);
+            p.setPosition(entity.getEyePos());
         }
         return p;
     }
@@ -51,4 +55,5 @@ public class AdaptabilityEnchantment extends OrchidEnchantWrapper {
         }
         return Flow.CONTINUE;
     }
+
 }

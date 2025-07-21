@@ -1,5 +1,6 @@
 package com.birblett.enchantment.impl;
 
+import com.birblett.Orchid;
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.enchantment.OrchidEnchantments;
 import com.birblett.entity.Ticker;
@@ -43,31 +44,32 @@ public class GrapplingEnchantment extends OrchidEnchantWrapper {
 
     @Override
     public Flow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
-        if (flag == Flag.DIRECT) {
-            if (!critical && entity instanceof FishingBobberEntity fishingBobberEntity) {
-                Vec3d pullStrength = null;
-                if (EntityUtils.isTouchingBlock(entity, 0.05)) {
-                    pullStrength = entity.getPos().subtract(shooter.getPos()).normalize();
-                    if (shooter instanceof PlayerEntity player) {
-                        stack.damage(1, player);
-                    }
-                } else if (fishingBobberEntity.getHookedEntity() != null) {
-                    pullStrength = fishingBobberEntity.getHookedEntity().getPos().subtract(shooter.getPos()).normalize();
+        if (!critical && entity instanceof FishingBobberEntity fishingBobberEntity) {
+            Vec3d pullStrength = null;
+            if (EntityUtils.isTouchingBlock(entity, 0.05)) {
+                pullStrength = entity.getPos().subtract(shooter.getPos()).normalize();
+                if (shooter instanceof PlayerEntity player) {
+                    stack.damage(1, player);
                 }
-                if (pullStrength != null) {
-                    double sneakMult = shooter.isSneaking() ? 1 : 1.6;
-                    double touchingWaterPullSpeed = shooter.isTouchingWater() ? 0.4 : 1.0;
-                    shooter.fallDistance = 0;
-                    shooter.setVelocity(shooter.getVelocity().add(pullStrength.multiply(touchingWaterPullSpeed * sneakMult)));
-                    shooter.velocityModified = true;
-                }
-            } else if (entity instanceof PersistentProjectileEntity p) {
-                EnchantmentUtils.setTracked(p, OrchidEnchantments.GRAPPLING, level);
+            } else if (fishingBobberEntity.getHookedEntity() != null) {
+                pullStrength = fishingBobberEntity.getHookedEntity().getPos().subtract(shooter.getPos()).normalize();
+            }
+            if (pullStrength != null) {
+                double sneakMult = shooter.isSneaking() ? 1 : 1.6;
+                double touchingWaterPullSpeed = shooter.isTouchingWater() ? 0.4 : 1.0;
+                shooter.fallDistance = 0;
+                shooter.setVelocity(shooter.getVelocity().add(pullStrength.multiply(touchingWaterPullSpeed * sneakMult)));
+                shooter.velocityModified = true;
+            }
+        } else if (entity instanceof PersistentProjectileEntity p) {
+            if (flag == Flag.DIRECT) {
                 if (Ticker.get(shooter, GrapplingTicker.ID) instanceof GrapplingTicker t) {
                     t.addEntity(p);
                 } else {
                     Ticker.set(shooter, GrapplingTicker.ID, new GrapplingTicker(shooter, p, stack));
                 }
+            } else {
+                EnchantmentUtils.removeTracked(p, OrchidEnchantments.GRAPPLING);
             }
         }
         return Flow.CONTINUE;

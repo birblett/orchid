@@ -57,7 +57,6 @@ public class EnchantmentUtils {
             if (e.getKey().isPresent() && OrchidEnchantments.PROCESS_PRIORITY.get(e.getKey().get()) instanceof Integer i) {
                 Triplet<Integer, Integer, RegistryKey<Enchantment>> t = new Triplet<>(i, EnchantmentHelper.getLevel(e, stack), e.getKey().get());
                 int idx = Collections.binarySearch(enchantments, t, Comparator.comparingInt(Triplet::getA));
-                Orchid.LOGGER.info("{} {}", idx, e.getKey());
                 if (idx < 0) {
                     enchantments.add(-idx - 1, t);
                 } else {

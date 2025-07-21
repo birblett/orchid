@@ -2,6 +2,7 @@ package com.birblett.enchantment;
 
 import com.birblett.datagen.OrchidItemTagProvider;
 import com.birblett.enchantment.impl.*;
+import com.birblett.enchantment.impl.curse.PlunkEnchantment;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
@@ -20,7 +21,8 @@ public class OrchidEnchantments {
     public static final HashMap<RegistryKey<Enchantment>, Integer> PROCESS_PRIORITY = new HashMap<>();
 
     public static final TagKey<Item> BOW_OR_CROSSBOW_ENCHANTABLE = OrchidItemTagProvider.create("enchantable/bow_or_crossbow")
-            .add(Items.BOW, Items.CROSSBOW)
+            .add(Items.BOW)
+            .add(Items.CROSSBOW)
             .tagKey;
 
     public static final TagKey<Item> GRAPPLING_ENCHANTABLE = OrchidItemTagProvider.create("enchantable/grappling")
@@ -34,28 +36,48 @@ public class OrchidEnchantments {
             .add(Items.TRIDENT)
             .tagKey;
 
+    /**
+     * Projectile Enchants
+     */
+
     public static RegistryKey<Enchantment> AERODYNAMIC = new AerodynamicEnchantment("aerodynamic", 0, PROJECTILE_ENCHANTABLE,
-            1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1, AttributeModifierSlot.ANY).key;
+            1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
+            AttributeModifierSlot.ANY).key;
 
     public static RegistryKey<Enchantment> ARROW_RAIN = new ArrowRainEnchantment("arrow_rain", 1, BOW_OR_CROSSBOW_ENCHANTABLE,
-            1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.ANY).key;
+            1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+            AttributeModifierSlot.ANY).key;
 
     public static RegistryKey<Enchantment> BURST_FIRE = new BurstFireEnchantment("burst_fire", 1, BOW_OR_CROSSBOW_ENCHANTABLE,
-            1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.ANY).key;
+            1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+            AttributeModifierSlot.ANY).key;
 
     public static RegistryKey<Enchantment> GRAPPLING = new GrapplingEnchantment("grappling", 0, GRAPPLING_ENCHANTABLE,
-            1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.ANY).key;
+            1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+            AttributeModifierSlot.ANY).key;
 
     public static RegistryKey<Enchantment> HITSCAN = new HitscanEnchantment("hitscan", 8, BOW_OR_CROSSBOW_ENCHANTABLE,
-            1, 3, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.ANY).key;
+            1, 3, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+            AttributeModifierSlot.ANY).key;
 
     public static RegistryKey<Enchantment> MARKED = new MarkedEnchantment("marked", 6, BOW_OR_CROSSBOW_ENCHANTABLE,
-            1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.ANY).key;
+            1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+            AttributeModifierSlot.ANY).key;
 
     public static RegistryKey<Enchantment> RICOCHET = new RicochetEnchantment("ricochet", 2, BOW_OR_CROSSBOW_ENCHANTABLE,
-            1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1, AttributeModifierSlot.ANY).key;
+            1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
+            AttributeModifierSlot.ANY).key;
 
     public static RegistryKey<Enchantment> STASIS = new StasisEnchantment("stasis", 5, BOW_OR_CROSSBOW_ENCHANTABLE,
-            1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.ANY).key;
+            1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+            AttributeModifierSlot.ANY).key;
+
+    /**
+     * Curses
+     */
+
+    public static RegistryKey<Enchantment> PLUNK = new PlunkEnchantment("plunk", 0, PROJECTILE_ENCHANTABLE, 1,
+            3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
+            AttributeModifierSlot.ANY).curse().key;
 
 }

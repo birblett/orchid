@@ -1,6 +1,7 @@
 package com.birblett.enchantment;
 
 import com.birblett.Orchid;
+import com.birblett.datagen.OrchidEnchantmentTagProvider;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
@@ -10,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.EnchantmentTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -55,6 +57,11 @@ public class OrchidEnchantWrapper {
     public OrchidEnchantWrapper(String id, int processPriority, TagKey<Item> supportedItems, int weight, int maxLevel,
                                    Enchantment.Cost minCost, Enchantment.Cost maxCost, int anvilCost, AttributeModifierSlot... slots) {
         this(id, processPriority, supportedItems, null, weight, maxLevel, minCost, maxCost, anvilCost, slots);
+    }
+
+    public OrchidEnchantWrapper curse() {
+        OrchidEnchantmentTagProvider.addOrGetExisting(EnchantmentTags.CURSE).add(this.key);
+        return this;
     }
 
     public Flow mainhandAttackAttempt(LivingEntity attacker, int level) {

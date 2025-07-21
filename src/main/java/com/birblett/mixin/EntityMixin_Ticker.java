@@ -22,6 +22,7 @@ public abstract class EntityMixin_Ticker implements TickedEntity {
 
     @Unique private final HashMap<String, Ticker> tickers = new HashMap<>();
     @Unique private final HashMap<String, Ticker> addedTickers = new HashMap<>();
+    @Unique private final ArrayList<String> removedTickers = new ArrayList<>();
     @Unique private final ArrayList<Ticker> anonymousTickers = new ArrayList<>();
     @Unique private final ArrayList<Ticker> addedAnonymousTickers = new ArrayList<>();
 
@@ -38,18 +39,16 @@ public abstract class EntityMixin_Ticker implements TickedEntity {
     @Override
     public void orchid_setTicker(String id, Ticker t) {
         this.addedTickers.put(id, t);
-        this.tickers.put(id, t);
     }
 
     @Override
     public void orchid_addAnonymousTicker(Ticker t) {
         this.addedAnonymousTickers.add(t);
-        this.anonymousTickers.add(t);
     }
 
     @Override
     public void orchid_removeTicker(String id) {
-        this.tickers.remove(id);
+        this.removedTickers.add(id);
     }
 
     @Override
@@ -62,6 +61,10 @@ public abstract class EntityMixin_Ticker implements TickedEntity {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void handleTickers(CallbackInfo ci) {
+        if (!this.removedTickers.isEmpty()) {
+            this.removedTickers.forEach(this.tickers::remove);
+            this.removedTickers.clear();
+        }
         if (!this.addedTickers.isEmpty()) {
             this.tickers.putAll(this.addedTickers);
             this.addedTickers.clear();

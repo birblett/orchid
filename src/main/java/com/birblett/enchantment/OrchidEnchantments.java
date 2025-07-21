@@ -8,7 +8,6 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.tag.EnchantmentTags;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 
@@ -42,40 +41,40 @@ public class OrchidEnchantments {
      * Projectile Enchants
      */
 
-    public static RegistryKey<Enchantment> AERODYNAMIC = new AerodynamicEnchantment("aerodynamic", 0, PROJECTILE_ENCHANTABLE,
+    public static final RegistryKey<Enchantment> AERODYNAMIC = new AerodynamicEnchantment("aerodynamic", 0, PROJECTILE_ENCHANTABLE,
             1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
             AttributeModifierSlot.ANY).key;
 
-    public static RegistryKey<Enchantment> ARROW_RAIN = new ArrowRainEnchantment("arrow_rain", 1, BOW_OR_CROSSBOW_ENCHANTABLE,
+    public static final RegistryKey<Enchantment> ARROW_RAIN = new ArrowRainEnchantment("arrow_rain", 1, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
             AttributeModifierSlot.ANY).key;
 
-    public static RegistryKey<Enchantment> BURST_FIRE = new BurstFireEnchantment("burst_fire", 1, BOW_OR_CROSSBOW_ENCHANTABLE,
+    public static final RegistryKey<Enchantment> BARBED = new BarbedEnchantment("barbed", 3, ItemTags.FISHING_ENCHANTABLE,
+            1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
+            AttributeModifierSlot.ANY).key;
+
+    public static final RegistryKey<Enchantment> BURST_FIRE = new BurstFireEnchantment("burst_fire", 1, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
             AttributeModifierSlot.ANY).key;
 
-    public static RegistryKey<Enchantment> GRAPPLING = new GrapplingEnchantment("grappling", 0, GRAPPLING_ENCHANTABLE,
+    public static final RegistryKey<Enchantment> GRAPPLING = new GrapplingEnchantment("grappling", 0, GRAPPLING_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
             AttributeModifierSlot.ANY).key;
 
-    public static RegistryKey<Enchantment> HITSCAN = new HitscanEnchantment("hitscan", 8, BOW_OR_CROSSBOW_ENCHANTABLE,
+    public static final RegistryKey<Enchantment> HITSCAN = new HitscanEnchantment("hitscan", 8, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 3, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
             AttributeModifierSlot.ANY).key;
 
-    public static RegistryKey<Enchantment> MARKED = new MarkedEnchantment("marked", 6, BOW_OR_CROSSBOW_ENCHANTABLE,
+    public static final RegistryKey<Enchantment> MARKED = new MarkedEnchantment("marked", 6, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
             AttributeModifierSlot.ANY).key;
 
-    public static RegistryKey<Enchantment> RICOCHET = new RicochetEnchantment("ricochet", 2, BOW_OR_CROSSBOW_ENCHANTABLE,
+    public static final RegistryKey<Enchantment> RICOCHET = new RicochetEnchantment("ricochet", 2, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
             AttributeModifierSlot.ANY).key;
 
-    public static RegistryKey<Enchantment> STASIS = new StasisEnchantment("stasis", 5, BOW_OR_CROSSBOW_ENCHANTABLE,
+    public static final RegistryKey<Enchantment> STASIS = new StasisEnchantment("stasis", 5, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
-            AttributeModifierSlot.ANY).key;
-
-    public static RegistryKey<Enchantment> BARBED = new BarbedEnchantment("barbed", 3, ItemTags.FISHING_ENCHANTABLE,
-            1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
             AttributeModifierSlot.ANY).key;
 
     /**

@@ -8,6 +8,8 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.tag.EnchantmentTags;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 
 import java.util.ArrayList;
@@ -70,6 +72,10 @@ public class OrchidEnchantments {
 
     public static RegistryKey<Enchantment> STASIS = new StasisEnchantment("stasis", 5, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+            AttributeModifierSlot.ANY).key;
+
+    public static RegistryKey<Enchantment> BARBED = new BarbedEnchantment("barbed", 3, ItemTags.FISHING_ENCHANTABLE,
+            1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
             AttributeModifierSlot.ANY).key;
 
     /**

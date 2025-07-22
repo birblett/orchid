@@ -14,6 +14,7 @@
     "events.projectiles.ExplosiveProjectileEntityMixin_Events",
     "events.projectiles.FireworkRocketEntityMixin_Events",
     "events.projectiles.FishingBobberEntityMixin_Events",
+    "events.projectiles.ItemMixin_Events",
     "events.projectiles.LlamaSpitEntityMixin_Events",
     "events.projectiles.PersistentProjectileEntityMixin_Events",
     "events.projectiles.ProjectileEntityMixin_Events",

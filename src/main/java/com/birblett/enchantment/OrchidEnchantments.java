@@ -61,6 +61,10 @@ public class OrchidEnchantments {
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
             AttributeModifierSlot.ANY).key;
 
+    public static final RegistryKey<Enchantment> FOCUS = new FocusEnchantment("focus", 1, ItemTags.BOW_ENCHANTABLE,
+            1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+            AttributeModifierSlot.ANY).key;;
+
     public static final RegistryKey<Enchantment> GRAPPLING = new GrapplingEnchantment("grappling", 0, GRAPPLING_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
             AttributeModifierSlot.ANY).key;

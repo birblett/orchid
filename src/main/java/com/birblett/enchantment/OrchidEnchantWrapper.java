@@ -72,6 +72,10 @@ public class OrchidEnchantWrapper {
         return Flow.CONTINUE;
     }
 
+    public Flow useTick(LivingEntity user, ItemStack stack, int remainingUseTicks, int level) {
+        return Flow.CONTINUE;
+    }
+
     public Flow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
         return Flow.CONTINUE;
     }

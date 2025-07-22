@@ -76,8 +76,8 @@ public class EnchantmentUtils {
                 int idx = Collections.binarySearch(enchantments, t, Comparator.comparingInt(Triplet::getA));
                 if (idx < 0) {
                     enchantments.add(-idx - 1, t);
-                } else if (idx == 0) {
-                    enchantments.addFirst(t);
+                } else {
+                    enchantments.add(idx, t);
                 }
             }
         }

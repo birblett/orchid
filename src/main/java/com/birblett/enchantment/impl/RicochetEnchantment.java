@@ -33,4 +33,5 @@ public class RicochetEnchantment extends OrchidEnchantWrapper {
         }
         return Flow.CONTINUE;
     }
+
 }

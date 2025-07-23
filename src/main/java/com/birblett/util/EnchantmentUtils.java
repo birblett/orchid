@@ -1,6 +1,5 @@
 package com.birblett.util;
 
-import com.birblett.Orchid;
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.enchantment.OrchidEnchantments;
 import com.birblett.network.AttachedDataRegistry;

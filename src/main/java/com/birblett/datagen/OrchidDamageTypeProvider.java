@@ -5,7 +5,9 @@ import com.birblett.datagen.wrapper.DamageTypeWrapper;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.minecraft.entity.damage.DamageType;
-import net.minecraft.registry.*;
+import net.minecraft.registry.Registerable;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryWrapper;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;

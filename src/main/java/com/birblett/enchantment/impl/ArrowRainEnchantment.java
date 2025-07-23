@@ -1,6 +1,5 @@
 package com.birblett.enchantment.impl;
 
-import com.birblett.Orchid;
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.entity.Ticker;
 import net.minecraft.component.type.AttributeModifierSlot;
@@ -34,21 +33,7 @@ public class ArrowRainEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public Flow onProjectileEntityHit(ProjectileEntity entity, EntityHitResult result, int level) {
-        return onHit(entity, result);
-    }
-
-    @Override
-    public Flow onProjectileBlockHit(ProjectileEntity entity, BlockHitResult result, int level) {
-        return onHit(entity, result);
-    }
-
-    @Override
-    public float projectileKnockbackMultiplier(ProjectileEntity entity, Entity target, int level) {
-        return 0;
-    }
-
-    private Flow onHit(ProjectileEntity entity, HitResult result) {
+    public Flow onProjectileHit(ProjectileEntity entity, HitResult result, int level) {
         if (entity.getOwner() instanceof LivingEntity owner && owner.getWorld() instanceof ServerWorld world) {
             Ticker.apply(entity, ArrowRainTicker.ID, t -> {
                 boolean critical = entity instanceof PersistentProjectileEntity p && p.isCritical() || !(entity instanceof PersistentProjectileEntity);
@@ -57,12 +42,17 @@ public class ArrowRainEnchantment extends OrchidEnchantWrapper {
                             entityHitResult.getEntity().getPos().add(0, entityHitResult.getEntity().getHeight() / 2, 0) :
                             entity.getPos();
                     Ticker.addAnonymous(owner, new ArrowRainTicker(owner, world, target, t.weaponStack, t.projectileStack));
-                } else if (result instanceof BlockHitResult && t.isSummon()) {
+                } else if (result instanceof BlockHitResult && t.isSummon() && entity instanceof PersistentProjectileEntity) {
                     entity.discard();
                 }
             });
         }
         return Flow.CONTINUE;
+    }
+
+    @Override
+    public float projectileKnockbackMultiplier(ProjectileEntity entity, Entity target, int level) {
+        return 0;
     }
 
 }

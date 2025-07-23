@@ -68,9 +68,18 @@ public class EnchantmentUtils {
     }
 
     public static boolean projectileIterator(ProjectileEntity p, BiFunction<OrchidEnchantWrapper, Integer, OrchidEnchantWrapper.Flow> execute) {
+        return applyEnchants(execute, getSortedProjectileEnchants(p));
+    }
+
+    @Nullable
+    public static <T> T projectileIteratorGeneric(ProjectileEntity p, BiFunction<OrchidEnchantWrapper, Integer, T> execute) {
+        return getFirstMatch(execute, getSortedProjectileEnchants(p));
+    }
+
+    private static ArrayList<Triplet<Integer, Integer, RegistryKey<Enchantment>>> getSortedProjectileEnchants(ProjectileEntity entity) {
         // triplet order is priority, level, enchantment
         ArrayList<Triplet<Integer, Integer, RegistryKey<Enchantment>>> enchantments = new ArrayList<>();
-        for (Map.Entry<RegistryKey<Enchantment>, Integer> entry : EnchantmentUtils.getTrackedMap(p).entrySet()) {
+        for (Map.Entry<RegistryKey<Enchantment>, Integer> entry : EnchantmentUtils.getTrackedMap(entity).entrySet()) {
             if (OrchidEnchantments.PROCESS_PRIORITY.get(entry.getKey()) instanceof Integer i) {
                 Triplet<Integer, Integer, RegistryKey<Enchantment>> t = new Triplet<>(i, entry.getValue(), entry.getKey());
                 int idx = Collections.binarySearch(enchantments, t, Comparator.comparingInt(Triplet::getA));
@@ -81,7 +90,7 @@ public class EnchantmentUtils {
                 }
             }
         }
-        return applyEnchants(execute, enchantments);
+        return enchantments;
     }
 
     private static boolean applyEnchants(BiFunction<OrchidEnchantWrapper, Integer, OrchidEnchantWrapper.Flow> execute, ArrayList<Triplet<Integer, Integer, RegistryKey<Enchantment>>> enchantments) {

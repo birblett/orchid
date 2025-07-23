@@ -1,4 +1,4 @@
-package com.birblett.datagen;
+package com.birblett.datagen.wrapper;
 
 import com.birblett.Orchid;
 import net.minecraft.registry.Registry;
@@ -11,10 +11,10 @@ import java.util.ArrayList;
 public class TagWrapper<T, E> {
 
     public final TagKey<T> tagKey;
-    protected final ArrayList<E> values = new ArrayList<>();
-    protected final ArrayList<TagKey<T>> tags = new ArrayList<>();
-    protected final ArrayList<E> optionals = new ArrayList<>();
-    protected final ArrayList<TagKey<T>> optionalTags = new ArrayList<>();
+    public final ArrayList<E> values = new ArrayList<>();
+    public final ArrayList<TagKey<T>> tags = new ArrayList<>();
+    public final ArrayList<E> optionals = new ArrayList<>();
+    public final ArrayList<TagKey<T>> optionalTags = new ArrayList<>();
 
     public TagWrapper(RegistryKey<? extends Registry<T>> key, String id) {
         this.tagKey = TagKey.of(key, Identifier.of(Orchid.MOD_ID, id));

@@ -1,5 +1,6 @@
 package com.birblett.datagen;
 
+import com.birblett.datagen.wrapper.TagWrapper;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.data.tag.ProvidedTagBuilder;

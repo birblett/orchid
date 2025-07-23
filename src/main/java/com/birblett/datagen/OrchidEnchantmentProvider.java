@@ -27,9 +27,16 @@ public class OrchidEnchantmentProvider extends FabricDynamicRegistryProvider {
                 entries.add(e.key, b.build(Identifier.of(Orchid.MOD_ID, e.id))));
     }
 
+    @Override
+    public String getName() {
+        return "Enchantment";
+    }
+
     public static void bootstrap(Registerable<Enchantment> enchantmentRegisterable) {
-        forEachEnchantment(enchantmentRegisterable.getRegistryLookup(RegistryKeys.ITEM), (e, b) ->
-                enchantmentRegisterable.register(e.key, b.build(Identifier.of(Orchid.MOD_ID, e.id))));
+        forEachEnchantment(enchantmentRegisterable.getRegistryLookup(RegistryKeys.ITEM), (e, b) -> {
+            enchantmentRegisterable.register(e.key, b.build(Identifier.of(Orchid.MOD_ID, e.id)));
+            e.forEachTranslation((l, v) -> Translateable.addTranslation(l, e.translationKey, v));
+        });
     }
 
     private static void forEachEnchantment(RegistryEntryLookup<Item> lookup, BiConsumer<OrchidEnchantWrapper, Enchantment.Builder> c) {
@@ -54,11 +61,6 @@ public class OrchidEnchantmentProvider extends FabricDynamicRegistryProvider {
                     itemLookup.getOrThrow(e.supportedItems), e.weight, e.maxLevel, e.minCost, e.maxCost, e.anvilCost, e.slots));
         }
         return b;
-    }
-
-    @Override
-    public String getName() {
-        return "Enchantment";
     }
 
 }

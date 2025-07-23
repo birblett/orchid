@@ -2,6 +2,7 @@ package com.birblett.enchantment;
 
 import com.birblett.datagen.OrchidItemTagProvider;
 import com.birblett.enchantment.impl.*;
+import com.birblett.enchantment.impl.curse.InfernalEnchantment;
 import com.birblett.enchantment.impl.curse.PlunkEnchantment;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
@@ -43,54 +44,82 @@ public class OrchidEnchantments {
 
     public static RegistryKey<Enchantment> ADAPTABILITY = new AdaptabilityEnchantment("adaptability", 1, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
-            AttributeModifierSlot.ANY).key;
+            AttributeModifierSlot.ANY).translate("Adaptability").key;
 
     public static final RegistryKey<Enchantment> AERODYNAMIC = new AerodynamicEnchantment("aerodynamic", 0, PROJECTILE_ENCHANTABLE,
             1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
-            AttributeModifierSlot.ANY).key;
+            AttributeModifierSlot.ANY)
+            .translate("Aerodynamic")
+            .key;
 
     public static final RegistryKey<Enchantment> ARROW_RAIN = new ArrowRainEnchantment("arrow_rain", 1, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
-            AttributeModifierSlot.ANY).key;
+            AttributeModifierSlot.ANY)
+            .translate("Arrow Rain")
+            .key;
 
     public static final RegistryKey<Enchantment> BARBED = new BarbedEnchantment("barbed", 3, ItemTags.FISHING_ENCHANTABLE,
             1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
-            AttributeModifierSlot.ANY).key;
+            AttributeModifierSlot.ANY)
+            .translate("Barbed")
+            .key;
 
     public static final RegistryKey<Enchantment> BURST_FIRE = new BurstFireEnchantment("burst_fire", 1, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
-            AttributeModifierSlot.ANY).key;
+            AttributeModifierSlot.ANY)
+            .translate("Burst Fire")
+            .key;
 
     public static final RegistryKey<Enchantment> FOCUS = new FocusEnchantment("focus", 1, ItemTags.BOW_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
-            AttributeModifierSlot.ANY).key;;
+            AttributeModifierSlot.ANY)
+            .translate("Focus")
+            .key;
 
     public static final RegistryKey<Enchantment> GRAPPLING = new GrapplingEnchantment("grappling", 0, GRAPPLING_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
-            AttributeModifierSlot.ANY).key;
+            AttributeModifierSlot.ANY)
+            .translate("Grappling")
+            .key;
 
     public static final RegistryKey<Enchantment> HITSCAN = new HitscanEnchantment("hitscan", 8, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 3, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
-            AttributeModifierSlot.ANY).key;
+            AttributeModifierSlot.ANY)
+            .translate("Hitscan")
+            .key;
 
     public static final RegistryKey<Enchantment> MARKED = new MarkedEnchantment("marked", 6, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
-            AttributeModifierSlot.ANY).key;
+            AttributeModifierSlot.ANY)
+            .translate("Marked")
+            .key;
 
     public static final RegistryKey<Enchantment> RICOCHET = new RicochetEnchantment("ricochet", 2, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
-            AttributeModifierSlot.ANY).key;
+            AttributeModifierSlot.ANY)
+            .translate("Ricochet")
+            .key;
 
     public static final RegistryKey<Enchantment> STASIS = new StasisEnchantment("stasis", 5, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
-            AttributeModifierSlot.ANY).key;
+            AttributeModifierSlot.ANY)
+            .translate("Stasis")
+            .key;
 
     /**
      * Curses
      */
 
+    public static RegistryKey<Enchantment> INFERNAL = new InfernalEnchantment("infernal", 0, ItemTags.BOW_ENCHANTABLE,
+            1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+            AttributeModifierSlot.ANY).curse()
+            .translate("Infernal")
+            .key;
+
     public static RegistryKey<Enchantment> PLUNK = new PlunkEnchantment("plunk", 0, PROJECTILE_ENCHANTABLE, 1,
             3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
-            AttributeModifierSlot.ANY).curse().key;
+            AttributeModifierSlot.ANY).curse()
+            .translate("Plunk")
+            .key;
 
 }

@@ -1,7 +1,11 @@
 package com.birblett.util;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import org.joml.Quaterniond;
+import org.joml.Quaternionf;
+import org.joml.Vector3d;
 
 import java.util.Random;
 
@@ -24,10 +28,7 @@ public class VectorUtils {
                 RANDOM.nextDouble() * maxAngle), in, RANDOM.nextDouble() * Math.PI * 2).normalize();
     }
 
-    public static Vec3d rotateAsPlane(Vec3d in, double angle) {
-        Vec3d axis = (in = in.normalize()).y == 1 || in.y == -1 ? AXIS_X : in.crossProduct(AXIS_Y).normalize().crossProduct(in);
-        return rotateAbout(in, axis, angle).normalize();
-    }
+    private static final Vec3d UP = Direction.UP.getDoubleVector();
 
     public static Vec3d rotateTowards(Vec3d base, Vec3d target, double angle) {
         if (base.lengthSquared() == 0 || target.lengthSquared() == 0) {
@@ -35,8 +36,14 @@ public class VectorUtils {
         }
         base = base.normalize();
         target = target.normalize();
-        return rotateAbout(base, base.crossProduct(target).normalize(), Math.clamp(Math.atan2(base.crossProduct(target).length(),
-                base.dotProduct(target)), 0, Math.abs(angle)));
+        angle = Math.min(Math.acos(Math.clamp(base.dotProduct(target), -1.0, 1.0)), angle);
+        Vec3d axis = base.crossProduct(target).normalize();
+        if (axis.equals(Vec3d.ZERO)) {
+            Vec3d other = UP.equals(base) ? Direction.NORTH.getDoubleVector() : UP;
+            axis = base.crossProduct(other).normalize();
+        }
+        angle = Math.sin(angle / 2);
+        return new Vec3d(base.toVector3f().rotate(new Quaternionf(axis.x * angle, axis.y * angle, axis.z * angle, Math.cos(angle / 2))));
     }
 
     public static void rotateEntity(Entity e, Vec3d rotation) {

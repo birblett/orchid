@@ -30,7 +30,6 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
     private final HashMap<String, String> translation_map = new HashMap<>();
 
     public final String id;
-    public final RegistryKey<Enchantment> key;
     public final TagKey<Item> supportedItems;
     public final TagKey<Item> primaryItems;
     public final int weight;
@@ -40,6 +39,7 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
     public final int anvilCost;
     public final AttributeModifierSlot[] slots;
     public final String translationKey;
+    private final RegistryKey<Enchantment> key;
 
     public OrchidEnchantWrapper(String id, int processPriority, TagKey<Item> supportedItems, TagKey<Item> primaryItems,
                                    int weight, int maxLevel, Enchantment.Cost minCost, Enchantment.Cost maxCost, int anvilCost,
@@ -86,6 +86,10 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
     public OrchidEnchantWrapper curse() {
         OrchidEnchantmentTagProvider.addOrGetExisting(EnchantmentTags.CURSE).add(this.key);
         return this;
+    }
+
+    public RegistryKey<Enchantment> getKey() {
+        return this.key;
     }
 
     public Flow mainhandAttackAttempt(LivingEntity attacker, int level) {

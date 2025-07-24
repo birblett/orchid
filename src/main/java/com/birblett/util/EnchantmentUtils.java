@@ -128,7 +128,7 @@ public class EnchantmentUtils {
     public static boolean onProjectileFired(ItemStack stack, ItemStack projectileStack, ProjectileEntity entity, LivingEntity shooter, ServerWorld world, boolean critical, OrchidEnchantWrapper.Flag f) {
         HashMap<RegistryKey<Enchantment>, Integer> map = new HashMap<>();
         EnchantmentUtils.stackIterator(stack, (enchant, level) -> {
-            map.put(enchant.key, level);
+            map.put(enchant.getKey(), level);
             return OrchidEnchantWrapper.Flow.CONTINUE;
         });
         EnchantmentUtils.setTrackedFromMap(entity, map);

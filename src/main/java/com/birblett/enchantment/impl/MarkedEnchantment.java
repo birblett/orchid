@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -37,15 +38,12 @@ public class MarkedEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public Flow onProjectileTick(ProjectileEntity entity, World world, int level) {
-        if (EnchantmentUtils.trackedContains(entity, OrchidEnchantments.MARKED)) {
-            int id = EnchantmentUtils.getTrackedLevel(entity, OrchidEnchantments.MARKED);
-            if (id != -1 && world.getEntityById(id) instanceof Entity e && e.isAlive()) {
-                Vec3d velocity = entity.getVelocity();
-                double d = velocity.length();
-                Vec3d target = e.getPos().add(0, e.getHeight() / 2, 0).subtract(entity.getPos());
-                entity.setVelocity(VectorUtils.rotateTowards(velocity, target, 0.1).multiply(d));
-            }
+    public Flow onProjectileTick(ProjectileEntity entity, World world, int id) {
+        if (id != -1 && world.getEntityById(id) instanceof Entity e && e.isAlive()) {
+            Vec3d velocity = entity.getVelocity();
+            double d = velocity.length();
+            Vec3d target = e.getPos().add(0, e.getHeight() / 2, 0).subtract(entity.getPos());
+            entity.setVelocity(VectorUtils.rotateTowards(velocity, target, 0.0349066).multiply(d));
         }
         return Flow.CONTINUE;
     }
@@ -60,7 +58,12 @@ public class MarkedEnchantment extends OrchidEnchantWrapper {
                 Ticker.set(owner, MarkedTicker.ID, new MarkedTicker(owner, result.getEntity()));
             }
         }
-        return Flow.CONTINUE;
+        return this.onProjectileHit(entity, result, level);
     }
 
+    @Override
+    public Flow onProjectileHit(ProjectileEntity entity, HitResult result, int level) {
+        EnchantmentUtils.removeTracked(entity, OrchidEnchantments.MARKED);
+        return Flow.CONTINUE;
+    }
 }

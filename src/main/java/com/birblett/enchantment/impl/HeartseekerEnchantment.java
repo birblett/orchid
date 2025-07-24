@@ -2,7 +2,6 @@ package com.birblett.enchantment.impl;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.enchantment.OrchidEnchantments;
-import com.birblett.entity.Ticker;
 import com.birblett.mixin.accessor.PersistentProjectileAccessor;
 import com.birblett.util.EnchantmentUtils;
 import com.birblett.util.VectorUtils;

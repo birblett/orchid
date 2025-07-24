@@ -1,11 +1,8 @@
 package com.birblett.util;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
-import org.joml.Quaterniond;
 import org.joml.Quaternionf;
-import org.joml.Vector3d;
 
 import java.util.Random;
 
@@ -22,13 +19,11 @@ public class VectorUtils {
                 .multiply(1 - cos));
     }
 
-    public static Vec3d applyDivergence(Vec3d in, double maxAngle) {
-        in = in.normalize();
-        return rotateAbout(rotateAbout(in, (in.y == 1 || in.y == -1 ? AXIS_X : AXIS_Y).crossProduct(in).normalize(),
-                RANDOM.nextDouble() * maxAngle), in, RANDOM.nextDouble() * Math.PI * 2).normalize();
+    public static Vec3d applyDivergence(Vec3d base, double maxAngle) {
+        base = base.normalize();
+        return rotateAbout(rotateAbout(base, (base.y == 1 || base.y == -1 ? AXIS_X : AXIS_Y).crossProduct(base).normalize(),
+                RANDOM.nextDouble() * maxAngle), base, RANDOM.nextDouble() * Math.PI * 2).normalize();
     }
-
-    private static final Vec3d UP = Direction.UP.getDoubleVector();
 
     public static Vec3d rotateTowards(Vec3d base, Vec3d target, double angle) {
         if (base.lengthSquared() == 0 || target.lengthSquared() == 0) {
@@ -39,8 +34,7 @@ public class VectorUtils {
         angle = Math.min(Math.acos(Math.clamp(base.dotProduct(target), -1.0, 1.0)), angle);
         Vec3d axis = base.crossProduct(target).normalize();
         if (axis.equals(Vec3d.ZERO)) {
-            Vec3d other = UP.equals(base) ? Direction.NORTH.getDoubleVector() : UP;
-            axis = base.crossProduct(other).normalize();
+            axis = base.crossProduct(AXIS_Y.equals(base) ? AXIS_X : AXIS_Y).normalize();
         }
         angle = Math.sin(angle / 2);
         return new Vec3d(base.toVector3f().rotate(new Quaternionf(axis.x * angle, axis.y * angle, axis.z * angle, Math.cos(angle / 2))));

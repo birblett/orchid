@@ -2,6 +2,7 @@ package com.birblett.enchantment;
 
 import com.birblett.datagen.OrchidItemTagProvider;
 import com.birblett.enchantment.impl.*;
+import com.birblett.enchantment.impl.curse.HeartseekerEnchantment;
 import com.birblett.enchantment.impl.curse.InfernalEnchantment;
 import com.birblett.enchantment.impl.curse.PlunkEnchantment;
 import net.minecraft.component.type.AttributeModifierSlot;

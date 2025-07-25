@@ -9,7 +9,6 @@ import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.RegistryEntryReferenceArgumentType;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -43,7 +42,6 @@ public class ForceEnchantCommand {
     private static final SimpleCommandExceptionType FAILED_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.enchant.failed"));
 
     private static int execute(ServerCommandSource source, Collection<? extends Entity> targets, RegistryEntry<Enchantment> enchantment, int level) throws CommandSyntaxException {
-        Enchantment enchantment2 = enchantment.value();
         int i = 0;
         for (Entity entity : targets) {
             if (entity instanceof LivingEntity livingEntity) {
@@ -58,7 +56,6 @@ public class ForceEnchantCommand {
                 throw FAILED_ENTITY_EXCEPTION.create(entity.getName().getString());
             }
         }
-
         if (i == 0) {
             throw FAILED_EXCEPTION.create();
         }

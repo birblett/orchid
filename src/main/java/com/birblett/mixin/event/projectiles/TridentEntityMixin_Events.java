@@ -25,7 +25,6 @@ public abstract class TridentEntityMixin_Events implements EnchantmentFlags {
 
     @WrapOperation(method = "onEntityHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/EnchantmentHelper;getDamage(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/damage/DamageSource;F)F"))
     private float getModifiedDamage(ServerWorld world, ItemStack stack, Entity target, DamageSource damageSource, float baseDamage, Operation<Float> original) {
-        Orchid.LOGGER.info("{}", (float) ((PersistentProjectileAccessor) this).orchid_damage());
         return original.call(world, stack, target, damageSource, (float) ((PersistentProjectileAccessor) this).orchid_damage());
     }
 

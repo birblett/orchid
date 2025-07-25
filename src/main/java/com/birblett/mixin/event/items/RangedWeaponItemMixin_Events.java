@@ -1,7 +1,8 @@
-package com.birblett.mixin.events.items;
+package com.birblett.mixin.event.items;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.util.EnchantmentUtils;
+import com.birblett.util.EntityUtils;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -12,7 +13,6 @@ import net.minecraft.item.RangedWeaponItem;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -22,8 +22,6 @@ import java.util.function.Predicate;
 
 @Mixin(RangedWeaponItem.class)
 public class RangedWeaponItemMixin_Events {
-
-    @Unique private static final Consumer<ProjectileEntity> NO_OP = p -> {};
 
     @Inject(method = "createArrowEntity", at = @At("HEAD"), cancellable = true)
     private void projectileEnchantmentOverride(World world, LivingEntity shooter, ItemStack weaponStack, ItemStack projectileStack, boolean critical, CallbackInfoReturnable<ProjectileEntity> cir) {
@@ -39,7 +37,7 @@ public class RangedWeaponItemMixin_Events {
         beforeSpawn.accept(entity);
         EnchantmentUtils.onProjectileFired(stack, projectileStack, entity, shooter, world, critical, OrchidEnchantWrapper.Flag.DIRECT);
         if (!entity.isRemoved()) {
-            original.call(entity, world, projectileStack, NO_OP);
+            original.call(entity, world, projectileStack, EntityUtils.PROJECTILE_NO_OP);
         }
         return entity;
     }

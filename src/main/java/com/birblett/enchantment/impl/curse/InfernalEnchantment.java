@@ -1,6 +1,6 @@
 package com.birblett.enchantment.impl.curse;
 
-import com.birblett.damage_types.OrchidDamageTypes;
+import com.birblett.damage_type.OrchidDamageTypes;
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.enchantment.OrchidEnchantments;
 import com.birblett.interfaces.entity.ProjectileFlags;
@@ -14,8 +14,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleEffect;
@@ -55,7 +57,8 @@ public class InfernalEnchantment extends OrchidEnchantWrapper {
                 EnchantmentUtils.setTracked(entity, OrchidEnchantments.INFERNAL, 1);
             }
             if (entity instanceof PersistentProjectileEntity p) {
-                p.setDamage(((PersistentProjectileAccessor) p).orchid_damage() + 2 + Math.max(0, Math.min((remainingUseTicks - 71960) / -22.0, 7)));
+                boolean b = p instanceof TridentEntity;
+                p.setDamage(((PersistentProjectileAccessor) p).orchid_damage() + 2 + Math.max(0, Math.min((remainingUseTicks - 71960) / (b ? -5.0 : -22.0), b ? 32 : 7)));
                 p.setOnFireFor(1000);
             }
             ProjectileFlags.setIgnoreIFrames(entity, true);
@@ -99,8 +102,8 @@ public class InfernalEnchantment extends OrchidEnchantWrapper {
                 } else if (remainingUseTicks == 71801) {
                     WorldUtils.playSound(null, user.getWorld(), user, SoundEvents.ENTITY_BLAZE_SHOOT, 1.0f, 0.1f);
                 }
-                int penalty = 9;
                 user.setOnFireForTicks(50);
+                int penalty = 9;
                 if (remainingUseTicks < 71801 && remainingUseTicks % 10 == 0) {
                     user.damage(world, user.getDamageSources().create(OrchidDamageTypes.IMMOLATION), 4);
                     penalty = 29;
@@ -157,7 +160,9 @@ public class InfernalEnchantment extends OrchidEnchantWrapper {
             if (result instanceof EntityHitResult entityHitResult) {
                 EntityUtils.resetIframes(entityHitResult.getEntity());
             }
-            entity.discard();
+            if (entity instanceof PersistentProjectileEntity) {
+                entity.tick();
+            }
         }
         EnchantmentUtils.removeTracked(entity, OrchidEnchantments.INFERNAL);
         return ControlFlow.CONTINUE;

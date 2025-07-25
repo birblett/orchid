@@ -1,4 +1,4 @@
-package com.birblett.mixin.events.items;
+package com.birblett.mixin.event.items;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.interfaces.item.EnchantableItem;

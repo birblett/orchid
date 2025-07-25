@@ -1,6 +1,6 @@
 package com.birblett.datagen;
 
-import com.birblett.damage_types.OrchidDamageTypes;
+import com.birblett.damage_type.OrchidDamageTypes;
 import com.birblett.datagen.wrapper.DamageTypeWrapper;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;

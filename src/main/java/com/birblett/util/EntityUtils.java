@@ -5,11 +5,16 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonPart;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.shape.VoxelShape;
 
+import java.util.function.Consumer;
+
 public class EntityUtils {
+
+    public static final Consumer<ProjectileEntity> PROJECTILE_NO_OP = p -> {};
 
     public static boolean isTouchingBlock(Entity self, double xTolerance, double yTolerance, double zTolerance) {
         Box box = self.getBoundingBox().expand(xTolerance, yTolerance, zTolerance);

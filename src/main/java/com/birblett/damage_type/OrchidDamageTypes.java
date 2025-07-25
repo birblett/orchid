@@ -1,4 +1,4 @@
-package com.birblett.damage_types;
+package com.birblett.damage_type;
 
 import com.birblett.Orchid;
 import com.birblett.datagen.wrapper.DamageTypeWrapper;

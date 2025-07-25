@@ -10,6 +10,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -37,9 +38,9 @@ public class FocusEnchantment extends OrchidEnchantWrapper {
 
     @Override
     public ControlFlow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
-        if (stack.getItem() instanceof BowItem bow && critical && bow.getMaxUseTime(stack, shooter) - shooter.getItemUseTimeLeft() < 22 &&
-                entity instanceof PersistentProjectileEntity p) {
-            p.setDamage(((PersistentProjectileAccessor) p).orchid_damage() + 1.5);
+        int useTime = stack.getItem().getMaxUseTime(stack, shooter) - shooter.getItemUseTimeLeft();
+        if (useTime < 23 && useTime >= 20 && entity instanceof PersistentProjectileEntity p) {
+            p.setDamage(((PersistentProjectileAccessor) p).orchid_damage() + (entity instanceof TridentEntity ? 6 : 1.5));
             p.setGlowing(true);
         } else {
             EnchantmentUtils.removeTracked(entity, OrchidEnchantments.FOCUS);

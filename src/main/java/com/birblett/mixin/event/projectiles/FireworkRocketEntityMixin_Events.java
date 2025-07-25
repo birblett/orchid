@@ -1,4 +1,4 @@
-package com.birblett.mixin.events.projectiles;
+package com.birblett.mixin.event.projectiles;
 
 import com.birblett.interfaces.entity.EnchantmentFlags;
 import net.minecraft.entity.projectile.FireworkRocketEntity;

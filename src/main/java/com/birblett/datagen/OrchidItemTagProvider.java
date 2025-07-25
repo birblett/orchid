@@ -1,22 +1,14 @@
 package com.birblett.datagen;
 
-import com.birblett.damage_types.OrchidDamageTypes;
-import com.birblett.datagen.wrapper.DamageTypeWrapper;
 import com.birblett.datagen.wrapper.TagWrapper;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.damage.DamageType;
 import net.minecraft.item.Item;
-import net.minecraft.registry.Registerable;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.TagKey;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class OrchidItemTagProvider extends FabricTagProvider.ItemTagProvider {

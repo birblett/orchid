@@ -11,6 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -24,24 +25,33 @@ public class WindRiderEnchantment extends OrchidEnchantWrapper {
 
     @Override
     public ActionResult onUse(PlayerEntity user, ItemStack stack, World world, Hand hand) {
-        if (!stack.willBreakNextUse() && !user.isTouchingWaterOrRain()) {
+        if (!stack.willBreakNextUse() && !user.isTouchingWaterOrRain() && (user.isOnGround() ||
+                EnchantmentUtils.trackedContains(user, OrchidEnchantments.WIND_RIDER))) {
             user.setCurrentHand(hand);
             return ActionResult.CONSUME;
+        } else {
+            return ActionResult.FAIL;
         }
-        return null;
     }
 
     @Override
     public Boolean onStoppedUsing(LivingEntity user, ItemStack stack, World world, int remainingUseTicks) {
         if (stack.getItem().getMaxUseTime(stack, user) - remainingUseTicks > 10  && user instanceof PlayerEntity p && !user.isTouchingWaterOrRain()) {
-            if (user.isOnGround()) {
+            boolean b;
+            if ((b = user.isOnGround()) || EnchantmentUtils.trackedContains(user, OrchidEnchantments.WIND_RIDER)) {
+                double strength = b ? 1.5 : 3.0;
                 p.useRiptide(20, 8.0F, stack);
-            } else if (EnchantmentUtils.trackedContains(user, OrchidEnchantments.WIND_RIDER)) {
-                p.useRiptide(20, 8.0F, stack);
-                EnchantmentUtils.removeTracked(p, OrchidEnchantments.WIND_RIDER);
+                p.addVelocity(p.getRotationVector().multiply(strength));
+                p.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));
+                if (b) {
+                    EnchantmentUtils.addToTracked(user, OrchidEnchantments.WIND_RIDER, 1);
+                } else {
+                    EnchantmentUtils.removeTracked(user, OrchidEnchantments.WIND_RIDER);
+                }
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     @Override

@@ -1,7 +1,7 @@
 {
   "anvil_cost": 1,
   "description": {
-    "translate": "enchantment.orchid.arrow_rain"
+    "translate": "enchantment.orchid.airstrike"
   },
   "max_cost": {
     "base": 50,

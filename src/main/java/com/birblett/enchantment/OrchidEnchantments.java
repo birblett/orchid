@@ -54,10 +54,10 @@ public class OrchidEnchantments {
             .translate("Aerodynamic")
             .build();
 
-    public static final RegistryKey<Enchantment> ARROW_RAIN = new ArrowRainEnchantment("arrow_rain", 1, BOW_OR_CROSSBOW_ENCHANTABLE,
+    public static final RegistryKey<Enchantment> AIRSTRIKE = new AirstrikeEnchantment("airstrike", 1, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
             AttributeModifierSlot.ANY)
-            .translate("Arrow Rain")
+            .translate("Airstrike")
             .build();
 
     public static final RegistryKey<Enchantment> BARBED = new BarbedEnchantment("barbed", 3, ItemTags.FISHING_ENCHANTABLE,

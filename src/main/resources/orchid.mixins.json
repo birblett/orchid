@@ -6,6 +6,7 @@
     "EntityMixin_Ticker",
     "accessor.PersistentProjectileAccessor",
     "accessor.RangedWeaponItemAccessor",
+    "accessor.TridentEntityAccessor",
     "command.CommandManagerMixin",
     "event.EntityMixin_Events",
     "event.LivingEntityMixin_Events",

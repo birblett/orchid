@@ -75,9 +75,6 @@ public abstract class ProjectileEntityMixin_Events implements ProjectileFlags, E
 
     @Unique private static ProjectileEntity spawnModifiers(ProjectileEntity entity, ServerWorld world, ItemStack projectileStack, Consumer<ProjectileEntity> beforeSpawn, Operation<ProjectileEntity> original) {
         beforeSpawn.accept(entity);
-        if (entity instanceof TridentEntity t) {
-            t.setDamage(8);
-        }
         if (entity.getOwner() instanceof LivingEntity e) {
             EnchantmentUtils.onProjectileFired(projectileStack, projectileStack, entity, e, world, true, OrchidEnchantWrapper.Flag.DIRECT);
         }

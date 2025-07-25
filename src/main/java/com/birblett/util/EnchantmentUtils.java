@@ -42,7 +42,7 @@ public class EnchantmentUtils {
         return e != null && EnchantmentHelper.getLevel(e, stack) > 0;
     }
 
-    public static boolean stackIterator(ItemStack stack, BiFunction<OrchidEnchantWrapper, Integer, OrchidEnchantWrapper.Flow> execute) {
+    public static boolean stackIterator(ItemStack stack, BiFunction<OrchidEnchantWrapper, Integer, OrchidEnchantWrapper.ControlFlow> execute) {
         return applyEnchants(execute, getSortedItemEnchants(stack));
     }
 
@@ -54,7 +54,7 @@ public class EnchantmentUtils {
     private static final EquipmentSlot[] ITERABLE_SLOT_ORDER = new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND,
             EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET, EquipmentSlot.BODY, EquipmentSlot.SADDLE};
 
-    public static boolean equipIterator(LivingEntity e, BiFunction<OrchidEnchantWrapper, Integer, OrchidEnchantWrapper.Flow> execute) {
+    public static boolean equipIterator(LivingEntity e, BiFunction<OrchidEnchantWrapper, Integer, OrchidEnchantWrapper.ControlFlow> execute) {
         boolean exit = false;
         for (EquipmentSlot slot : ITERABLE_SLOT_ORDER) {
             if (!e.getEquippedStack(slot).isEmpty() && EnchantmentHelper.hasEnchantments(e.getEquippedStack(slot))) {
@@ -98,7 +98,7 @@ public class EnchantmentUtils {
         }
     }
 
-    public static boolean entityIterator(Entity e, BiFunction<OrchidEnchantWrapper, Integer, OrchidEnchantWrapper.Flow> execute) {
+    public static boolean entityIterator(Entity e, BiFunction<OrchidEnchantWrapper, Integer, OrchidEnchantWrapper.ControlFlow> execute) {
         return applyEnchants(execute, getEntityEnchantFlags(e));
     }
 
@@ -124,18 +124,18 @@ public class EnchantmentUtils {
         return enchantments;
     }
 
-    private static boolean applyEnchants(BiFunction<OrchidEnchantWrapper, Integer, OrchidEnchantWrapper.Flow> execute, List<Triplet<Integer, Integer, RegistryKey<Enchantment>>> enchantments) {
-        OrchidEnchantWrapper.Flow exit = OrchidEnchantWrapper.Flow.CONTINUE;
+    private static boolean applyEnchants(BiFunction<OrchidEnchantWrapper, Integer, OrchidEnchantWrapper.ControlFlow> execute, List<Triplet<Integer, Integer, RegistryKey<Enchantment>>> enchantments) {
+        OrchidEnchantWrapper.ControlFlow exit = OrchidEnchantWrapper.ControlFlow.CONTINUE;
         int lastPrio = 0;
         for (Triplet<Integer, Integer, RegistryKey<Enchantment>> t : enchantments) {
-            if (exit != OrchidEnchantWrapper.Flow.CONTINUE && exit != OrchidEnchantWrapper.Flow.CANCEL_AFTER && t.getA() != lastPrio) {
+            if (exit != OrchidEnchantWrapper.ControlFlow.CONTINUE && exit != OrchidEnchantWrapper.ControlFlow.CANCEL_AFTER && t.getA() != lastPrio) {
                 break;
             }
-            if (exit == OrchidEnchantWrapper.Flow.CONTINUE || exit == OrchidEnchantWrapper.Flow.CANCEL_AFTER) {
-                OrchidEnchantWrapper.Flow temp = execute.apply(OrchidEnchantments.ORCHID_ENCHANTMENTS.get(t.getA()).get(t.getC()), t.getB());
-                if (exit == OrchidEnchantWrapper.Flow.CANCEL_AFTER) {
-                    if (temp == OrchidEnchantWrapper.Flow.CANCEL_BREAK || temp == OrchidEnchantWrapper.Flow.BREAK) {
-                        exit = OrchidEnchantWrapper.Flow.CANCEL_BREAK;
+            if (exit == OrchidEnchantWrapper.ControlFlow.CONTINUE || exit == OrchidEnchantWrapper.ControlFlow.CANCEL_AFTER) {
+                OrchidEnchantWrapper.ControlFlow temp = execute.apply(OrchidEnchantments.ORCHID_ENCHANTMENTS.get(t.getA()).get(t.getC()), t.getB());
+                if (exit == OrchidEnchantWrapper.ControlFlow.CANCEL_AFTER) {
+                    if (temp == OrchidEnchantWrapper.ControlFlow.CANCEL_BREAK || temp == OrchidEnchantWrapper.ControlFlow.BREAK) {
+                        exit = OrchidEnchantWrapper.ControlFlow.CANCEL_BREAK;
                     }
                 } else {
                     exit = temp;
@@ -143,7 +143,7 @@ public class EnchantmentUtils {
             }
             lastPrio = t.getA();
         }
-        return exit == OrchidEnchantWrapper.Flow.CANCEL_BREAK || exit == OrchidEnchantWrapper.Flow.CANCEL_AFTER;
+        return exit == OrchidEnchantWrapper.ControlFlow.CANCEL_BREAK || exit == OrchidEnchantWrapper.ControlFlow.CANCEL_AFTER;
     }
 
     @Nullable
@@ -161,7 +161,7 @@ public class EnchantmentUtils {
         HashMap<RegistryKey<Enchantment>, Integer> map = new HashMap<>();
         EnchantmentUtils.stackIterator(stack, (enchant, level) -> {
             map.put(enchant.getOrCreateKey(), level);
-            return OrchidEnchantWrapper.Flow.CONTINUE;
+            return OrchidEnchantWrapper.ControlFlow.CONTINUE;
         });
         EnchantmentUtils.setTrackedFromMap(entity, map);
         return EnchantmentUtils.stackIterator(stack, (enchant, level) ->
@@ -172,7 +172,7 @@ public class EnchantmentUtils {
         MutableDouble drag = new MutableDouble(value);
         EnchantmentUtils.entityIterator(p, (enchant, level) -> {
             drag.setValue(enchant.projectileDragModifier(p, drag.getValue(), level));
-            return OrchidEnchantWrapper.Flow.CONTINUE;
+            return OrchidEnchantWrapper.ControlFlow.CONTINUE;
         });
         return drag.getValue();
     }

@@ -27,29 +27,29 @@ public class MarkedEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public Flow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
+    public ControlFlow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
         MarkedTicker t;
         if ((t = Ticker.get(shooter, MarkedTicker.ID)) != null && t.getTarget() != null) {
             EnchantmentUtils.setTracked(entity, OrchidEnchantments.MARKED, t.getTarget().getId());
         } else {
             EnchantmentUtils.setTracked(entity, OrchidEnchantments.MARKED, -1);
         }
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
     @Override
-    public Flow onProjectileTick(ProjectileEntity entity, World world, int id) {
+    public ControlFlow onProjectileTick(ProjectileEntity entity, World world, int id) {
         if (id != -1 && world.getEntityById(id) instanceof Entity e && e.isAlive()) {
             Vec3d velocity = entity.getVelocity();
             double d = velocity.length();
             Vec3d target = e.getPos().add(0, e.getHeight() / 2, 0).subtract(entity.getPos());
             entity.setVelocity(VectorUtils.rotateTowards(velocity, target, 0.0349066).multiply(d));
         }
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
     @Override
-    public Flow onProjectileEntityHit(ProjectileEntity entity, EntityHitResult result, int level) {
+    public ControlFlow onProjectileEntityHit(ProjectileEntity entity, EntityHitResult result, int level) {
         if (entity.getOwner() instanceof LivingEntity owner) {
             MarkedTicker t;
             if ((t = Ticker.get(owner, MarkedTicker.ID)) != null) {
@@ -62,8 +62,8 @@ public class MarkedEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public Flow onProjectileHit(ProjectileEntity entity, HitResult result, int level) {
+    public ControlFlow onProjectileHit(ProjectileEntity entity, HitResult result, int level) {
         EnchantmentUtils.removeTracked(entity, OrchidEnchantments.MARKED);
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 }

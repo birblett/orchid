@@ -1,12 +1,11 @@
 package com.birblett.mixin.events;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
-import com.birblett.entity.EnchantmentFlags;
+import com.birblett.interfaces.entity.EnchantmentFlags;
 import com.birblett.util.EnchantmentUtils;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.projectile.ProjectileEntity;
@@ -41,7 +40,7 @@ public abstract class LivingEntityMixin_Events implements EnchantmentFlags {
         if (source.getSource() instanceof ProjectileEntity p) {
             EnchantmentUtils.entityIterator(p, (enchant, level) -> {
                 f.setValue(f.toFloat() * enchant.projectileKnockbackMultiplier(p, instance, level));
-                return f.getValue() != 0 ? OrchidEnchantWrapper.Flow.CONTINUE : OrchidEnchantWrapper.Flow.BREAK;
+                return f.getValue() != 0 ? OrchidEnchantWrapper.ControlFlow.CONTINUE : OrchidEnchantWrapper.ControlFlow.BREAK;
             });
         }
         original.call(instance, f.floatValue() * strength, x, z);

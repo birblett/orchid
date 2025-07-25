@@ -25,15 +25,15 @@ public class ArrowRainEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public Flow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
+    public ControlFlow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
         if (critical && flag != Flag.SUMMON && world instanceof ServerWorld) {
             Ticker.set(entity, ArrowRainTicker.ID, new ArrowRainTicker(stack, projectileStack));
         }
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
     @Override
-    public Flow onProjectileHit(ProjectileEntity entity, HitResult result, int level) {
+    public ControlFlow onProjectileHit(ProjectileEntity entity, HitResult result, int level) {
         if (entity.getOwner() instanceof LivingEntity owner && owner.getWorld() instanceof ServerWorld world) {
             Ticker.apply(entity, ArrowRainTicker.ID, t -> {
                 boolean critical = entity instanceof PersistentProjectileEntity p && p.isCritical() || !(entity instanceof PersistentProjectileEntity);
@@ -47,7 +47,7 @@ public class ArrowRainEnchantment extends OrchidEnchantWrapper {
                 }
             });
         }
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
     @Override

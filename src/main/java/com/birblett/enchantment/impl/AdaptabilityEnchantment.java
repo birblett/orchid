@@ -1,7 +1,7 @@
 package com.birblett.enchantment.impl;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
-import com.birblett.entity.ProjectileFlags;
+import com.birblett.interfaces.entity.ProjectileFlags;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
@@ -95,11 +95,11 @@ public class AdaptabilityEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public Flow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
+    public ControlFlow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
         if (ADAPTABILITY_MAP.get(projectileStack.getItem()) instanceof AdaptabilityData a) {
             entity.setVelocity(entity.getVelocity().multiply(a.velocityMult));
         }
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
 }

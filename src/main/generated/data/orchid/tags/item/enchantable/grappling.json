@@ -1,6 +1,6 @@
 {
   "values": [
-    "minecraft:fishing_rod",
+    "#minecraft:enchantable/fishing",
     "#orchid:enchantable/bow_or_crossbow"
   ]
 }

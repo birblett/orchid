@@ -19,13 +19,13 @@ public class BarbedEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public Flow onProjectileEntityHit(ProjectileEntity entity, EntityHitResult result, int level) {
+    public ControlFlow onProjectileEntityHit(ProjectileEntity entity, EntityHitResult result, int level) {
         if (entity instanceof FishingBobberEntity bobber && result.getEntity() instanceof LivingEntity target &&
                 target.getWorld() instanceof ServerWorld world && entity.getOwner() instanceof LivingEntity owner) {
             target.damage(world, bobber.getDamageSources().mobProjectile(bobber, owner), level);
             bobber.discard();
         }
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
 }

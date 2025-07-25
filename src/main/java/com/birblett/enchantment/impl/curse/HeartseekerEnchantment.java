@@ -27,27 +27,27 @@ public class HeartseekerEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public Flow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
+    public ControlFlow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
         if (entity instanceof PersistentProjectileEntity p) {
             p.setDamage(((PersistentProjectileAccessor) p).orchid_damage() + 2);
         }
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
     @Override
-    public Flow onProjectileTick(ProjectileEntity entity, World world, int level) {
+    public ControlFlow onProjectileTick(ProjectileEntity entity, World world, int level) {
         if (entity.getOwner() instanceof Entity e) {
             Vec3d velocity = entity.getVelocity();
             Vec3d target = e.getEyePos().subtract(entity.getPos());
             entity.setVelocity(VectorUtils.rotateTowards(velocity, target, level * 0.0872665).multiply(velocity.length()));
         }
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
     @Override
-    public Flow onProjectileHit(ProjectileEntity entity, HitResult result, int level) {
+    public ControlFlow onProjectileHit(ProjectileEntity entity, HitResult result, int level) {
         EnchantmentUtils.removeTracked(entity, OrchidEnchantments.HEARTSEEKER);
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
 }

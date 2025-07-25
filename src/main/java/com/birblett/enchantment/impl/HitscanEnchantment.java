@@ -19,7 +19,7 @@ public class HitscanEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public Flow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
+    public ControlFlow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
         if (entity != null && critical) {
             entity.lastRenderX = entity.getX();
             entity.lastRenderY = entity.getY();
@@ -42,7 +42,7 @@ public class HitscanEnchantment extends OrchidEnchantWrapper {
                 if (entity.isRemoved() || entity.isOnGround()) break;
             }
         }
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
 }

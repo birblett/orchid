@@ -19,7 +19,7 @@ public class RicochetEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public Flow onProjectileBlockHit(ProjectileEntity entity, BlockHitResult result, int level) {
+    public ControlFlow onProjectileBlockHit(ProjectileEntity entity, BlockHitResult result, int level) {
         level = EnchantmentUtils.getTrackedLevel(entity, OrchidEnchantments.RICOCHET);
         if (level > (entity.getWorld().isClient ? -1 : 0)) {
             EnchantmentUtils.addToTracked(entity, OrchidEnchantments.RICOCHET, -1);
@@ -29,9 +29,9 @@ public class RicochetEnchantment extends OrchidEnchantWrapper {
             entity.setVelocity(res.multiply(0.9));
             entity.setPosition(entity.getPos().add(entity.getVelocity()));
             entity.setAngles(entity.getYaw(), entity.getPitch());
-            return Flow.CANCEL_BREAK;
+            return ControlFlow.CANCEL_BREAK;
         }
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
 }

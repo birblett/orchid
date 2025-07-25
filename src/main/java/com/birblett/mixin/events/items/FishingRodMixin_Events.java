@@ -1,6 +1,7 @@
-package com.birblett.mixin.events;
+package com.birblett.mixin.events.items;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
+import com.birblett.interfaces.item.EnchantableItem;
 import com.birblett.util.EnchantmentUtils;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -11,13 +12,21 @@ import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.FishingRodItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(FishingRodItem.class)
-public class FishingRodMixin_Events {
+public class FishingRodMixin_Events implements EnchantableItem {
+
+    @Inject(method = "use", at = @At("HEAD"), cancellable = true)
+    private void onUseEvent(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
+        this.enchantUseAction(world, user, hand, cir);
+    }
 
     @WrapOperation(method = "use", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/FishingBobberEntity;use(Lnet/minecraft/item/ItemStack;)I"))
     private int serverReelEvent(FishingBobberEntity instance, ItemStack usedItem, Operation<Integer> original, @Local(argsOnly = true) World world, @Local(argsOnly = true) PlayerEntity user, @Local(argsOnly = true) Hand hand) {

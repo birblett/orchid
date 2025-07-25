@@ -1,8 +1,8 @@
 package com.birblett.mixin.events.projectiles;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
-import com.birblett.entity.EnchantmentFlags;
-import com.birblett.entity.ProjectileFlags;
+import com.birblett.interfaces.entity.EnchantmentFlags;
+import com.birblett.interfaces.entity.ProjectileFlags;
 import com.birblett.util.EnchantmentUtils;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -41,7 +41,7 @@ public abstract class PersistentProjectileEntityMixin_Events implements Projecti
         PersistentProjectileEntity p = (PersistentProjectileEntity) (Object) this;
         EnchantmentUtils.entityIterator(p, (enchant, level) -> {
             f.setValue(f.toFloat() * enchant.projectileKnockbackMultiplier(p, target, level));
-            return f.getValue() != 0 ? OrchidEnchantWrapper.Flow.CONTINUE : OrchidEnchantWrapper.Flow.BREAK;
+            return f.getValue() != 0 ? OrchidEnchantWrapper.ControlFlow.CONTINUE : OrchidEnchantWrapper.ControlFlow.BREAK;
         });
         return f.getValue();
     }

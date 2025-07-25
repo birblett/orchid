@@ -1,5 +1,6 @@
 package com.birblett.datagen;
 
+import com.birblett.Orchid;
 import com.birblett.datagen.wrapper.TagWrapper;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
@@ -29,7 +30,7 @@ public class OrchidEnchantmentTagProvider extends FabricTagProvider<Enchantment>
         for (TagWrapper<Enchantment, RegistryKey<Enchantment>> t : EXISTING_ENCHANTMENT_TAGS.values()) {
             ProvidedTagBuilder<RegistryKey<Enchantment>, Enchantment> builder = this.builder(t.tagKey);
             t.values.forEach(builder::add);
-            t.tags.forEach(builder::addTag);
+            t.tags.forEach(builder::forceAddTag);
             t.optionals.forEach(builder::addOptional);
             t.optionalTags.forEach(builder::addOptionalTag);
         }

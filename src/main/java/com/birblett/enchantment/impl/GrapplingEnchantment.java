@@ -30,19 +30,19 @@ public class GrapplingEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public Flow mainhandAttackAttempt(LivingEntity attacker, int level) {
+    public ControlFlow mainhandAttackAttempt(LivingEntity attacker, int level) {
         Ticker.apply(attacker, GrapplingTicker.ID, GrapplingTicker::removeAll);
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
     @Override
-    public Flow offhandAttackAttempt(LivingEntity attacker, int level) {
+    public ControlFlow offhandAttackAttempt(LivingEntity attacker, int level) {
         Ticker.apply(attacker, GrapplingTicker.ID, GrapplingTicker::removeAll);
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
     @Override
-    public Flow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
+    public ControlFlow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
         if (!critical && entity instanceof FishingBobberEntity fishingBobberEntity) {
             Vec3d pullStrength = null;
             if (EntityUtils.isTouchingBlock(entity, 0.05)) {
@@ -71,18 +71,18 @@ public class GrapplingEnchantment extends OrchidEnchantWrapper {
                 EnchantmentUtils.removeTracked(p, OrchidEnchantments.GRAPPLING);
             }
         }
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
     @Override
-    public Flow onProjectileTick(ProjectileEntity entity, World world, int level) {
+    public ControlFlow onProjectileTick(ProjectileEntity entity, World world, int level) {
         if (entity instanceof FishingBobberEntity fishingBobberEntity && fishingBobberEntity.getHookedEntity() == null &&
                 entity.getOwner() instanceof LivingEntity livingEntity && EntityUtils.isTouchingBlock(fishingBobberEntity, 0.05)) {
             boolean mh = livingEntity.getMainHandStack().getItem() instanceof FishingRodItem &&
                     EnchantmentUtils.hasEnchant(livingEntity.getMainHandStack(), OrchidEnchantments.GRAPPLING, world);
             boolean oh = !mh && livingEntity.getOffHandStack().getItem() instanceof FishingRodItem &&
                     EnchantmentUtils.hasEnchant(livingEntity.getOffHandStack(), OrchidEnchantments.GRAPPLING, world);
-            return mh || oh ? Flow.CANCEL_AFTER : Flow.CONTINUE;
+            return mh || oh ? ControlFlow.CANCEL_AFTER : ControlFlow.CONTINUE;
         } else if (entity instanceof PersistentProjectileEntity) {
             if (world instanceof ServerWorld && (!(entity.getOwner() instanceof LivingEntity owner) ||
                     owner.squaredDistanceTo(entity) >= 2500)) {
@@ -96,7 +96,7 @@ public class GrapplingEnchantment extends OrchidEnchantWrapper {
                 }
             }
         }
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
 }

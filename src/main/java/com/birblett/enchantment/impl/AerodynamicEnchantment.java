@@ -18,9 +18,9 @@ public class AerodynamicEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public Flow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
+    public ControlFlow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
         entity.setVelocity(entity.getVelocity().multiply(1 + level * 0.05));
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.birblett.enchantment.impl;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
-import com.birblett.entity.ProjectileFlags;
+import com.birblett.interfaces.entity.ProjectileFlags;
 import com.birblett.entity.Ticker;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
@@ -23,7 +23,7 @@ public class BurstFireEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public Flow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
+    public ControlFlow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
         if (flag == Flag.DIRECT && critical && !Ticker.contains(shooter, BurstFireTicker.ID) && stack.getItem() instanceof RangedWeaponItem) {
             Hand hand = shooter.getMainHandStack() == stack ? Hand.MAIN_HAND : Hand.OFF_HAND;
             Ticker.set(shooter, BurstFireTicker.ID, new BurstFireTicker(shooter, stack, projectileStack, hand, level));
@@ -32,7 +32,7 @@ public class BurstFireEnchantment extends OrchidEnchantWrapper {
             }
         }
         ProjectileFlags.setIgnoreIFrames(entity, true);
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
 }

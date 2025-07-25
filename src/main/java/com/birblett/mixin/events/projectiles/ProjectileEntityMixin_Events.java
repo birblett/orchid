@@ -1,7 +1,7 @@
 package com.birblett.mixin.events.projectiles;
 
-import com.birblett.entity.EnchantmentFlags;
-import com.birblett.entity.ProjectileFlags;
+import com.birblett.interfaces.entity.EnchantmentFlags;
+import com.birblett.interfaces.entity.ProjectileFlags;
 import com.birblett.util.EnchantmentUtils;
 import com.birblett.util.EntityUtils;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;

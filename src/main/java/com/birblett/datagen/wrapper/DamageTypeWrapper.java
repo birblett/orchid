@@ -36,11 +36,6 @@ public class DamageTypeWrapper implements Translateable<DamageTypeWrapper> {
     }
 
     @Override
-    public String getTranslation(String lang) {
-        return this.translationMap.get(lang);
-    }
-
-    @Override
     public void forEachTranslation(BiConsumer<String, String> langTranslationConsumer) {
         this.translationMap.forEach(langTranslationConsumer);
     }

@@ -2,7 +2,7 @@ package com.birblett.enchantment.impl;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.enchantment.OrchidEnchantments;
-import com.birblett.entity.ProjectileFlags;
+import com.birblett.interfaces.entity.ProjectileFlags;
 import com.birblett.entity.Ticker;
 import com.birblett.util.EnchantmentUtils;
 import net.minecraft.component.type.AttributeModifierSlot;
@@ -25,19 +25,19 @@ public class StasisEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public Flow mainhandAttackAttempt(LivingEntity attacker, int level) {
+    public ControlFlow mainhandAttackAttempt(LivingEntity attacker, int level) {
         Ticker.apply(attacker, StasisTicker.ID, t -> t.fireAll(true));
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
     @Override
-    public Flow offhandAttackAttempt(LivingEntity attacker, int level) {
+    public ControlFlow offhandAttackAttempt(LivingEntity attacker, int level) {
         Ticker.apply(attacker, StasisTicker.ID, t -> t.fireAll(true));
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
     @Override
-    public Flow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
+    public ControlFlow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
         if (entity != null && flag == Flag.DIRECT) {
             StasisTicker t;
             if (!Ticker.contains(shooter, StasisTicker.ID)) {
@@ -52,17 +52,17 @@ public class StasisEnchantment extends OrchidEnchantWrapper {
             if (entity instanceof PersistentProjectileEntity p) {
                 p.setCritical(false);
             }
-            return Flow.BREAK;
+            return ControlFlow.BREAK;
         }
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
     @Override
-    public Flow onProjectileTick(ProjectileEntity entity, World world, int level) {
+    public ControlFlow onProjectileTick(ProjectileEntity entity, World world, int level) {
         if (world instanceof ServerWorld && (entity.getOwner() == null || !Ticker.contains(entity, StasisTicker.ID))) {
             EnchantmentUtils.removeTracked(entity, OrchidEnchantments.STASIS);
         }
-        return EnchantmentUtils.trackedContains(entity, OrchidEnchantments.STASIS) ? Flow.CANCEL_AFTER : Flow.CONTINUE;
+        return EnchantmentUtils.trackedContains(entity, OrchidEnchantments.STASIS) ? ControlFlow.CANCEL_AFTER : ControlFlow.CONTINUE;
     }
 
 }

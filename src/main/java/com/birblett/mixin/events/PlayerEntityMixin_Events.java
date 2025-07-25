@@ -16,8 +16,8 @@ public class PlayerEntityMixin_Events {
     @Inject(method = "getProjectileType", at = @At(value = "INVOKE", target = "Ljava/util/function/Predicate;test(Ljava/lang/Object;)Z"), cancellable = true)
     private void projectileTypeOverride(ItemStack stack, CallbackInfoReturnable<ItemStack> cir, @Local(ordinal = 2) ItemStack projectileStack) {
         if (EnchantmentUtils.stackIterator(stack, (enchant, level) ->
-                enchant.allowProjectileType((PlayerEntity) (Object) this, stack, projectileStack) ? OrchidEnchantWrapper.Flow.CANCEL_BREAK :
-                        OrchidEnchantWrapper.Flow.CONTINUE)) {
+                enchant.allowProjectileType((PlayerEntity) (Object) this, stack, projectileStack) ? OrchidEnchantWrapper.ControlFlow.CANCEL_BREAK :
+                        OrchidEnchantWrapper.ControlFlow.CONTINUE)) {
             cir.setReturnValue(projectileStack);
         }
     }

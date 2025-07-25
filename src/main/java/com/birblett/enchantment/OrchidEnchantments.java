@@ -8,7 +8,6 @@ import com.birblett.enchantment.impl.curse.PlunkEnchantment;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
@@ -24,19 +23,19 @@ public class OrchidEnchantments {
     public static final HashMap<RegistryKey<Enchantment>, Integer> PROCESS_PRIORITY = new HashMap<>();
 
     public static final TagKey<Item> BOW_OR_CROSSBOW_ENCHANTABLE = OrchidItemTagProvider.create("enchantable/bow_or_crossbow")
-            .add(Items.BOW)
-            .add(Items.CROSSBOW)
+            .add(ItemTags.BOW_ENCHANTABLE)
+            .add(ItemTags.CROSSBOW_ENCHANTABLE)
             .tagKey;
 
     public static final TagKey<Item> GRAPPLING_ENCHANTABLE = OrchidItemTagProvider.create("enchantable/grappling")
-            .add(Items.FISHING_ROD)
+            .add(ItemTags.FISHING_ENCHANTABLE)
             .add(BOW_OR_CROSSBOW_ENCHANTABLE)
             .tagKey;
 
     public static final TagKey<Item> PROJECTILE_ENCHANTABLE = OrchidItemTagProvider.create("enchantable/projectile")
             .add(BOW_OR_CROSSBOW_ENCHANTABLE)
-            .add(Items.FISHING_ROD)
-            .add(Items.TRIDENT)
+            .add(ItemTags.FISHING_ENCHANTABLE)
+            .add(ItemTags.TRIDENT_ENCHANTABLE)
             .tagKey;
 
     /**
@@ -107,6 +106,12 @@ public class OrchidEnchantments {
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
             AttributeModifierSlot.ANY)
             .translate("Stasis")
+            .build();
+
+    public static final RegistryKey<Enchantment> WIND_RIDER = new WindRiderEnchantment("wind_rider", 5, ItemTags.TRIDENT_ENCHANTABLE,
+            1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+            AttributeModifierSlot.ANY)
+            .translate("Wind Rider")
             .build();
 
     /**

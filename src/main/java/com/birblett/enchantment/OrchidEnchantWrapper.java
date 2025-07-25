@@ -7,6 +7,7 @@ import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,6 +17,8 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.EnchantmentTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -70,17 +73,12 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
     }
 
     @Override
-    public String getTranslation(String lang) {
-        return this.translation_map.get(lang);
-    }
-
-    @Override
     public void forEachTranslation(BiConsumer<String, String> langTranslationConsumer) {
         this.translation_map.forEach(langTranslationConsumer);
     }
 
     public OrchidEnchantWrapper curse() {
-        OrchidEnchantmentTagProvider.addOrGetExisting(EnchantmentTags.CURSE).add(this.key);
+        OrchidEnchantmentTagProvider.addOrGetExisting(EnchantmentTags.CURSE).add(this.getOrCreateKey());
         return this;
     }
 
@@ -100,47 +98,53 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
         return this.getOrCreateKey();
     }
 
-    public Flow mainhandAttackAttempt(LivingEntity attacker, int level) {
-        return Flow.CONTINUE;
+    public ControlFlow mainhandAttackAttempt(LivingEntity attacker, int level) {
+        return ControlFlow.CONTINUE;
     }
 
-    public Flow offhandAttackAttempt(LivingEntity attacker, int level) {
-        return Flow.CONTINUE;
+    public ControlFlow offhandAttackAttempt(LivingEntity attacker, int level) {
+        return ControlFlow.CONTINUE;
+    }
+
+    public ActionResult onUse(PlayerEntity user, ItemStack stack, World world, Hand hand) { return null; }
+
+    public Boolean onStoppedUsing(LivingEntity user, ItemStack stack, World world, int remainingUseTicks) {
+        return null;
     }
 
     /**
      * called when item use is held, distinct from use
      */
-    public Flow useTick(LivingEntity user, ItemStack stack, int remainingUseTicks, int level) {
-        return Flow.CONTINUE;
+    public ControlFlow onUseTick(LivingEntity user, ItemStack stack, int remainingUseTicks, int level) {
+        return ControlFlow.CONTINUE;
     }
 
     /**
      * called when a non-projectile entity has a synced enchant component and is ticked
      */
-    public Flow onEntityTick(Entity e, World world, int level) {
-        return Flow.CONTINUE;
+    public ControlFlow onEntityTick(Entity e, World world, int level) {
+        return ControlFlow.CONTINUE;
     }
 
     /**
      * called when a living entity has an enchanted equip held or worn in armor slots
      */
-    public Flow onEntityTickEquip(LivingEntity e, World world, int level) {
-        return Flow.CONTINUE;
+    public ControlFlow onEntityTickEquip(LivingEntity e, World world, int level) {
+        return ControlFlow.CONTINUE;
     }
 
     /**
      * called when various projectiles are created
      */
-    public Flow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
-        return Flow.CONTINUE;
+    public ControlFlow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
+        return ControlFlow.CONTINUE;
     }
 
     /**
      * called when a projectile entity has a synced enchant component and is ticked
      */
-    public Flow onProjectileTick(ProjectileEntity entity, World world, int level) {
-        return Flow.CONTINUE;
+    public ControlFlow onProjectileTick(ProjectileEntity entity, World world, int level) {
+        return ControlFlow.CONTINUE;
     }
 
     /**
@@ -168,16 +172,16 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
         return drag;
     }
 
-    public Flow onProjectileBlockHit(ProjectileEntity entity, BlockHitResult result, int level) {
+    public ControlFlow onProjectileBlockHit(ProjectileEntity entity, BlockHitResult result, int level) {
         return this.onProjectileHit(entity, result, level);
     }
 
-    public Flow onProjectileEntityHit(ProjectileEntity entity, EntityHitResult result, int level) {
+    public ControlFlow onProjectileEntityHit(ProjectileEntity entity, EntityHitResult result, int level) {
         return this.onProjectileHit(entity, result, level);
     }
 
-    public Flow onProjectileHit(ProjectileEntity entity, HitResult result, int level) {
-        return Flow.CONTINUE;
+    public ControlFlow onProjectileHit(ProjectileEntity entity, HitResult result, int level) {
+        return ControlFlow.CONTINUE;
     }
 
     public boolean allowProjectileType(LivingEntity entity, ItemStack weapon, ItemStack stack) {
@@ -194,7 +198,7 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
         SUMMON
     }
 
-    public enum Flow {
+    public enum ControlFlow {
         CONTINUE,
         BREAK,
         CANCEL_AFTER,

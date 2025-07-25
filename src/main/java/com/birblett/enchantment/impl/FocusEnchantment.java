@@ -28,15 +28,15 @@ public class FocusEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public Flow useTick(LivingEntity user, ItemStack stack, int remainingUseTicks, int level) {
+    public ControlFlow onUseTick(LivingEntity user, ItemStack stack, int remainingUseTicks, int level) {
         if (remainingUseTicks == 71981) {
             WorldUtils.playSound(null, user.getWorld(), user, SoundEvents.ENTITY_ARROW_HIT_PLAYER, 1.0f, 2.0f);
         }
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
     @Override
-    public Flow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
+    public ControlFlow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
         if (stack.getItem() instanceof BowItem bow && critical && bow.getMaxUseTime(stack, shooter) - shooter.getItemUseTimeLeft() < 22 &&
                 entity instanceof PersistentProjectileEntity p) {
             p.setDamage(((PersistentProjectileAccessor) p).orchid_damage() + 1.5);
@@ -44,11 +44,11 @@ public class FocusEnchantment extends OrchidEnchantWrapper {
         } else {
             EnchantmentUtils.removeTracked(entity, OrchidEnchantments.FOCUS);
         }
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
     @Override
-    public Flow onProjectileTick(ProjectileEntity entity, World world, int level) {
+    public ControlFlow onProjectileTick(ProjectileEntity entity, World world, int level) {
         if (world.isClient && entity instanceof PersistentProjectileEntity p && p.isCritical() &&
                 !((PersistentProjectileAccessor) p).orchid_inGround()) {
             Vec3d pos = entity.getPos();
@@ -57,6 +57,6 @@ public class FocusEnchantment extends OrchidEnchantWrapper {
             world.addImportantParticleClient(ParticleTypes.END_ROD, true, pos.x + v.x, pos.y + v.y, pos.z + v.z, v.x, v.y, v.z);
             world.addImportantParticleClient(ParticleTypes.END_ROD, true, pos.x + 2 * v.x, pos.y + 2 * v.y, pos.z + 2 * v.z, v.x, v.y, v.z);
         }
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 }

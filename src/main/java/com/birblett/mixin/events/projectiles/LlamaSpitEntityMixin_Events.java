@@ -1,6 +1,6 @@
 package com.birblett.mixin.events.projectiles;
 
-import com.birblett.entity.EnchantmentFlags;
+import com.birblett.interfaces.entity.EnchantmentFlags;
 import net.minecraft.entity.projectile.LlamaSpitEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

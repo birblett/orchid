@@ -1,7 +1,7 @@
 {
   "values": [
-    "minecraft:fishing_rod",
-    "minecraft:trident",
-    "#orchid:enchantable/bow_or_crossbow"
+    "#orchid:enchantable/bow_or_crossbow",
+    "#minecraft:enchantable/fishing",
+    "#minecraft:enchantable/trident"
   ]
 }

@@ -1,4 +1,6 @@
-package com.birblett.entity;
+package com.birblett.interfaces.entity;
+
+import com.birblett.entity.Ticker;
 
 import java.util.function.Consumer;
 

@@ -1,4 +1,4 @@
-package com.birblett.entity;
+package com.birblett.interfaces.entity;
 
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 

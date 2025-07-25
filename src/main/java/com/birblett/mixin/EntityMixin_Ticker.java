@@ -1,6 +1,6 @@
 package com.birblett.mixin;
 
-import com.birblett.entity.TickedEntity;
+import com.birblett.interfaces.entity.TickedEntity;
 import com.birblett.entity.Ticker;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

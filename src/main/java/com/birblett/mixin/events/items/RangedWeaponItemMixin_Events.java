@@ -1,4 +1,4 @@
-package com.birblett.mixin.events;
+package com.birblett.mixin.events.items;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.util.EnchantmentUtils;
@@ -48,11 +48,11 @@ public class RangedWeaponItemMixin_Events {
     private static void getHeldProjectileOverride(LivingEntity entity, Predicate<ItemStack> predicate, CallbackInfoReturnable<ItemStack> cir) {
         if (EnchantmentUtils.stackIterator(entity.getMainHandStack(), (enchant, level) ->
                 enchant.allowProjectileType(entity, entity.getMainHandStack(), entity.getOffHandStack()) ?
-                        OrchidEnchantWrapper.Flow.CANCEL_BREAK : OrchidEnchantWrapper.Flow.CONTINUE)) {
+                        OrchidEnchantWrapper.ControlFlow.CANCEL_BREAK : OrchidEnchantWrapper.ControlFlow.CONTINUE)) {
             cir.setReturnValue(entity.getOffHandStack());
         } else if (EnchantmentUtils.stackIterator(entity.getOffHandStack(), (enchant, level) ->
                 enchant.allowProjectileType(entity, entity.getOffHandStack(), entity.getMainHandStack()) ?
-                        OrchidEnchantWrapper.Flow.CANCEL_BREAK : OrchidEnchantWrapper.Flow.CONTINUE)) {
+                        OrchidEnchantWrapper.ControlFlow.CANCEL_BREAK : OrchidEnchantWrapper.ControlFlow.CONTINUE)) {
             cir.setReturnValue(entity.getMainHandStack());
         }
     }

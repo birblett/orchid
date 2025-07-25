@@ -1,7 +1,7 @@
 package com.birblett.mixin.events;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
-import com.birblett.entity.EnchantmentFlags;
+import com.birblett.interfaces.entity.EnchantmentFlags;
 import com.birblett.util.EnchantmentUtils;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -48,7 +48,7 @@ public class EntityMixin_Events implements EnchantmentFlags {
         if (instance instanceof ProjectileEntity p) {
             EnchantmentUtils.entityIterator(p, (enchant, level) -> {
                 gravity.setValue(enchant.projectileGravityModifier(p, gravity.getValue(), level));
-                return OrchidEnchantWrapper.Flow.CONTINUE;
+                return OrchidEnchantWrapper.ControlFlow.CONTINUE;
             });
         }
         return gravity.doubleValue();

@@ -1,5 +1,6 @@
 package com.birblett.entity;
 
+import com.birblett.interfaces.entity.TickedEntity;
 import com.mojang.serialization.Codec;
 import net.minecraft.entity.Entity;
 

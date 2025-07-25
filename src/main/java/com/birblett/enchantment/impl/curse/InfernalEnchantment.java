@@ -3,7 +3,7 @@ package com.birblett.enchantment.impl.curse;
 import com.birblett.damage_types.OrchidDamageTypes;
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.enchantment.OrchidEnchantments;
-import com.birblett.entity.ProjectileFlags;
+import com.birblett.interfaces.entity.ProjectileFlags;
 import com.birblett.mixin.accessor.PersistentProjectileAccessor;
 import com.birblett.util.EnchantmentUtils;
 import com.birblett.util.EntityUtils;
@@ -44,7 +44,7 @@ public class InfernalEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public Flow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
+    public ControlFlow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
         int remainingUseTicks = shooter.getItemUseTimeLeft();
         if (remainingUseTicks < 71961 && flag == Flag.DIRECT) {
             if (remainingUseTicks < 71801) {
@@ -62,11 +62,11 @@ public class InfernalEnchantment extends OrchidEnchantWrapper {
         } else {
             EnchantmentUtils.removeTracked(entity, OrchidEnchantments.INFERNAL);
         }
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
     @Override
-    public Flow useTick(LivingEntity user, ItemStack stack, int remainingUseTicks, int level) {
+    public ControlFlow onUseTick(LivingEntity user, ItemStack stack, int remainingUseTicks, int level) {
         if (remainingUseTicks <= 71961) {
             if (user.getWorld().isClient) {
                 ParticleEffect part = remainingUseTicks > 71880 ? ParticleTypes.SMALL_FLAME : ParticleTypes.SOUL_FIRE_FLAME;
@@ -116,7 +116,7 @@ public class InfernalEnchantment extends OrchidEnchantWrapper {
                 }
             }
         }
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
     @Override
@@ -126,17 +126,17 @@ public class InfernalEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public Flow onProjectileTick(ProjectileEntity entity, World world, int level) {
+    public ControlFlow onProjectileTick(ProjectileEntity entity, World world, int level) {
         if (entity.getY() > 1000) {
             EnchantmentUtils.removeTracked(entity, OrchidEnchantments.INFERNAL);
-            return Flow.CONTINUE;
+            return ControlFlow.CONTINUE;
         }
         if (level == 3 && entity.getOwner() instanceof Entity e) {
             Vec3d v = entity.getPos().subtract(entity.getVelocity().multiply(0.6));
             world.createExplosion(e, e.getDamageSources().explosion(e, entity), INFERNAL_EXPLOSION, v, 1, true,
                     World.ExplosionSourceType.MOB);
         }
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
     @Override
@@ -149,7 +149,7 @@ public class InfernalEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public Flow onProjectileHit(ProjectileEntity entity, HitResult result, int level) {
+    public ControlFlow onProjectileHit(ProjectileEntity entity, HitResult result, int level) {
         if (level == 3 && entity.getOwner() instanceof Entity e) {
             Vec3d v = result instanceof EntityHitResult entityHitResult ? entityHitResult.getEntity().getPos().add(0,
                     entityHitResult.getEntity().getHeight() / 3, 0) : entity.getPos();
@@ -160,7 +160,7 @@ public class InfernalEnchantment extends OrchidEnchantWrapper {
             entity.discard();
         }
         EnchantmentUtils.removeTracked(entity, OrchidEnchantments.INFERNAL);
-        return Flow.CONTINUE;
+        return ControlFlow.CONTINUE;
     }
 
     private void addParticlesVParticles(LivingEntity user, ParticleEffect part, Vec3d p, Vec3d v, int remainingUseTicks) {

@@ -19,7 +19,7 @@ public class LivingEntityMixin_Events {
     private void applyKnockbackMods(LivingEntity instance, double strength, double x, double z, Operation<Void> original, @Local(argsOnly = true) DamageSource source) {
         MutableFloat f = new MutableFloat(1);
         if (source.getSource() instanceof ProjectileEntity p) {
-            EnchantmentUtils.projectileIterator(p, (enchant, level) -> {
+            EnchantmentUtils.entityIterator(p, (enchant, level) -> {
                 f.setValue(f.toFloat() * enchant.projectileKnockbackMultiplier(p, instance, level));
                 return f.getValue() != 0 ? OrchidEnchantWrapper.Flow.CONTINUE : OrchidEnchantWrapper.Flow.BREAK;
             });

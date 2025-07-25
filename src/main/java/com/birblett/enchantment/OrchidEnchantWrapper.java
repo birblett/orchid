@@ -104,6 +104,10 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
         return Flow.CONTINUE;
     }
 
+    public Flow onEntityTick(Entity e, World world, int level) {
+        return Flow.CONTINUE;
+    }
+
     public Flow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
         return Flow.CONTINUE;
     }

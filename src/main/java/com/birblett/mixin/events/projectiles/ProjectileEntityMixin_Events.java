@@ -48,9 +48,19 @@ public class ProjectileEntityMixin_Events implements ProjectileFlags, Enchantmen
         return time == lastTime;
     }
 
+    @Override
+    public void orchid_processTick(CallbackInfo c) {
+        if (!this.orchid_isTickProcessed()) {
+            ProjectileEntity p = (ProjectileEntity) (Object) this;
+            if (EnchantmentUtils.entityIterator(p, (enchant, level) -> enchant.onProjectileTick(p, p.getWorld(), level))) {
+                c.cancel();
+            }
+        }
+    }
+
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     private void tickEvents(CallbackInfo ci) {
-        this.processTick(ci);
+        this.orchid_processTick(ci);
     }
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;tick()V"))
@@ -69,7 +79,7 @@ public class ProjectileEntityMixin_Events implements ProjectileFlags, Enchantmen
             EntityUtils.resetIframes(entityHitResult.getEntity());
         }
         ProjectileEntity p = (ProjectileEntity) (Object) this;
-        if (!EnchantmentUtils.projectileIterator(p, (enchant, level) -> enchant.onProjectileEntityHit(p, entityHitResult, level))) {
+        if (!EnchantmentUtils.entityIterator(p, (enchant, level) -> enchant.onProjectileEntityHit(p, entityHitResult, level))) {
             original.call(instance, entityHitResult);
         }
     }
@@ -77,7 +87,7 @@ public class ProjectileEntityMixin_Events implements ProjectileFlags, Enchantmen
     @WrapOperation(method = "onCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/ProjectileEntity;onBlockHit(Lnet/minecraft/util/hit/BlockHitResult;)V"))
     private void blockHitHandler(ProjectileEntity instance, BlockHitResult blockHitResult, Operation<Void> original) {
         ProjectileEntity p = (ProjectileEntity) (Object) this;
-        if (!EnchantmentUtils.projectileIterator(p, (enchant, level) -> enchant.onProjectileBlockHit(p, blockHitResult, level))) {
+        if (!EnchantmentUtils.entityIterator(p, (enchant, level) -> enchant.onProjectileBlockHit(p, blockHitResult, level))) {
             original.call(instance, blockHitResult);
         }
     }

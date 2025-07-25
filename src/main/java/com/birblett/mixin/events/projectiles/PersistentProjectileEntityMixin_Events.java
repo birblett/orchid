@@ -24,13 +24,13 @@ public abstract class PersistentProjectileEntityMixin_Events implements Projecti
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     private void tickEvents(CallbackInfo ci) {
-        this.processTick(ci);
+        this.orchid_processTick(ci);
     }
 
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;addParticleClient(Lnet/minecraft/particle/ParticleEffect;DDDDDD)V"))
     private void modifyParticle(World instance, ParticleEffect parameters, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Operation<Void> original) {
         PersistentProjectileEntity p = (PersistentProjectileEntity) (Object) this;
-        ParticleEffect tmp = EnchantmentUtils.projectileIteratorGeneric(p, (enchant, level) ->
+        ParticleEffect tmp = EnchantmentUtils.entityIteratorGeneric(p, (enchant, level) ->
                 enchant.projectileParticleModifier(p, level));
         original.call(instance, tmp == null ? parameters : tmp, x, y, z, velocityX, velocityY, velocityZ);
     }
@@ -39,7 +39,7 @@ public abstract class PersistentProjectileEntityMixin_Events implements Projecti
     private float applyEnchantmentKnockback(float original, @Local(argsOnly = true) LivingEntity target) {
         MutableFloat f = new MutableFloat(original);
         PersistentProjectileEntity p = (PersistentProjectileEntity) (Object) this;
-        EnchantmentUtils.projectileIterator(p, (enchant, level) -> {
+        EnchantmentUtils.entityIterator(p, (enchant, level) -> {
             f.setValue(f.toFloat() * enchant.projectileKnockbackMultiplier(p, target, level));
             return f.getValue() != 0 ? OrchidEnchantWrapper.Flow.CONTINUE : OrchidEnchantWrapper.Flow.BREAK;
         });

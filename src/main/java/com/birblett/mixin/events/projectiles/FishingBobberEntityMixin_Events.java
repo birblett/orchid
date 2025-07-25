@@ -16,7 +16,7 @@ public abstract class FishingBobberEntityMixin_Events implements EnchantmentFlag
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     private void tickEvents(CallbackInfo ci) {
-        this.processTick(ci);
+        this.orchid_processTick(ci);
     }
 
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/Vec3d;multiply(D)Lnet/minecraft/util/math/Vec3d;", ordinal = 0))

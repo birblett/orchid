@@ -12,7 +12,7 @@ public abstract class ExplosiveProjectileEntityMixin_Events implements Enchantme
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     private void tickEvents(CallbackInfo ci) {
-        this.processTick(ci);
+        this.orchid_processTick(ci);
     }
 
 }

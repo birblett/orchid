@@ -7,6 +7,7 @@ import com.birblett.network.attached_data.EnchantmentDataAttachment;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentTarget;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
@@ -66,16 +67,16 @@ public class EnchantmentUtils {
         return enchantments;
     }
 
-    public static boolean projectileIterator(ProjectileEntity p, BiFunction<OrchidEnchantWrapper, Integer, OrchidEnchantWrapper.Flow> execute) {
-        return applyEnchants(execute, getSortedProjectileEnchants(p));
+    public static boolean entityIterator(Entity e, BiFunction<OrchidEnchantWrapper, Integer, OrchidEnchantWrapper.Flow> execute) {
+        return applyEnchants(execute, getEntityEnchantFlags(e));
     }
 
     @Nullable
-    public static <T> T projectileIteratorGeneric(ProjectileEntity p, BiFunction<OrchidEnchantWrapper, Integer, T> execute) {
-        return getFirstMatch(execute, getSortedProjectileEnchants(p));
+    public static <T> T entityIteratorGeneric(ProjectileEntity p, BiFunction<OrchidEnchantWrapper, Integer, T> execute) {
+        return getFirstMatch(execute, getEntityEnchantFlags(p));
     }
 
-    private static ArrayList<Triplet<Integer, Integer, RegistryKey<Enchantment>>> getSortedProjectileEnchants(ProjectileEntity entity) {
+    private static ArrayList<Triplet<Integer, Integer, RegistryKey<Enchantment>>> getEntityEnchantFlags(Entity entity) {
         // triplet order is priority, level, enchantment
         ArrayList<Triplet<Integer, Integer, RegistryKey<Enchantment>>> enchantments = new ArrayList<>();
         for (Map.Entry<RegistryKey<Enchantment>, Integer> entry : EnchantmentUtils.getTrackedMap(entity).entrySet()) {
@@ -138,7 +139,7 @@ public class EnchantmentUtils {
 
     public static double projectileDragModifier(ProjectileEntity p, double value) {
         MutableDouble drag = new MutableDouble(value);
-        EnchantmentUtils.projectileIterator(p, (enchant, level) -> {
+        EnchantmentUtils.entityIterator(p, (enchant, level) -> {
             drag.setValue(enchant.projectileDragModifier(p, drag.getValue(), level));
             return OrchidEnchantWrapper.Flow.CONTINUE;
         });

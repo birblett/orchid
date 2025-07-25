@@ -14,4 +14,7 @@ public interface PersistentProjectileAccessor {
     @Invoker("isInGround")
     boolean orchid_inGround();
 
+    @Invoker("setInGround")
+    void orchid_setInGround(boolean inGround);
+
 }

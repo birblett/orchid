@@ -24,7 +24,7 @@ public class OrchidEnchantmentProvider extends FabricDynamicRegistryProvider {
     @Override
     protected void configure(RegistryWrapper.WrapperLookup registries, Entries entries) {
         forEachEnchantment(registries.getOrThrow(RegistryKeys.ITEM), (e, b) ->
-                entries.add(e.getKey(), b.build(Identifier.of(Orchid.MOD_ID, e.id))));
+                entries.add(e.getOrCreateKey(), b.build(Identifier.of(Orchid.MOD_ID, e.id))));
     }
 
     @Override
@@ -34,8 +34,8 @@ public class OrchidEnchantmentProvider extends FabricDynamicRegistryProvider {
 
     public static void bootstrap(Registerable<Enchantment> enchantmentRegisterable) {
         forEachEnchantment(enchantmentRegisterable.getRegistryLookup(RegistryKeys.ITEM), (e, b) -> {
-            enchantmentRegisterable.register(e.getKey(), b.build(Identifier.of(Orchid.MOD_ID, e.id)));
-            e.forEachTranslation((l, v) -> Translateable.addTranslation(l, e.translationKey, v));
+            enchantmentRegisterable.register(e.getOrCreateKey(), b.build(Identifier.of(Orchid.MOD_ID, e.id)));
+            e.forEachTranslation((l, v) -> Translateable.addTranslation(l, "enchantment.orchid." + e.translationKey, v));
         });
     }
 

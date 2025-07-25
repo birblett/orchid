@@ -39,13 +39,13 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
     public final int anvilCost;
     public final AttributeModifierSlot[] slots;
     public final String translationKey;
-    private final RegistryKey<Enchantment> key;
+    public final int processPriority;
+    private RegistryKey<Enchantment> key;
 
     public OrchidEnchantWrapper(String id, int processPriority, TagKey<Item> supportedItems, TagKey<Item> primaryItems,
                                    int weight, int maxLevel, Enchantment.Cost minCost, Enchantment.Cost maxCost, int anvilCost,
                                    AttributeModifierSlot... slots) {
         this.id = id;
-        this.key = RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(Orchid.MOD_ID, id));
         this.supportedItems = supportedItems;
         this.primaryItems = primaryItems;
         this.weight = weight;
@@ -54,12 +54,8 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
         this.maxCost = maxCost;
         this.anvilCost = anvilCost;
         this.slots = slots;
-        OrchidEnchantments.PROCESS_PRIORITY.put(this.key, processPriority);
-        if (OrchidEnchantments.ORCHID_ENCHANTMENTS.get(processPriority) == null) {
-            OrchidEnchantments.ORCHID_ENCHANTMENTS.set(processPriority, new HashMap<>());
-        }
-        OrchidEnchantments.ORCHID_ENCHANTMENTS.get(processPriority).put(this.key, this);
-        this.translationKey = "enchantment.orchid." + id;
+        this.translationKey = id;
+        this.processPriority = processPriority;
     }
 
     public OrchidEnchantWrapper(String id, int processPriority, TagKey<Item> supportedItems, int weight, int maxLevel,
@@ -88,8 +84,20 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
         return this;
     }
 
-    public RegistryKey<Enchantment> getKey() {
+    public RegistryKey<Enchantment> getOrCreateKey() {
+        if (this.key == null) {
+            this.key = RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(Orchid.MOD_ID, id));
+        }
         return this.key;
+    }
+
+    public RegistryKey<Enchantment> build() {
+        OrchidEnchantments.PROCESS_PRIORITY.put(this.getOrCreateKey(), processPriority);
+        if (OrchidEnchantments.ORCHID_ENCHANTMENTS.get(processPriority) == null) {
+            OrchidEnchantments.ORCHID_ENCHANTMENTS.set(processPriority, new HashMap<>());
+        }
+        OrchidEnchantments.ORCHID_ENCHANTMENTS.get(processPriority).put(this.getOrCreateKey(), this);
+        return this.getOrCreateKey();
     }
 
     public Flow mainhandAttackAttempt(LivingEntity attacker, int level) {
@@ -100,30 +108,58 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
         return Flow.CONTINUE;
     }
 
+    /**
+     * called when item use is held, distinct from use
+     */
     public Flow useTick(LivingEntity user, ItemStack stack, int remainingUseTicks, int level) {
         return Flow.CONTINUE;
     }
 
+    /**
+     * called when a non-projectile entity has a synced enchant component and is ticked
+     */
     public Flow onEntityTick(Entity e, World world, int level) {
         return Flow.CONTINUE;
     }
 
+    /**
+     * called when a living entity has an enchanted equip held or worn in armor slots
+     */
+    public Flow onEntityTickEquip(LivingEntity e, World world, int level) {
+        return Flow.CONTINUE;
+    }
+
+    /**
+     * called when various projectiles are created
+     */
     public Flow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
         return Flow.CONTINUE;
     }
 
+    /**
+     * called when a projectile entity has a synced enchant component and is ticked
+     */
     public Flow onProjectileTick(ProjectileEntity entity, World world, int level) {
         return Flow.CONTINUE;
     }
 
+    /**
+     * for arrows only - modifies particle trail
+     */
     public ParticleEffect projectileParticleModifier(ProjectileEntity entity, int level) {
         return null;
     }
 
+    /**
+     * modifies knockback for all projectiles - may behave differently with arrows
+     */
     public float projectileKnockbackMultiplier(ProjectileEntity entity, Entity target, int level) {
         return 1.0f;
     }
 
+    /**
+     * modifies the gravity of a projectile entity
+     */
     public double projectileGravityModifier(ProjectileEntity entity, double gravity, int level) {
         return gravity;
     }

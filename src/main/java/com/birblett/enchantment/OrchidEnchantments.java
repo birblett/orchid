@@ -47,67 +47,67 @@ public class OrchidEnchantments {
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
             AttributeModifierSlot.ANY)
             .translate("Adaptability")
-            .getKey();
+            .build();
 
     public static final RegistryKey<Enchantment> AERODYNAMIC = new AerodynamicEnchantment("aerodynamic", 0, PROJECTILE_ENCHANTABLE,
             1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
             AttributeModifierSlot.ANY)
             .translate("Aerodynamic")
-            .getKey();
+            .build();
 
     public static final RegistryKey<Enchantment> ARROW_RAIN = new ArrowRainEnchantment("arrow_rain", 1, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
             AttributeModifierSlot.ANY)
             .translate("Arrow Rain")
-            .getKey();
+            .build();
 
     public static final RegistryKey<Enchantment> BARBED = new BarbedEnchantment("barbed", 3, ItemTags.FISHING_ENCHANTABLE,
             1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
             AttributeModifierSlot.ANY)
             .translate("Barbed")
-            .getKey();
+            .build();
 
     public static final RegistryKey<Enchantment> BURST_FIRE = new BurstFireEnchantment("burst_fire", 1, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
             AttributeModifierSlot.ANY)
             .translate("Burst Fire")
-            .getKey();
+            .build();
 
     public static final RegistryKey<Enchantment> FOCUS = new FocusEnchantment("focus", 1, ItemTags.BOW_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
             AttributeModifierSlot.ANY)
             .translate("Focus")
-            .getKey();
+            .build();
 
     public static final RegistryKey<Enchantment> GRAPPLING = new GrapplingEnchantment("grappling", 0, GRAPPLING_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
             AttributeModifierSlot.ANY)
             .translate("Grappling")
-            .getKey();
+            .build();
 
     public static final RegistryKey<Enchantment> HITSCAN = new HitscanEnchantment("hitscan", 8, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 3, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
             AttributeModifierSlot.ANY)
             .translate("Hitscan")
-            .getKey();
+            .build();
 
     public static final RegistryKey<Enchantment> MARKED = new MarkedEnchantment("marked", 6, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
             AttributeModifierSlot.ANY)
             .translate("Marked")
-            .getKey();
+            .build();
 
     public static final RegistryKey<Enchantment> RICOCHET = new RicochetEnchantment("ricochet", 2, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
             AttributeModifierSlot.ANY)
             .translate("Ricochet")
-            .getKey();
+            .build();
 
     public static final RegistryKey<Enchantment> STASIS = new StasisEnchantment("stasis", 5, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
             AttributeModifierSlot.ANY)
             .translate("Stasis")
-            .getKey();
+            .build();
 
     /**
      * Curses
@@ -117,18 +117,18 @@ public class OrchidEnchantments {
             1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
             AttributeModifierSlot.ANY).curse()
             .translate("Heartseeker")
-            .getKey();
+            .build();
 
     public static RegistryKey<Enchantment> INFERNAL = new InfernalEnchantment("infernal", 0, ItemTags.BOW_ENCHANTABLE,
             1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
             AttributeModifierSlot.ANY).curse()
             .translate("Infernal")
-            .getKey();
+            .build();
 
     public static RegistryKey<Enchantment> PLUNK = new PlunkEnchantment("plunk", 0, PROJECTILE_ENCHANTABLE, 1,
             3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
             AttributeModifierSlot.ANY).curse()
             .translate("Plunk")
-            .getKey();
+            .build();
 
 }

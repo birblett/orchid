@@ -19,11 +19,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ProjectileEntity.class)
-public class ProjectileEntityMixin_Events implements ProjectileFlags, EnchantmentFlags {
+public abstract class ProjectileEntityMixin_Events implements ProjectileFlags, EnchantmentFlags {
 
     @Unique boolean ignoresIFrames = false;
     @Unique int lifeLeft = -1;
-    @Unique long lastProcessedTick = 0;
 
     @Override
     public void orchid_setIgnoreIFrames(boolean b) {
@@ -38,14 +37,6 @@ public class ProjectileEntityMixin_Events implements ProjectileFlags, Enchantmen
     @Override
     public void orchid_setLifeTime(int i) {
         this.lifeLeft = i;
-    }
-
-    @Override
-    public boolean orchid_isTickProcessed() {
-        long time = ((ProjectileEntity) (Object) this).getWorld().getTime();
-        long lastTime = this.lastProcessedTick;
-        this.lastProcessedTick = time;
-        return time == lastTime;
     }
 
     @Override

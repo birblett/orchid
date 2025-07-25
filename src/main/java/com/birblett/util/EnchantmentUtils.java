@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.attachment.v1.AttachmentTarget;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
@@ -50,21 +51,51 @@ public class EnchantmentUtils {
         return getFirstMatch(execute, getSortedItemEnchants(stack));
     }
 
+    private static final EquipmentSlot[] ITERABLE_SLOT_ORDER = new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND,
+            EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET, EquipmentSlot.BODY, EquipmentSlot.SADDLE};
+
+    public static boolean equipIterator(LivingEntity e, BiFunction<OrchidEnchantWrapper, Integer, OrchidEnchantWrapper.Flow> execute) {
+        boolean exit = false;
+        for (EquipmentSlot slot : ITERABLE_SLOT_ORDER) {
+            if (!e.getEquippedStack(slot).isEmpty() && EnchantmentHelper.hasEnchantments(e.getEquippedStack(slot))) {
+                exit |= applyEnchants(execute, getEquipMatchingEnchants(e.getEquippedStack(slot), slot));
+            }
+        }
+        return exit;
+    }
+
     private static ArrayList<Triplet<Integer, Integer, RegistryKey<Enchantment>>> getSortedItemEnchants(ItemStack stack) {
-        // triplet order is priority, level, enchantment
         ArrayList<Triplet<Integer, Integer, RegistryKey<Enchantment>>> enchantments = new ArrayList<>();
         for (RegistryEntry<Enchantment> e : EnchantmentHelper.getEnchantments(stack).getEnchantments()) {
             if (e.getKey().isPresent() && OrchidEnchantments.PROCESS_PRIORITY.get(e.getKey().get()) instanceof Integer i) {
-                Triplet<Integer, Integer, RegistryKey<Enchantment>> t = new Triplet<>(i, EnchantmentHelper.getLevel(e, stack), e.getKey().get());
-                int idx = Collections.binarySearch(enchantments, t, Comparator.comparingInt(Triplet::getA));
-                if (idx < 0) {
-                    enchantments.add(-idx - 1, t);
-                } else {
-                    enchantments.add(idx, t);
+                addListTriplet(enchantments, e.getKey().get(), i,  EnchantmentHelper.getLevel(e, stack));
+            }
+        }
+        return enchantments;
+    }
+
+    private static ArrayList<Triplet<Integer, Integer, RegistryKey<Enchantment>>> getEquipMatchingEnchants(ItemStack stack, EquipmentSlot slot) {
+        ArrayList<Triplet<Integer, Integer, RegistryKey<Enchantment>>> enchantments = new ArrayList<>();
+        for (RegistryEntry<Enchantment> e : EnchantmentHelper.getEnchantments(stack).getEnchantments()) {
+            if (e.getKey().isPresent() && OrchidEnchantments.PROCESS_PRIORITY.get(e.getKey().get()) instanceof Integer i) {
+                if (Arrays.stream(OrchidEnchantments.ORCHID_ENCHANTMENTS.get(i).get(e.getKey().get()).slots)
+                        .anyMatch(s -> s.matches(slot))) {
+                    addListTriplet(enchantments, e.getKey().get(), i,  EnchantmentHelper.getLevel(e, stack));
                 }
             }
         }
         return enchantments;
+    }
+
+    private static void addListTriplet(ArrayList<Triplet<Integer, Integer, RegistryKey<Enchantment>>> enchantments, RegistryKey<Enchantment> e, Integer i, int level) {
+        // triplet order is priority, level, enchantment
+        Triplet<Integer, Integer, RegistryKey<Enchantment>> t = new Triplet<>(i, level, e);
+        int idx = Collections.binarySearch(enchantments, t, Comparator.comparingInt(Triplet::getA));
+        if (idx < 0) {
+            enchantments.add(-idx - 1, t);
+        } else {
+            enchantments.add(idx, t);
+        }
     }
 
     public static boolean entityIterator(Entity e, BiFunction<OrchidEnchantWrapper, Integer, OrchidEnchantWrapper.Flow> execute) {
@@ -93,7 +124,7 @@ public class EnchantmentUtils {
         return enchantments;
     }
 
-    private static boolean applyEnchants(BiFunction<OrchidEnchantWrapper, Integer, OrchidEnchantWrapper.Flow> execute, ArrayList<Triplet<Integer, Integer, RegistryKey<Enchantment>>> enchantments) {
+    private static boolean applyEnchants(BiFunction<OrchidEnchantWrapper, Integer, OrchidEnchantWrapper.Flow> execute, List<Triplet<Integer, Integer, RegistryKey<Enchantment>>> enchantments) {
         OrchidEnchantWrapper.Flow exit = OrchidEnchantWrapper.Flow.CONTINUE;
         int lastPrio = 0;
         for (Triplet<Integer, Integer, RegistryKey<Enchantment>> t : enchantments) {
@@ -116,7 +147,7 @@ public class EnchantmentUtils {
     }
 
     @Nullable
-    private static <T> T getFirstMatch(BiFunction<OrchidEnchantWrapper, Integer, T> execute, ArrayList<Triplet<Integer, Integer, RegistryKey<Enchantment>>> enchantments) {
+    private static <T> T getFirstMatch(BiFunction<OrchidEnchantWrapper, Integer, T> execute, List<Triplet<Integer, Integer, RegistryKey<Enchantment>>> enchantments) {
         T value = null;
         for (Triplet<Integer, Integer, RegistryKey<Enchantment>> t : enchantments) {
            if ((value = execute.apply(OrchidEnchantments.ORCHID_ENCHANTMENTS.get(t.getA()).get(t.getC()), t.getB())) != null) {
@@ -129,7 +160,7 @@ public class EnchantmentUtils {
     public static boolean onProjectileFired(ItemStack stack, ItemStack projectileStack, ProjectileEntity entity, LivingEntity shooter, ServerWorld world, boolean critical, OrchidEnchantWrapper.Flag f) {
         HashMap<RegistryKey<Enchantment>, Integer> map = new HashMap<>();
         EnchantmentUtils.stackIterator(stack, (enchant, level) -> {
-            map.put(enchant.getKey(), level);
+            map.put(enchant.getOrCreateKey(), level);
             return OrchidEnchantWrapper.Flow.CONTINUE;
         });
         EnchantmentUtils.setTrackedFromMap(entity, map);

@@ -9,6 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import org.apache.commons.lang3.mutable.MutableDouble;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -16,9 +17,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Entity.class)
 public class EntityMixin_Events implements EnchantmentFlags {
 
+    @Unique long lastProcessedTick = 0;
+
     @Override
     public boolean orchid_isTickProcessed() {
-        return false;
+        long time = ((Entity) (Object) this).getWorld().getTime();
+        long lastTime = this.lastProcessedTick;
+        this.lastProcessedTick = time;
+        return time == lastTime;
     }
 
     @Override

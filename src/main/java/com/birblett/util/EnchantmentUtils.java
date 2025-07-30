@@ -43,6 +43,9 @@ public class EnchantmentUtils {
     }
 
     public static boolean stackIterator(ItemStack stack, BiFunction<OrchidEnchantWrapper, Integer, OrchidEnchantWrapper.ControlFlow> execute) {
+        if (stack.isEmpty()) {
+            return false;
+        }
         return applyEnchants(execute, getSortedItemEnchants(stack));
     }
 

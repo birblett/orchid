@@ -15,23 +15,23 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
-public class PlayerEntityMixin_AttackEvents {
+public class PlayerEntityMixin_Events {
 
-    @ModifyVariable(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getDamageAgainst(Lnet/minecraft/entity/Entity;FLnet/minecraft/entity/damage/DamageSource;)F", ordinal = 0))
-    private float onAttackEvent(float damage, @Local(argsOnly = true) Entity target, @Local ItemStack weaponStack, @Local DamageSource source) {
-        MutableFloat dmg = new MutableFloat(damage);
+    @ModifyVariable(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;resetLastAttackedTicks()V"), ordinal = 1)
+    private float onAttackEvent(float bonus, @Local(argsOnly = true) Entity target, @Local ItemStack weaponStack, @Local DamageSource source, @Local(ordinal = 0) float damage) {
+        MutableFloat dmg = new MutableFloat(damage + bonus);
         PlayerEntity p = (PlayerEntity) (Object) this;
-        EnchantmentUtils.entityIterator(p, (enchant, level) -> {
+        EnchantmentUtils.stackIterator(weaponStack, (enchant, level) -> {
             dmg.setValue(enchant.attackModifier(p, target, weaponStack, dmg.getValue(), source, level));
             return dmg.getValue() != 0 ? OrchidEnchantWrapper.ControlFlow.CONTINUE : OrchidEnchantWrapper.ControlFlow.BREAK;
         });
-        return dmg.getValue();
+        return dmg.getValue() - damage;
     }
 
     @Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getWorld()Lnet/minecraft/world/World;", ordinal = 8))
     private void postAttackEvent(Entity target, CallbackInfo ci, @Local(ordinal = 0) float damage, @Local ItemStack weaponStack, @Local DamageSource source) {
         PlayerEntity p = (PlayerEntity) (Object) this;
-        EnchantmentUtils.entityIterator(p, (enchant, level) -> enchant.postAttack(p, target, weaponStack, damage, source, level));
+        EnchantmentUtils.stackIterator(weaponStack, (enchant, level) -> enchant.postAttack(p, target, weaponStack, damage, source, level));
     }
 
 }

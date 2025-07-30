@@ -1,6 +1,5 @@
 package com.birblett.mixin.event.living_entities;
 
-import com.birblett.Orchid;
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.util.EnchantmentUtils;
 import com.llamalad7.mixinextras.sugar.Local;

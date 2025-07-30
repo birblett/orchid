@@ -1,8 +1,8 @@
 package com.birblett.enchantment.impl;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
-import com.birblett.interfaces.entity.ProjectileFlags;
 import com.birblett.entity.Ticker;
+import com.birblett.interfaces.entity.ProjectileFlags;
 import com.birblett.mixin.accessor.RangedWeaponItemAccessor;
 import com.birblett.util.EnchantmentUtils;
 import com.birblett.util.VectorUtils;

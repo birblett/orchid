@@ -2,8 +2,8 @@ package com.birblett.enchantment.impl;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.enchantment.OrchidEnchantments;
-import com.birblett.interfaces.entity.ProjectileFlags;
 import com.birblett.entity.Ticker;
+import com.birblett.interfaces.entity.ProjectileFlags;
 import com.birblett.util.EnchantmentUtils;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;

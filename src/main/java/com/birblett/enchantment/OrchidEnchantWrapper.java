@@ -7,6 +7,7 @@ import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.Item;
@@ -106,9 +107,17 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
         return ControlFlow.CONTINUE;
     }
 
-    public ActionResult onUse(PlayerEntity user, ItemStack stack, World world, Hand hand) { return null; }
+    public Float attackModifier(LivingEntity attacker, Entity target, ItemStack stack, float damage, DamageSource source, int level) {
+        return damage;
+    }
 
-    public Boolean onStoppedUsing(LivingEntity user, ItemStack stack, World world, int remainingUseTicks) {
+    public ControlFlow postAttack(LivingEntity attacker, Entity target, ItemStack stack, float damage, DamageSource source, int level) {
+        return ControlFlow.CONTINUE;
+    }
+
+    public ActionResult onUse(PlayerEntity user, ItemStack stack, World world, Hand hand, int level) { return null; }
+
+    public Boolean onStoppedUsing(LivingEntity user, ItemStack stack, World world, int remainingUseTicks, int level) {
         return null;
     }
 

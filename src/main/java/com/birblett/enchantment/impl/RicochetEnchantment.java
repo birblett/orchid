@@ -1,5 +1,6 @@
 package com.birblett.enchantment.impl;
 
+import com.birblett.Orchid;
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.enchantment.OrchidEnchantments;
 import com.birblett.mixin.accessor.PersistentProjectileAccessor;
@@ -8,6 +9,7 @@ import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.item.Item;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.hit.BlockHitResult;
@@ -32,7 +34,7 @@ public class RicochetEnchantment extends OrchidEnchantWrapper {
             entity.setPosition(entity.getPos().add(entity.getVelocity()));
             entity.setAngles(entity.getYaw(), entity.getPitch());
             if (entity instanceof PersistentProjectileEntity e) {
-                e.setDamage(((PersistentProjectileAccessor) e).orchid_damage() + 0.5);
+                e.setDamage(((PersistentProjectileAccessor) e).orchid_damage() + ((e instanceof TridentEntity) ? 4 : 1));
             }
             return ControlFlow.CANCEL_BREAK;
         }

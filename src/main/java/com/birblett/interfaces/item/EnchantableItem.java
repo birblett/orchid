@@ -13,7 +13,7 @@ public interface EnchantableItem {
 
     default void enchantUseAction(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         ActionResult a = EnchantmentUtils.stackIteratorGeneric(user.getStackInHand(hand), (enchant, level) ->
-                enchant.onUse(user, user.getStackInHand(hand), world, hand));
+                enchant.onUse(user, user.getStackInHand(hand), world, hand, level));
         if (a != null) {
             cir.setReturnValue(a);
         }
@@ -21,7 +21,7 @@ public interface EnchantableItem {
 
     default void enchantStoppedUsingAction(LivingEntity user, ItemStack stack, World world, int remainingUseTicks, CallbackInfoReturnable<Boolean> cir) {
         Boolean b = EnchantmentUtils.stackIteratorGeneric(stack, (enchant, level) ->
-                enchant.onStoppedUsing(user, stack, world, remainingUseTicks));
+                enchant.onStoppedUsing(user, stack, world, remainingUseTicks, level));
         if (b != null) {
             cir.setReturnValue(b);
         }

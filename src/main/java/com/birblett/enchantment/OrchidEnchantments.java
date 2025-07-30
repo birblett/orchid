@@ -96,7 +96,7 @@ public class OrchidEnchantments {
             .translate("Marked")
             .build();
 
-    public static final RegistryKey<Enchantment> RICOCHET = new RicochetEnchantment("ricochet", 2, BOW_OR_CROSSBOW_ENCHANTABLE,
+    public static final RegistryKey<Enchantment> RICOCHET = new RicochetEnchantment("ricochet", 0, BOW_OR_CROSSBOW_ENCHANTABLE,
             1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
             AttributeModifierSlot.ANY)
             .translate("Ricochet")

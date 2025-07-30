@@ -9,6 +9,7 @@ import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.RegistryEntryReferenceArgumentType;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -47,7 +48,7 @@ public class ForceEnchantCommand {
             if (entity instanceof LivingEntity livingEntity) {
                 ItemStack itemStack = livingEntity.getMainHandStack();
                 if (!itemStack.isEmpty()) {
-                    itemStack.addEnchantment(enchantment, level);
+                    EnchantmentHelper.apply(itemStack, builder -> builder.set(enchantment, level));
                     ++i;
                 } else if (targets.size() == 1) {
                     throw FAILED_ITEMLESS_EXCEPTION.create(livingEntity.getName().getString());

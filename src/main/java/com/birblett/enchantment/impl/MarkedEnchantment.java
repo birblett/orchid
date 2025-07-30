@@ -2,7 +2,6 @@ package com.birblett.enchantment.impl;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.enchantment.OrchidEnchantments;
-import com.birblett.entity.Ticker;
 import com.birblett.util.EnchantmentUtils;
 import com.birblett.util.VectorUtils;
 import net.minecraft.component.type.AttributeModifierSlot;
@@ -28,9 +27,14 @@ public class MarkedEnchantment extends OrchidEnchantWrapper {
 
     @Override
     public ControlFlow onProjectileFired(LivingEntity shooter, ProjectileEntity entity, ItemStack stack, ItemStack projectileStack, ServerWorld world, boolean critical, int level, Flag flag) {
-        MarkedTicker t;
-        if ((t = Ticker.get(shooter, MarkedTicker.ID)) != null && t.getTarget() != null) {
-            EnchantmentUtils.setTracked(entity, OrchidEnchantments.MARKED, t.getTarget().getId());
+        if (EnchantmentUtils.trackedContains(shooter, OrchidEnchantments.MARKED)) {
+            int i = EnchantmentUtils.getTrackedLevel(shooter, OrchidEnchantments.MARKED);
+            if (world.getEntityById(i) instanceof Entity e && e.isAlive()) {
+                EnchantmentUtils.setTracked(entity, OrchidEnchantments.MARKED, i);
+            } else {
+                EnchantmentUtils.setTracked(entity, OrchidEnchantments.MARKED, -1);
+                EnchantmentUtils.removeTracked(shooter, OrchidEnchantments.MARKED);
+            }
         } else {
             EnchantmentUtils.setTracked(entity, OrchidEnchantments.MARKED, -1);
         }
@@ -51,14 +55,9 @@ public class MarkedEnchantment extends OrchidEnchantWrapper {
     @Override
     public ControlFlow onProjectileEntityHit(ProjectileEntity entity, EntityHitResult result, int level) {
         if (entity.getOwner() instanceof LivingEntity owner) {
-            MarkedTicker t;
-            if ((t = Ticker.get(owner, MarkedTicker.ID)) != null) {
-                t.setTarget(result.getEntity());
-            } else {
-                Ticker.set(owner, MarkedTicker.ID, new MarkedTicker(owner, result.getEntity()));
-            }
+            EnchantmentUtils.setTracked(owner, OrchidEnchantments.MARKED, result.getEntity().getId());
         }
-        return this.onProjectileHit(entity, result, level);
+        return ControlFlow.CONTINUE;
     }
 
     @Override

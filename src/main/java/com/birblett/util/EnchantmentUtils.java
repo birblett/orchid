@@ -2,9 +2,11 @@ package com.birblett.util;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.enchantment.OrchidEnchantments;
+import com.birblett.interfaces.client.ClientPlayerEnchantTracker;
 import com.birblett.network.AttachedDataRegistry;
 import com.birblett.network.attached_data.EnchantmentDataAttachment;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentTarget;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -220,6 +222,19 @@ public class EnchantmentUtils {
             return tmp.contains(enchantment);
         }
         return false;
+    }
+
+    public static void setTempLevel(ClientPlayerEntity entity, RegistryKey<Enchantment> enchantment, int level) {
+        ((ClientPlayerEnchantTracker) entity).orchid_setTempLevel(enchantment, level);
+    }
+
+    public static void addToTempLevel(ClientPlayerEntity entity, RegistryKey<Enchantment> enchantment, int level) {
+        ClientPlayerEnchantTracker tracker = (ClientPlayerEnchantTracker) entity;
+        tracker.orchid_setTempLevel(enchantment, tracker.orchid_getTempLevel(enchantment) + level);
+    }
+
+    public static int getTempLevel(ClientPlayerEntity entity, RegistryKey<Enchantment> enchantment) {
+        return ((ClientPlayerEnchantTracker) entity).orchid_getTempLevel(enchantment);
     }
 
 }

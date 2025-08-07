@@ -33,6 +33,7 @@
     "requireAnnotations": true
   },
   "client": [
+    "client.events.ClientPlayerEntityMixin_Events",
     "client.MinecraftClientMixin",
     "client.render.ProjectileEntityRendererMixin",
     "client.render.ProjectileEntityRenderStateMixin",

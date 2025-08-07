@@ -3,6 +3,9 @@ package com.birblett.enchantment;
 import com.birblett.Orchid;
 import com.birblett.datagen.OrchidEnchantmentTagProvider;
 import com.birblett.datagen.Translateable;
+import com.birblett.util.InputManager;
+import net.minecraft.client.input.Input;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
@@ -139,6 +142,10 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
      * called when a living entity has an enchanted equip held or worn in armor slots
      */
     public ControlFlow onEntityTickEquip(LivingEntity e, World world, int level) {
+        return ControlFlow.CONTINUE;
+    }
+
+    public ControlFlow onMovementTick(ClientPlayerEntity e, World world, Input input, InputManager pressed, int level) {
         return ControlFlow.CONTINUE;
     }
 

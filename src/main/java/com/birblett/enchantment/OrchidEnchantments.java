@@ -39,6 +39,15 @@ public class OrchidEnchantments {
             .tagKey;
 
     /**
+     * Boot Enchants
+     */
+
+    public static RegistryKey<Enchantment> DOUBLE_JUMP = new DoubleJumpEnchantment("double_jump", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
+            1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.ANY)
+            .translate("Double Jump")
+            .build();
+
+    /**
      * Projectile Enchants
      */
 

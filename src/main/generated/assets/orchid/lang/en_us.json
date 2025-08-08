@@ -4,6 +4,7 @@
   "enchantment.orchid.aerodynamic": "Aerodynamic",
   "enchantment.orchid.airstrike": "Airstrike",
   "enchantment.orchid.barbed": "Barbed",
+  "enchantment.orchid.bunny_hop": "Bunny Hop",
   "enchantment.orchid.burst_fire": "Burst Fire",
   "enchantment.orchid.double_jump": "Double Jump",
   "enchantment.orchid.focus": "Focus",
@@ -14,6 +15,8 @@
   "enchantment.orchid.marked": "Marked",
   "enchantment.orchid.plunk": "Plunk",
   "enchantment.orchid.ricochet": "Ricochet",
+  "enchantment.orchid.slimed": "Slimed",
   "enchantment.orchid.stasis": "Stasis",
-  "enchantment.orchid.wind_rider": "Wind Rider"
+  "enchantment.orchid.wind_rider": "Wind Rider",
+  "enchantment.orchid.windstep": "Windstep"
 }

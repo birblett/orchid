@@ -5,7 +5,9 @@ import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.enchantment.OrchidEnchantments;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
+import net.minecraft.component.EnchantmentEffectComponentTypes;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.effect.AttributeEnchantmentEffect;
 import net.minecraft.item.Item;
 import net.minecraft.registry.*;
 import net.minecraft.util.Identifier;
@@ -59,6 +61,9 @@ public class OrchidEnchantmentProvider extends FabricDynamicRegistryProvider {
         } else {
             b = Enchantment.builder(Enchantment.definition(itemLookup.getOrThrow(e.supportedItems),
                     itemLookup.getOrThrow(e.supportedItems), e.weight, e.maxLevel, e.minCost, e.maxCost, e.anvilCost, e.slots));
+        }
+        for (AttributeEnchantmentEffect effect : e.attributes) {
+            b.addEffect(EnchantmentEffectComponentTypes.ATTRIBUTES, effect);
         }
         return b;
     }

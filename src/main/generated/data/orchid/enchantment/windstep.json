@@ -1,0 +1,70 @@
+{
+  "anvil_cost": 1,
+  "description": {
+    "translate": "enchantment.orchid.windstep"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.1,
+          "per_level_above_first": 0.1
+        },
+        "attribute": "minecraft:movement_speed",
+        "id": "orchid:enchantment.windstep",
+        "operation": "add_multiplied_total"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.6,
+          "per_level_above_first": 0.5
+        },
+        "attribute": "minecraft:step_height",
+        "id": "orchid:enchantment.windstep",
+        "operation": "add_value"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.05,
+          "per_level_above_first": 0.05
+        },
+        "attribute": "minecraft:jump_strength",
+        "id": "orchid:enchantment.windstep",
+        "operation": "add_multiplied_base"
+      },
+      {
+        "amount": -0.1,
+        "attribute": "minecraft:gravity",
+        "id": "orchid:enchantment.windstep",
+        "operation": "add_multiplied_base"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 2.0,
+          "per_level_above_first": 2.0
+        },
+        "attribute": "minecraft:safe_fall_distance",
+        "id": "orchid:enchantment.windstep",
+        "operation": "add_value"
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 50,
+    "per_level_above_first": 0
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 25,
+    "per_level_above_first": 0
+  },
+  "slots": [
+    "feet"
+  ],
+  "supported_items": "#minecraft:enchantable/foot_armor",
+  "weight": 1
+}

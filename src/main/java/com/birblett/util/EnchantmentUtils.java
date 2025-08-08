@@ -1,11 +1,13 @@
 package com.birblett.util;
 
+import com.birblett.Orchid;
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.enchantment.OrchidEnchantments;
 import com.birblett.interfaces.client.ClientPlayerEnchantTracker;
 import com.birblett.network.AttachedDataRegistry;
 import com.birblett.network.attached_data.EnchantmentDataAttachment;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentTarget;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -22,6 +24,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.mutable.MutableDouble;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Unique;
 import oshi.util.tuples.Triplet;
 
 import java.util.*;
@@ -67,6 +70,19 @@ public class EnchantmentUtils {
             }
         }
         return exit;
+    }
+
+    @Nullable
+    public static <T> T equipIteratorGeneric(LivingEntity e, BiFunction<OrchidEnchantWrapper, Integer, T> execute) {
+        for (EquipmentSlot slot : ITERABLE_SLOT_ORDER) {
+            if (!e.getEquippedStack(slot).isEmpty() && EnchantmentHelper.hasEnchantments(e.getEquippedStack(slot))) {
+                T out = getFirstMatch(execute, getEquipMatchingEnchants(e.getEquippedStack(slot), slot));
+                if (out != null) {
+                    return out;
+                }
+            }
+        }
+        return null;
     }
 
     private static ArrayList<Triplet<Integer, Integer, RegistryKey<Enchantment>>> getSortedItemEnchants(ItemStack stack) {
@@ -180,6 +196,18 @@ public class EnchantmentUtils {
             return OrchidEnchantWrapper.ControlFlow.CONTINUE;
         });
         return drag.getValue();
+    }
+
+    public static BlockState getEntityBlockFeedbackState(Entity entity, BlockState state) {
+        if (entity instanceof LivingEntity e) {
+            BlockState tmp = state;
+            BlockState out = EnchantmentUtils.equipIteratorGeneric(e, (enchant, level) ->
+                    enchant.onBlockFeedback(e, e.getWorld(), tmp, level));
+            if (out != null) {
+                state = out;
+            }
+        }
+        return state;
     }
 
     public static Map<RegistryKey<Enchantment>, Integer> getTrackedMap(AttachmentTarget target) {

@@ -3,13 +3,19 @@ package com.birblett.enchantment;
 import com.birblett.Orchid;
 import com.birblett.datagen.OrchidEnchantmentTagProvider;
 import com.birblett.datagen.Translateable;
-import com.birblett.util.InputManager;
+import com.birblett.util.InputRecord;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.input.Input;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentLevelBasedValue;
+import net.minecraft.enchantment.effect.AttributeEnchantmentEffect;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
@@ -18,6 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.EnchantmentTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
@@ -27,8 +34,10 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.BiConsumer;
 
@@ -47,6 +56,7 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
     public final AttributeModifierSlot[] slots;
     public final String translationKey;
     public final int processPriority;
+    public final ArrayList<AttributeEnchantmentEffect> attributes = new ArrayList<>();
     private RegistryKey<Enchantment> key;
 
     public OrchidEnchantWrapper(String id, int processPriority, TagKey<Item> supportedItems, TagKey<Item> primaryItems,
@@ -83,6 +93,12 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
 
     public OrchidEnchantWrapper curse() {
         OrchidEnchantmentTagProvider.addOrGetExisting(EnchantmentTags.CURSE).add(this.getOrCreateKey());
+        return this;
+    }
+
+    public OrchidEnchantWrapper addAttribute(RegistryEntry<EntityAttribute> attribute, EnchantmentLevelBasedValue value, EntityAttributeModifier.Operation operation) {
+        this.attributes.add(new AttributeEnchantmentEffect(Identifier.of(Orchid.MOD_ID, "enchantment." + this.id), attribute, value,
+                operation));
         return this;
     }
 
@@ -145,8 +161,32 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
         return ControlFlow.CONTINUE;
     }
 
-    public ControlFlow onMovementTick(ClientPlayerEntity e, World world, Input input, InputManager pressed, int level) {
+    public ControlFlow onMovementTick(ClientPlayerEntity e, World world, Input input, InputRecord pressed, int level) {
         return ControlFlow.CONTINUE;
+    }
+
+    public Block onBlockLand(LivingEntity e, World world, Block block, int level) {
+        return null;
+    }
+
+    public BlockState onBlockFeedback(LivingEntity e, World world, BlockState state, int level) {
+        return null;
+    }
+
+    public float modifySlipperiness(LivingEntity e, World world, Block block, float slipperiness, int level) {
+        return slipperiness;
+    }
+
+    public float modifySlipperyMovementSpeed(LivingEntity e, World world, float movementSpeed, float slipperiness, int level) {
+        return movementSpeed;
+    }
+
+    public Vec3d modifyJumpDirect(LivingEntity e, World world, Vec3d jumpVelocity, int level) {
+        return jumpVelocity;
+    }
+
+    public Boolean modifyCanStep(LivingEntity e, World world, int level) {
+        return false;
     }
 
     /**

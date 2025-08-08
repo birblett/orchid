@@ -1,8 +1,10 @@
 package com.birblett.enchantment;
 
 import com.birblett.datagen.OrchidItemTagProvider;
-import com.birblett.enchantment.impl.*;
+import com.birblett.enchantment.impl.boots.DoubleJumpEnchantment;
+import com.birblett.enchantment.impl.boots.SlimedEnchantment;
 import com.birblett.enchantment.impl.curse.*;
+import com.birblett.enchantment.impl.projectile.*;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelBasedValue;

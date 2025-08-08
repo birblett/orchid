@@ -1,4 +1,4 @@
-package com.birblett.enchantment.impl;
+package com.birblett.enchantment.impl.boots;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import net.minecraft.block.Block;

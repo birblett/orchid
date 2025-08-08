@@ -1,6 +1,5 @@
 package com.birblett.enchantment.impl.curse;
 
-import com.birblett.Orchid;
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
@@ -25,8 +24,7 @@ public class ConcreteShoesEnchantment extends OrchidEnchantWrapper {
         if (attacker instanceof PlayerEntity p && p.getAttackCooldownProgress(0.5F) > 0.9f && p.fallDistance > 0.0
                 && !p.isOnGround() && !p.isClimbing() && !p.isTouchingWater() && !p.hasStatusEffect(StatusEffects.BLINDNESS)
                 && !p.hasVehicle() && target instanceof LivingEntity && !p.isSprinting()) {
-            damage *= 2.5f;
-            Orchid.LOGGER.info("{}", damage);
+            damage *= 5f/3;
         }
         return damage;
     }

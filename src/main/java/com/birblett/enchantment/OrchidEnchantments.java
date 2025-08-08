@@ -194,7 +194,7 @@ public class OrchidEnchantments {
                 .addAttribute(EntityAttributes.JUMP_STRENGTH, EnchantmentLevelBasedValue.constant(0.25f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
                 .addAttribute(EntityAttributes.GRAVITY, EnchantmentLevelBasedValue.constant(1), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
                 .addAttribute(EntityAttributes.STEP_HEIGHT, EnchantmentLevelBasedValue.constant(-1), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
-                .addAttribute(EntityAttributes.ATTACK_DAMAGE, EnchantmentLevelBasedValue.constant(-0.3f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                .addAttribute(EntityAttributes.ATTACK_DAMAGE, EnchantmentLevelBasedValue.constant(-0.2f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
                 .curse()
                 .build();
 

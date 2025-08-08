@@ -175,4 +175,5 @@ public class InfernalEnchantment extends OrchidEnchantWrapper {
             user.getWorld().addImportantParticleClient(ParticleTypes.ELECTRIC_SPARK, true, p.x, p.y, p.z, v.x, v.y, v.z);
         }
     }
+
 }

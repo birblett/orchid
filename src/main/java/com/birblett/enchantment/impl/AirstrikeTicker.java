@@ -6,11 +6,6 @@ import com.birblett.interfaces.entity.ProjectileFlags;
 import com.birblett.mixin.accessor.RangedWeaponItemAccessor;
 import com.birblett.util.EnchantmentUtils;
 import com.birblett.util.VectorUtils;
-import com.mojang.datafixers.util.Function3;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.component.ComponentChanges;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
@@ -18,10 +13,12 @@ import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.TridentEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.FireworkRocketItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.RangedWeaponItem;
+import net.minecraft.item.TridentItem;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.util.math.Vec3d;
 
 public class AirstrikeTicker extends Ticker {

@@ -28,4 +28,5 @@ public class ConcreteShoesEnchantment extends OrchidEnchantWrapper {
         }
         return damage;
     }
+
 }

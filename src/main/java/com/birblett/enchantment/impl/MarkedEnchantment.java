@@ -65,4 +65,5 @@ public class MarkedEnchantment extends OrchidEnchantWrapper {
         EnchantmentUtils.removeTracked(entity, OrchidEnchantments.MARKED);
         return ControlFlow.CONTINUE;
     }
+
 }

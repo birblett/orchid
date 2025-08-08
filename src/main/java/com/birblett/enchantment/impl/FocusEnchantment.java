@@ -59,4 +59,5 @@ public class FocusEnchantment extends OrchidEnchantWrapper {
         }
         return ControlFlow.CONTINUE;
     }
+
 }

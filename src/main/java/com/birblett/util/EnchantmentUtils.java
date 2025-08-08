@@ -1,6 +1,5 @@
 package com.birblett.util;
 
-import com.birblett.Orchid;
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.enchantment.OrchidEnchantments;
 import com.birblett.interfaces.client.ClientPlayerEnchantTracker;
@@ -24,7 +23,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.mutable.MutableDouble;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.Unique;
 import oshi.util.tuples.Triplet;
 
 import java.util.*;

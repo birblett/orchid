@@ -1,6 +1,5 @@
 package com.birblett.mixin.event.entities;
 
-import com.birblett.Orchid;
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.interfaces.entity.EnchantmentFlags;
 import com.birblett.util.EnchantmentUtils;

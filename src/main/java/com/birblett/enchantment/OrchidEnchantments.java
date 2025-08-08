@@ -2,9 +2,7 @@ package com.birblett.enchantment;
 
 import com.birblett.datagen.OrchidItemTagProvider;
 import com.birblett.enchantment.impl.*;
-import com.birblett.enchantment.impl.curse.HeartseekerEnchantment;
-import com.birblett.enchantment.impl.curse.InfernalEnchantment;
-import com.birblett.enchantment.impl.curse.PlunkEnchantment;
+import com.birblett.enchantment.impl.curse.*;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelBasedValue;
@@ -173,6 +171,7 @@ public class OrchidEnchantments {
      */
 
     public static final RegistryKey<Enchantment> BUNNY_HOP;
+    public static final RegistryKey<Enchantment> CONCRETE_SHOES;
     public static final RegistryKey<Enchantment> HEARTSEEKER;
     public static final RegistryKey<Enchantment> INFERNAL;
     public static final RegistryKey<Enchantment> PLUNK;
@@ -185,6 +184,17 @@ public class OrchidEnchantments {
                 .addAttribute(EntityAttributes.MOVEMENT_SPEED, EnchantmentLevelBasedValue.constant(-0.3f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
                 .addAttribute(EntityAttributes.JUMP_STRENGTH, EnchantmentLevelBasedValue.constant(-0.3f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
                 .addAttribute(EntityAttributes.STEP_HEIGHT, EnchantmentLevelBasedValue.constant(0.2f), EntityAttributeModifier.Operation.ADD_VALUE)
+                .curse()
+                .build();
+
+        CONCRETE_SHOES = new ConcreteShoesEnchantment("concrete_shoes", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
+                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
+                .translate("Concrete Shoes")
+                .addAttribute(EntityAttributes.MOVEMENT_SPEED, EnchantmentLevelBasedValue.constant(-0.1f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                .addAttribute(EntityAttributes.JUMP_STRENGTH, EnchantmentLevelBasedValue.constant(0.25f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                .addAttribute(EntityAttributes.GRAVITY, EnchantmentLevelBasedValue.constant(1), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                .addAttribute(EntityAttributes.STEP_HEIGHT, EnchantmentLevelBasedValue.constant(-1), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                .addAttribute(EntityAttributes.ATTACK_DAMAGE, EnchantmentLevelBasedValue.constant(-0.3f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
                 .curse()
                 .build();
 

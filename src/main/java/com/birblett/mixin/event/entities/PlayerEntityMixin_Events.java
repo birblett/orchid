@@ -22,7 +22,7 @@ public class PlayerEntityMixin_Events {
     private float onAttackEvent(float bonus, @Local(argsOnly = true) Entity target, @Local ItemStack weaponStack, @Local DamageSource source, @Local(ordinal = 0) float damage) {
         MutableFloat dmg = new MutableFloat(damage + bonus);
         PlayerEntity p = (PlayerEntity) (Object) this;
-        EnchantmentUtils.stackIterator(weaponStack, (enchant, level) -> {
+        EnchantmentUtils.equipIterator(p, (enchant, level) -> {
             dmg.setValue(enchant.attackModifier(p, target, weaponStack, dmg.getValue(), source, level));
             return dmg.getValue() != 0 ? OrchidEnchantWrapper.ControlFlow.CONTINUE : OrchidEnchantWrapper.ControlFlow.BREAK;
         });
@@ -32,7 +32,8 @@ public class PlayerEntityMixin_Events {
     @Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getWorld()Lnet/minecraft/world/World;", ordinal = 8))
     private void postAttackEvent(Entity target, CallbackInfo ci, @Local(ordinal = 0) float damage, @Local ItemStack weaponStack, @Local DamageSource source) {
         PlayerEntity p = (PlayerEntity) (Object) this;
-        EnchantmentUtils.stackIterator(weaponStack, (enchant, level) -> enchant.postAttack(p, target, weaponStack, damage, source, level));
+        EnchantmentUtils.equipIterator(p, (enchant, level) ->
+                enchant.postAttack(p, target, weaponStack, damage, source, level));
     }
 
     @Inject(method = "getProjectileType", at = @At(value = "INVOKE", target = "Ljava/util/function/Predicate;test(Ljava/lang/Object;)Z"), cancellable = true)

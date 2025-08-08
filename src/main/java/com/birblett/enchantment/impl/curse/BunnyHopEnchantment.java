@@ -1,4 +1,4 @@
-package com.birblett.enchantment.impl;
+package com.birblett.enchantment.impl.curse;
 
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import net.minecraft.component.type.AttributeModifierSlot;

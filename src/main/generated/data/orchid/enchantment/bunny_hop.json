@@ -6,7 +6,7 @@
   "effects": {
     "minecraft:attributes": [
       {
-        "amount": -0.4,
+        "amount": -0.3,
         "attribute": "minecraft:movement_speed",
         "id": "orchid:enchantment.bunny_hop",
         "operation": "add_multiplied_base"

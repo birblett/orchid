@@ -186,7 +186,7 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
     }
 
     public Boolean modifyCanStep(LivingEntity e, World world, int level) {
-        return false;
+        return null;
     }
 
     /**

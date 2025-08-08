@@ -18,7 +18,7 @@ public class BunnyHopEnchantment extends OrchidEnchantWrapper {
 
     @Override
     public Vec3d modifyJumpDirect(LivingEntity e, World world, Vec3d jumpVelocity, int level) {
-        return jumpVelocity.multiply(3, 1, 3);
+        return jumpVelocity.multiply(4, 1, 4);
     }
 
     @Override

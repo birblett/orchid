@@ -45,20 +45,11 @@ public class OrchidEnchantments {
      * Boot Enchants
      */
 
-    public static final RegistryKey<Enchantment> BUNNY_HOP;
     public static final RegistryKey<Enchantment> DOUBLE_JUMP;
     public static final RegistryKey<Enchantment> SLIMED;
     public static final RegistryKey<Enchantment> WINDSTEP;
 
     static {
-
-        BUNNY_HOP = new BunnyHopEnchantment("bunny_hop", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
-                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
-                .translate("Bunny Hop")
-                .addAttribute(EntityAttributes.MOVEMENT_SPEED, EnchantmentLevelBasedValue.constant(-0.15f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
-                .addAttribute(EntityAttributes.JUMP_STRENGTH, EnchantmentLevelBasedValue.constant(-0.2f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
-                .addAttribute(EntityAttributes.STEP_HEIGHT, EnchantmentLevelBasedValue.constant(0.2f), EntityAttributeModifier.Operation.ADD_VALUE)
-                .build();
 
         DOUBLE_JUMP = new DoubleJumpEnchantment("double_jump", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
@@ -181,28 +172,41 @@ public class OrchidEnchantments {
      * Curses
      */
 
+    public static final RegistryKey<Enchantment> BUNNY_HOP;
     public static final RegistryKey<Enchantment> HEARTSEEKER;
     public static final RegistryKey<Enchantment> INFERNAL;
     public static final RegistryKey<Enchantment> PLUNK;
 
     static {
 
+        BUNNY_HOP = new BunnyHopEnchantment("bunny_hop", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
+                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
+                .translate("Bunny Hop")
+                .addAttribute(EntityAttributes.MOVEMENT_SPEED, EnchantmentLevelBasedValue.constant(-0.3f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                .addAttribute(EntityAttributes.JUMP_STRENGTH, EnchantmentLevelBasedValue.constant(-0.3f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                .addAttribute(EntityAttributes.STEP_HEIGHT, EnchantmentLevelBasedValue.constant(0.2f), EntityAttributeModifier.Operation.ADD_VALUE)
+                .curse()
+                .build();
+
         HEARTSEEKER = new HeartseekerEnchantment("heartseeker", 6, BOW_OR_CROSSBOW_ENCHANTABLE,
                 1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
-                AttributeModifierSlot.ANY).curse()
+                AttributeModifierSlot.ANY)
                 .translate("Heartseeker")
+                .curse()
                 .build();
 
         INFERNAL = new InfernalEnchantment("infernal", 0, ItemTags.BOW_ENCHANTABLE,
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
-                AttributeModifierSlot.ANY).curse()
+                AttributeModifierSlot.ANY)
                 .translate("Infernal")
+                .curse()
                 .build();
 
         PLUNK = new PlunkEnchantment("plunk", 0, PROJECTILE_ENCHANTABLE, 1,
                 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
-                AttributeModifierSlot.ANY).curse()
+                AttributeModifierSlot.ANY)
                 .translate("Plunk")
+                .curse()
                 .build();
 
     }

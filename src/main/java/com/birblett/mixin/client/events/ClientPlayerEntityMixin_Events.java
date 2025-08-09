@@ -32,17 +32,17 @@ public class ClientPlayerEntityMixin_Events implements ClientPlayerEnchantTracke
 
     @Override
     public void orchid_setTempLevel(RegistryKey<Enchantment> key, int level) {
-        this.enchants.put(key, level);
+        if (level == 0) {
+            this.enchants.remove(key);
+        } else {
+            this.enchants.put(key, level);
+        }
     }
 
     @WrapOperation(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/AbstractClientPlayerEntity;tickMovement()V"))
     private void applyMovementMods(ClientPlayerEntity instance, Operation<Void> original) {
         PlayerInput playerInput = input.playerInput;
-        InputRecord pressed = new InputRecord(
-                playerInput.forward() && !this.last.forward(), playerInput.backward() && !this.last.backward(),
-                playerInput.left() && !this.last.left(), playerInput.right() && !this.last.right(), playerInput.jump() &&
-                !this.last.jump(), playerInput.sneak() && !this.last.sneak(), playerInput.sprint() && !this.last.sprint()
-        );
+        InputRecord pressed = InputRecord.fromLast(playerInput, this.last);
         this.last = new InputRecord(playerInput.forward(), playerInput.backward(), playerInput.left(), playerInput.right(),
                 playerInput.jump(), playerInput.sneak(), playerInput.sprint());
         if (!EnchantmentUtils.equipIterator(instance, (enchant, level) ->

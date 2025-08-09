@@ -27,10 +27,12 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.EnchantmentTags;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.PlayerInput;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -162,6 +164,10 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
     }
 
     public ControlFlow onMovementTick(ClientPlayerEntity e, World world, Input input, InputRecord pressed, int level) {
+        return ControlFlow.CONTINUE;
+    }
+
+    public ControlFlow onServerPlayerInput(ServerPlayerEntity e, World world, PlayerInput input, InputRecord pressed, int level) {
         return ControlFlow.CONTINUE;
     }
 

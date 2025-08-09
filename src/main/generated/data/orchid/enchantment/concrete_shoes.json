@@ -30,7 +30,7 @@
         "operation": "add_multiplied_base"
       },
       {
-        "amount": -0.3,
+        "amount": -0.2,
         "attribute": "minecraft:attack_damage",
         "id": "orchid:enchantment.concrete_shoes",
         "operation": "add_multiplied_base"

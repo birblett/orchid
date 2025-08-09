@@ -1,5 +1,6 @@
 {
   "death.attack.orchid.immolation": "%1$s was immolated",
+  "enchantment.orchid.acrobatic": "Acrobatic",
   "enchantment.orchid.adaptability": "Adaptability",
   "enchantment.orchid.aerodynamic": "Aerodynamic",
   "enchantment.orchid.airstrike": "Airstrike",
@@ -16,6 +17,7 @@
   "enchantment.orchid.marked": "Marked",
   "enchantment.orchid.plunk": "Plunk",
   "enchantment.orchid.ricochet": "Ricochet",
+  "enchantment.orchid.rocket": "Rocket",
   "enchantment.orchid.slimed": "Slimed",
   "enchantment.orchid.stasis": "Stasis",
   "enchantment.orchid.wind_rider": "Wind Rider",

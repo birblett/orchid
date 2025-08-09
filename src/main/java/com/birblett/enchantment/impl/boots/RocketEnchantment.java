@@ -27,7 +27,7 @@ import net.minecraft.world.explosion.ExplosionBehavior;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class RocketEnchantment  extends OrchidEnchantWrapper {
+public class RocketEnchantment extends OrchidEnchantWrapper {
 
     public RocketEnchantment(String id, int processPriority, TagKey<Item> supportedItems, int weight, int maxLevel,
                                  Enchantment.Cost minCost, Enchantment.Cost maxCost, int anvilCost, AttributeModifierSlot... slots) {

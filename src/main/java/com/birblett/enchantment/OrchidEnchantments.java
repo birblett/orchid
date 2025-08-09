@@ -1,10 +1,7 @@
 package com.birblett.enchantment;
 
 import com.birblett.datagen.OrchidItemTagProvider;
-import com.birblett.enchantment.impl.boots.DoubleJumpEnchantment;
-import com.birblett.enchantment.impl.boots.RocketEnchantment;
-import com.birblett.enchantment.impl.boots.SlimedEnchantment;
-import com.birblett.enchantment.impl.boots.AcrobaticEnchantment;
+import com.birblett.enchantment.impl.boots.*;
 import com.birblett.enchantment.impl.curse.*;
 import com.birblett.enchantment.impl.projectile.*;
 import net.minecraft.component.type.AttributeModifierSlot;
@@ -48,6 +45,7 @@ public class OrchidEnchantments {
      */
 
     public static final RegistryKey<Enchantment> DOUBLE_JUMP;
+    public static final RegistryKey<Enchantment> HOVER;
     public static final RegistryKey<Enchantment> ROCKET;
     public static final RegistryKey<Enchantment> SLIMED;
     public static final RegistryKey<Enchantment> ACROBATIC;
@@ -55,9 +53,20 @@ public class OrchidEnchantments {
 
     static {
 
+        ACROBATIC = new AcrobaticEnchantment("acrobatic", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
+                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
+                .translate("Acrobatic")
+                .build();
+
         DOUBLE_JUMP = new DoubleJumpEnchantment("double_jump", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
                 .translate("Double Jump")
+                .build();
+
+        HOVER = new HoverEnchantment("hover", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
+                1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
+                AttributeModifierSlot.FEET)
+                .translate("Hover")
                 .build();
 
         ROCKET = new RocketEnchantment("rocket", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
@@ -70,11 +79,6 @@ public class OrchidEnchantments {
                 .translate("Slimed")
                 .addAttribute(EntityAttributes.JUMP_STRENGTH, EnchantmentLevelBasedValue.constant(0.3f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
                 .addAttribute(EntityAttributes.SAFE_FALL_DISTANCE, EnchantmentLevelBasedValue.constant(2), EntityAttributeModifier.Operation.ADD_VALUE)
-                .build();
-
-        ACROBATIC = new AcrobaticEnchantment("acrobatic", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
-                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
-                .translate("Acrobatic")
                 .build();
 
         WINDSTEP = new OrchidEnchantWrapper("windstep", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,

@@ -102,4 +102,16 @@ public class EntityMixin_Events implements EnchantmentFlags {
         return b;
     }
 
+    @WrapOperation(method = "setSwimming", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setFlag(IZ)V"))
+    private void modifyCanSwim(Entity instance, int index, boolean value, Operation<Void> original) {
+        if (instance instanceof LivingEntity e) {
+            Boolean b = EnchantmentUtils.equipIteratorGeneric(e, (enchant, level) ->
+                    enchant.modifyCanSwim(e, e.getWorld(), level));
+            if (b != null) {
+                value = b;
+            }
+        }
+        original.call(instance, index, value);
+    }
+
 }

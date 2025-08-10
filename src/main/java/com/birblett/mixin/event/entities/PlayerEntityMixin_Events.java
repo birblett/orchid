@@ -1,5 +1,6 @@
 package com.birblett.mixin.event.entities;
 
+import com.birblett.Orchid;
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.util.EnchantmentUtils;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -12,6 +13,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -34,6 +36,19 @@ public class PlayerEntityMixin_Events {
         PlayerEntity p = (PlayerEntity) (Object) this;
         EnchantmentUtils.equipIterator(p, (enchant, level) ->
                 enchant.postAttack(p, target, weaponStack, damage, source, level));
+    }
+
+    @ModifyVariable(method = "attack", slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;isSprinting()Z")), at = @At(value = "LOAD", ordinal = 0), ordinal = 2)
+    private boolean crit(boolean value, @Local(argsOnly = true) Entity target) {
+        if (!value) {
+            PlayerEntity p = (PlayerEntity) (Object) this;
+            Boolean b = EnchantmentUtils.equipIteratorGeneric(p, (enchant, level) ->
+                    enchant.shouldCrit(p, target, level));
+            if (b != null) {
+                value = b;
+            }
+        }
+        return value;
     }
 
     @Inject(method = "getProjectileType", at = @At(value = "INVOKE", target = "Ljava/util/function/Predicate;test(Ljava/lang/Object;)Z"), cancellable = true)

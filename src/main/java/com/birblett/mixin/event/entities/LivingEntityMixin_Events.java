@@ -98,4 +98,14 @@ public abstract class LivingEntityMixin_Events implements EnchantmentFlags {
         original.call(instance, dx.doubleValue(), dy.doubleValue(), dz.doubleValue());
     }
 
+    @WrapOperation(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;shouldSwimInFluids()Z"))
+    private boolean modifyCanSwim(LivingEntity e, Operation<Boolean> original) {
+        Boolean b = EnchantmentUtils.equipIteratorGeneric(e, (enchant, level) ->
+                enchant.modifyCanSwim(e, e.getWorld(), level));
+        if (b != null) {
+            return b;
+        }
+        return original.call(e);
+    }
+
 }

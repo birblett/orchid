@@ -33,23 +33,25 @@ public class HoverEnchantment extends OrchidEnchantWrapper {
                 }
             }
             if (EnchantmentUtils.getTempLevel(e, OrchidEnchantments.HOVER) > 1) {
-                e.setVelocity(Vec3d.ZERO);
+                Vec3d vel = Vec3d.ZERO;
                 PlayerInput in = input.playerInput;
                 if (in.forward() || in.backward() || in.left() || in.right()) {
-                    Vec3d base = e.getRotationVector().multiply(1e17, 0, 1e17).normalize().multiply(0.5);
+                    Vec3d base = e.getRotationVector().multiply(1e17, 0, 1e17).normalize();
                     if (in.forward()) {
-                        e.addVelocity(base);
+                        vel = vel.add(base);
                     }
                     if (in.backward()) {
-                        e.addVelocity(new Vec3d(-base.x, 0, -base.z));
+                        vel = vel.add(new Vec3d(-base.x, 0, -base.z));
                     }
                     if (in.left()) {
-                        e.addVelocity(new Vec3d(base.z, 0, -base.x));
+                        vel = vel.add(new Vec3d(base.z, 0, -base.x));
                     }
                     if (in.right()) {
-                        e.addVelocity(new Vec3d(-base.z, 0, base.x));
+                        vel = vel.add(new Vec3d(-base.z, 0, base.x));
                     }
+                    vel = vel.normalize().multiply(0.5);
                 }
+                e.setVelocity(vel);
                 EnchantmentUtils.addToTempLevel(e, OrchidEnchantments.HOVER, -1);
             }
         } else {

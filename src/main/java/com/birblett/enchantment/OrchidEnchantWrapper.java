@@ -132,6 +132,10 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
         return damage;
     }
 
+    public Boolean shouldCrit(LivingEntity attacker, Entity target, int level) {
+        return null;
+    }
+
     public ControlFlow postAttack(LivingEntity attacker, Entity target, ItemStack stack, float damage, DamageSource source, int level) {
         return ControlFlow.CONTINUE;
     }
@@ -179,20 +183,24 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
         return null;
     }
 
-    public float modifySlipperiness(LivingEntity e, World world, Block block, float slipperiness, int level) {
-        return slipperiness;
-    }
-
-    public float modifySlipperyMovementSpeed(LivingEntity e, World world, float movementSpeed, float slipperiness, int level) {
-        return movementSpeed;
-    }
-
     public Vec3d modifyJumpDirect(LivingEntity e, World world, Vec3d jumpVelocity, int level) {
         return jumpVelocity;
     }
 
     public Boolean modifyCanStep(LivingEntity e, World world, int level) {
         return null;
+    }
+
+    public Boolean modifyCanSwim(LivingEntity e, World world, int level) {
+        return null;
+    }
+
+    public float modifySlipperiness(LivingEntity e, World world, Block block, float slipperiness, int level) {
+        return slipperiness;
+    }
+
+    public float modifySlipperyMovementSpeed(LivingEntity e, World world, float movementSpeed, float slipperiness, int level) {
+        return movementSpeed;
     }
 
     /**

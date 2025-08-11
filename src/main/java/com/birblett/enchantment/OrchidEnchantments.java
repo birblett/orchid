@@ -44,11 +44,12 @@ public class OrchidEnchantments {
      * Boot Enchants
      */
 
+    public static final RegistryKey<Enchantment> ACROBATIC;
+    public static final RegistryKey<Enchantment> AIR_DASH;
     public static final RegistryKey<Enchantment> DOUBLE_JUMP;
     public static final RegistryKey<Enchantment> HOVER;
     public static final RegistryKey<Enchantment> ROCKET;
     public static final RegistryKey<Enchantment> SLIMED;
-    public static final RegistryKey<Enchantment> ACROBATIC;
     public static final RegistryKey<Enchantment> WINDSTEP;
 
     static {
@@ -56,6 +57,11 @@ public class OrchidEnchantments {
         ACROBATIC = new AcrobaticEnchantment("acrobatic", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
                 .translate("Acrobatic")
+                .build();
+
+        AIR_DASH = new AirDashEnchantment("air_dash", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
+                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
+                .translate("Air Dash")
                 .build();
 
         DOUBLE_JUMP = new DoubleJumpEnchantment("double_jump", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,

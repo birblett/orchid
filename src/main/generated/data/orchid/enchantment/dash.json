@@ -1,7 +1,7 @@
 {
   "anvil_cost": 1,
   "description": {
-    "translate": "enchantment.orchid.air_dash"
+    "translate": "enchantment.orchid.dash"
   },
   "max_cost": {
     "base": 50,

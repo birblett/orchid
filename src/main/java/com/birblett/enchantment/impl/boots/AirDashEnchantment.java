@@ -1,6 +1,5 @@
 package com.birblett.enchantment.impl.boots;
 
-import com.birblett.Orchid;
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.enchantment.OrchidEnchantments;
 import com.birblett.util.EnchantmentUtils;
@@ -22,7 +21,7 @@ public class AirDashEnchantment extends OrchidEnchantWrapper {
 
     @Override
     public ControlFlow onMovementTick(ClientPlayerEntity e, World world, Input input, InputRecord pressed, int level) {
-        int i = EnchantmentUtils.getTempLevel(e, OrchidEnchantments.AIR_DASH);
+        int i = EnchantmentUtils.getTempLevel(e, OrchidEnchantments.DASH);
         int dash = i & 0xFF;
         int cd = i - dash;
         if (cd > 0xFF) {
@@ -39,7 +38,7 @@ public class AirDashEnchantment extends OrchidEnchantWrapper {
                 cd = 0x1A00;
             }
         }
-        EnchantmentUtils.setTempLevel(e, OrchidEnchantments.AIR_DASH, cd + dash);
+        EnchantmentUtils.setTempLevel(e, OrchidEnchantments.DASH, cd + dash);
         return ControlFlow.CONTINUE;
     }
 

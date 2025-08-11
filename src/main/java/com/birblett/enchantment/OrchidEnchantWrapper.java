@@ -171,7 +171,7 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
         return ControlFlow.CONTINUE;
     }
 
-    public ControlFlow onServerPlayerInput(ServerPlayerEntity e, World world, PlayerInput input, InputRecord pressed, int level) {
+    public ControlFlow onServerPlayerInput(ServerPlayerEntity e, ServerWorld world, PlayerInput input, InputRecord pressed, int level) {
         return ControlFlow.CONTINUE;
     }
 

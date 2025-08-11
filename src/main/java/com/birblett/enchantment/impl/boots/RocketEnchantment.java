@@ -1,6 +1,5 @@
 package com.birblett.enchantment.impl.boots;
 
-import com.birblett.Orchid;
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.enchantment.OrchidEnchantments;
 import com.birblett.util.EnchantmentUtils;
@@ -9,7 +8,6 @@ import com.birblett.util.WorldUtils;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.projectile.WindChargeEntity;
 import net.minecraft.item.Item;
 import net.minecraft.particle.ParticleTypes;
@@ -53,7 +51,7 @@ public class RocketEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public ControlFlow onServerPlayerInput(ServerPlayerEntity player, World world, PlayerInput input, InputRecord pressed, int level) {
+    public ControlFlow onServerPlayerInput(ServerPlayerEntity player, ServerWorld world, PlayerInput input, InputRecord pressed, int level) {
         if (EnchantmentUtils.getTrackedLevel(player, OrchidEnchantments.ROCKET) == 0 && pressed.jump() && player.isSneaking() &&
                 !player.isOnGround()) {
             WorldUtils.playSound(null, world, player, SoundEvents.ENTITY_FIREWORK_ROCKET_LAUNCH, 1.0f, 1.0f);

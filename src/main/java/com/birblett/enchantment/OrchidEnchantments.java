@@ -45,6 +45,7 @@ public class OrchidEnchantments {
      */
 
     public static final RegistryKey<Enchantment> ACROBATIC;
+    public static final RegistryKey<Enchantment> BLINK;
     public static final RegistryKey<Enchantment> DASH;
     public static final RegistryKey<Enchantment> DOUBLE_JUMP;
     public static final RegistryKey<Enchantment> HOVER;
@@ -57,6 +58,11 @@ public class OrchidEnchantments {
         ACROBATIC = new AcrobaticEnchantment("acrobatic", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
                 .translate("Acrobatic")
+                .build();
+
+        BLINK = new BlinkEnchantment("blink", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
+                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
+                .translate("Blink")
                 .build();
 
         DASH = new AirDashEnchantment("dash", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
@@ -217,8 +223,8 @@ public class OrchidEnchantments {
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
                 .translate("Concrete Shoes")
                 .addAttribute(EntityAttributes.MOVEMENT_SPEED, EnchantmentLevelBasedValue.constant(-0.1f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
-                .addAttribute(EntityAttributes.JUMP_STRENGTH, EnchantmentLevelBasedValue.constant(0.25f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
-                .addAttribute(EntityAttributes.GRAVITY, EnchantmentLevelBasedValue.constant(1), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                .addAttribute(EntityAttributes.JUMP_STRENGTH, EnchantmentLevelBasedValue.constant(0.1f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                .addAttribute(EntityAttributes.GRAVITY, EnchantmentLevelBasedValue.constant(0.35f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
                 .addAttribute(EntityAttributes.STEP_HEIGHT, EnchantmentLevelBasedValue.constant(-1), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
                 .addAttribute(EntityAttributes.ATTACK_DAMAGE, EnchantmentLevelBasedValue.constant(-0.2f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
                 .curse()

@@ -12,10 +12,16 @@
         "operation": "add_multiplied_base"
       },
       {
-        "amount": 2.0,
+        "amount": 10.0,
         "attribute": "minecraft:safe_fall_distance",
         "id": "orchid:enchantment.slimed",
         "operation": "add_value"
+      },
+      {
+        "amount": 0.4,
+        "attribute": "minecraft:fall_damage_multiplier",
+        "id": "orchid:enchantment.slimed",
+        "operation": "add_multiplied_base"
       }
     ]
   },

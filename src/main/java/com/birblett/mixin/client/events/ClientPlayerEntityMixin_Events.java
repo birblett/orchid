@@ -46,7 +46,7 @@ public class ClientPlayerEntityMixin_Events implements ClientPlayerEnchantTracke
         this.last = new InputRecord(playerInput.forward(), playerInput.backward(), playerInput.left(), playerInput.right(),
                 playerInput.jump(), playerInput.sneak(), playerInput.sprint());
         if (!EnchantmentUtils.equipIterator(instance, (enchant, level) ->
-                enchant.onMovementTick(instance, instance.getWorld(), input, pressed, level))) {
+                enchant.onMovementTick(instance, instance.getWorld(), playerInput, pressed, level))) {
             original.call(instance);
         }
     }

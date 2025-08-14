@@ -118,7 +118,7 @@ public class EnchantmentUtils {
     }
 
     public static boolean entityIterator(Entity e, BiFunction<OrchidEnchantWrapper, Integer, OrchidEnchantWrapper.ControlFlow> execute) {
-        return applyEnchants(execute, getEntityEnchantFlags(e));
+        return !EnchantmentUtils.getTrackedMap(e).isEmpty() && applyEnchants(execute, getEntityEnchantFlags(e));
     }
 
     @Nullable
@@ -213,15 +213,24 @@ public class EnchantmentUtils {
     }
 
     public static void setTrackedFromMap(AttachmentTarget target, Map<RegistryKey<Enchantment>, Integer> data) {
+        if (target instanceof Entity e && e.isRemoved()) {
+            return;
+        }
         target.setAttached(AttachedDataRegistry.ENCHANTMENT_DATA_ATTACHMENT, new EnchantmentDataAttachment(data));
     }
 
     public static void setTracked(AttachmentTarget target, RegistryKey<Enchantment> enchantment, int value) {
+        if (target instanceof Entity e && e.isRemoved()) {
+            return;
+        }
         EnchantmentDataAttachment tmp = target.getAttachedOrCreate(AttachedDataRegistry.ENCHANTMENT_DATA_ATTACHMENT);
         target.setAttached(AttachedDataRegistry.ENCHANTMENT_DATA_ATTACHMENT, tmp.setEntry(enchantment, value));
     }
 
     public static int getTrackedLevel(AttachmentTarget target, RegistryKey<Enchantment> enchantment) {
+        if (target instanceof Entity e && e.isRemoved()) {
+            return 0;
+        }
         EnchantmentDataAttachment tmp;
         if ((tmp = target.getAttached(AttachedDataRegistry.ENCHANTMENT_DATA_ATTACHMENT)) != null) {
             return tmp.getOrDefault(enchantment, 0);
@@ -230,6 +239,9 @@ public class EnchantmentUtils {
     }
 
     public static void removeTracked(AttachmentTarget target, RegistryKey<Enchantment> enchantment) {
+        if (target instanceof Entity e && e.isRemoved()) {
+            return;
+        }
         EnchantmentDataAttachment tmp;
         if ((tmp = target.getAttached(AttachedDataRegistry.ENCHANTMENT_DATA_ATTACHMENT)) != null) {
             target.setAttached(AttachedDataRegistry.ENCHANTMENT_DATA_ATTACHMENT, tmp.removeEntry(enchantment));
@@ -237,12 +249,18 @@ public class EnchantmentUtils {
     }
 
     public static void addToTracked(AttachmentTarget target, RegistryKey<Enchantment> enchantment, int value) {
+        if (target instanceof Entity e && e.isRemoved()) {
+            return;
+        }
         EnchantmentDataAttachment tmp = target.getAttachedOrCreate(AttachedDataRegistry.ENCHANTMENT_DATA_ATTACHMENT);
         int v = tmp.getOrDefault(enchantment, value);
         target.setAttached(AttachedDataRegistry.ENCHANTMENT_DATA_ATTACHMENT, tmp.setEntry(enchantment, v + value));
     }
 
     public static boolean trackedContains(AttachmentTarget target, RegistryKey<Enchantment> enchantment) {
+        if (target instanceof Entity e && e.isRemoved()) {
+            return false;
+        }
         EnchantmentDataAttachment tmp;
         if ((tmp = target.getAttached(AttachedDataRegistry.ENCHANTMENT_DATA_ATTACHMENT)) != null) {
             return tmp.contains(enchantment);

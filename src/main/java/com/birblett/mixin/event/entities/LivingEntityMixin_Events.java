@@ -3,14 +3,17 @@ package com.birblett.mixin.event.entities;
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.interfaces.entity.EnchantmentFlags;
 import com.birblett.util.EnchantmentUtils;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
@@ -74,6 +77,18 @@ public abstract class LivingEntityMixin_Events implements EnchantmentFlags {
         return f.floatValue();
     }
 
+    @ModifyReturnValue(method = "getStepHeight", at = @At("RETURN"))
+    private float modifyReturnValueDirect(float s) {
+        LivingEntity e = (LivingEntity) (Object) this;
+        MutableFloat f = new MutableFloat(s);
+        EnchantmentUtils.equipIterator(e, (enchant, level) -> {
+            f.setValue(enchant.modifyStepHeightDirect(e, e.getWorld(), f.getValue(), level));
+            return f.getValue() != 0 ? OrchidEnchantWrapper.ControlFlow.CONTINUE : OrchidEnchantWrapper.ControlFlow.BREAK;
+        });
+        return f.floatValue();
+    }
+
+
     @WrapOperation(method = "getMovementSpeed(F)F", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getMovementSpeed()F"))
     private float modifySlipperyMovement(LivingEntity instance, Operation<Float> original, @Local(argsOnly = true) float slipperiness) {
         MutableFloat f = new MutableFloat(original.call(instance));
@@ -96,6 +111,14 @@ public abstract class LivingEntityMixin_Events implements EnchantmentFlags {
             return OrchidEnchantWrapper.ControlFlow.CONTINUE;
         });
         original.call(instance, dx.doubleValue(), dy.doubleValue(), dz.doubleValue());
+    }
+
+    @ModifyReturnValue(method = "canWalkOnFluid", at = @At("RETURN"))
+    private boolean modifyFluidHandling(boolean original, @Local(argsOnly = true) FluidState b) {
+        LivingEntity e = (LivingEntity) (Object) this;
+        Boolean maybe = EnchantmentUtils.equipIteratorGeneric(e, (enchant, level) ->
+                enchant.canWalkOnFluid(e, e.getWorld(), b, level));
+        return maybe == null ? original : maybe;
     }
 
     @WrapOperation(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;shouldSwimInFluids()Z"))

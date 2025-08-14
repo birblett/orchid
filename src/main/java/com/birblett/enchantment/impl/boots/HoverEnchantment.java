@@ -1,11 +1,9 @@
 package com.birblett.enchantment.impl.boots;
 
-import com.birblett.Orchid;
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.enchantment.OrchidEnchantments;
 import com.birblett.util.EnchantmentUtils;
 import com.birblett.util.InputRecord;
-import net.minecraft.client.input.Input;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
@@ -23,7 +21,7 @@ public class HoverEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public ControlFlow onMovementTick(ClientPlayerEntity e, World world, Input input, InputRecord pressed, int level) {
+    public ControlFlow onMovementTick(ClientPlayerEntity e, World world, PlayerInput input, InputRecord pressed, int level) {
         if (!e.isOnGround()) {
             if (pressed.sneak()) {
                 if (EnchantmentUtils.getTempLevel(e, OrchidEnchantments.HOVER) == 0) {
@@ -34,19 +32,18 @@ public class HoverEnchantment extends OrchidEnchantWrapper {
             }
             if (EnchantmentUtils.getTempLevel(e, OrchidEnchantments.HOVER) > 1) {
                 Vec3d vel = Vec3d.ZERO;
-                PlayerInput in = input.playerInput;
-                if (in.forward() || in.backward() || in.left() || in.right()) {
+                if (input.forward() || input.backward() || input.left() || input.right()) {
                     Vec3d base = e.getRotationVector().multiply(1e17, 0, 1e17).normalize();
-                    if (in.forward()) {
+                    if (input.forward()) {
                         vel = vel.add(base);
                     }
-                    if (in.backward()) {
+                    if (input.backward()) {
                         vel = vel.add(new Vec3d(-base.x, 0, -base.z));
                     }
-                    if (in.left()) {
+                    if (input.left()) {
                         vel = vel.add(new Vec3d(base.z, 0, -base.x));
                     }
-                    if (in.right()) {
+                    if (input.right()) {
                         vel = vel.add(new Vec3d(-base.z, 0, base.x));
                     }
                     vel = vel.normalize().multiply(0.5);

@@ -4,9 +4,10 @@ import com.birblett.Orchid;
 import com.birblett.datagen.OrchidEnchantmentTagProvider;
 import com.birblett.datagen.Translateable;
 import com.birblett.util.InputRecord;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.input.Input;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
@@ -19,6 +20,7 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleEffect;
@@ -36,7 +38,10 @@ import net.minecraft.util.PlayerInput;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.CollisionView;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -167,7 +172,7 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
         return ControlFlow.CONTINUE;
     }
 
-    public ControlFlow onMovementTick(ClientPlayerEntity e, World world, Input input, InputRecord pressed, int level) {
+    public ControlFlow onMovementTick(ClientPlayerEntity e, World world, PlayerInput input, InputRecord pressed, int level) {
         return ControlFlow.CONTINUE;
     }
 
@@ -191,6 +196,10 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
         return null;
     }
 
+    public float modifyStepHeightDirect(LivingEntity e, World world, float stepHeight, int level) {
+        return stepHeight;
+    }
+
     public Boolean modifyCanSwim(LivingEntity e, World world, int level) {
         return null;
     }
@@ -201,6 +210,10 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
 
     public float modifySlipperyMovementSpeed(LivingEntity e, World world, float movementSpeed, float slipperiness, int level) {
         return movementSpeed;
+    }
+
+    public Boolean canWalkOnFluid(LivingEntity e, World world, FluidState state, int level) {
+        return null;
     }
 
     /**

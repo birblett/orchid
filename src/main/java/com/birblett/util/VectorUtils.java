@@ -1,6 +1,7 @@
 package com.birblett.util;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.util.PlayerInput;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Quaternionf;
 
@@ -10,8 +11,8 @@ public class VectorUtils {
 
     private static final Random RANDOM = new Random();
 
-    private static final Vec3d AXIS_X = new Vec3d(1, 0, 0);
-    private static final Vec3d AXIS_Y = new Vec3d(0, 1, 0);
+    public static final Vec3d AXIS_X = new Vec3d(1, 0, 0);
+    public static final Vec3d AXIS_Y = new Vec3d(0, 1, 0);
 
     public static Vec3d rotateAbout(Vec3d base, Vec3d axis, double angle) {
         double cos = Math.cos(angle);
@@ -43,6 +44,13 @@ public class VectorUtils {
     public static void rotateEntity(Entity e, Vec3d rotation) {
         rotation = rotation.normalize();
         e.rotate((float) Math.toDegrees(Math.atan2(rotation.x, rotation.z)), (float) Math.toDegrees(Math.asin(rotation.y)));
+    }
+
+    public static Vec3d vecFromInput(Entity e, PlayerInput input) {
+        Vec3d vel = Vec3d.ZERO;
+        return VectorUtils.rotateAbout(new Vec3d(vel.x + (input.left() ? 1 : 0) + (input.right() ? -1 : 0), 0, vel.z +
+                        (input.forward() ? 1 : 0) + (input.backward() ? -1 : 0)).normalize(), VectorUtils.AXIS_Y,
+                -Math.toRadians(e.getYaw())).normalize();
     }
 
 }

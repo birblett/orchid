@@ -1,11 +1,9 @@
 package com.birblett.enchantment.impl.curse;
 
-import com.birblett.Orchid;
 import com.birblett.enchantment.OrchidEnchantWrapper;
 import com.birblett.enchantment.OrchidEnchantments;
 import com.birblett.util.EnchantmentUtils;
 import com.birblett.util.InputRecord;
-import net.minecraft.client.input.Input;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
@@ -17,6 +15,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.PlayerInput;
 import net.minecraft.world.World;
 
 public class ConcreteShoesEnchantment extends OrchidEnchantWrapper {
@@ -42,12 +41,12 @@ public class ConcreteShoesEnchantment extends OrchidEnchantWrapper {
     }
 
     @Override
-    public ControlFlow onMovementTick(ClientPlayerEntity e, World world, Input input, InputRecord pressed, int level) {
+    public ControlFlow onMovementTick(ClientPlayerEntity e, World world, PlayerInput input, InputRecord pressed, int level) {
         if (EnchantmentUtils.getTempLevel(e, OrchidEnchantments.CONCRETE_SHOES) > 0) {
             EnchantmentUtils.addToTempLevel(e, OrchidEnchantments.CONCRETE_SHOES, -1);
         }
         if (e.isInFluid() && !e.getAbilities().flying) {
-            if (input.playerInput.jump() && e.isOnGround() && EnchantmentUtils.getTempLevel(e, OrchidEnchantments.CONCRETE_SHOES) <= 0) {
+            if (input.jump() && e.isOnGround() && EnchantmentUtils.getTempLevel(e, OrchidEnchantments.CONCRETE_SHOES) <= 0) {
                 e.jump();
                 EnchantmentUtils.setTempLevel(e, OrchidEnchantments.CONCRETE_SHOES, 8);
             }

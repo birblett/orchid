@@ -60,7 +60,7 @@ public class AcrobaticEnchantment extends OrchidEnchantWrapper {
             } else if (!e.isGliding()) {
                 if (input.forward() || input.backward() || input.left() || input.right()) {
                     Vec3d vel = VectorUtils.vecFromInput(e, input);
-                    double m = velocity.length() * 0.205;
+                    double m = velocity.length() * 0.201;
                     e.setVelocity(velocity.x * 0.8 + vel.x * m, velocity.y, velocity.z * 0.8 + vel.z * m);
                 }
             }

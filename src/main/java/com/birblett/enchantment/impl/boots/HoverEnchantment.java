@@ -46,7 +46,7 @@ public class HoverEnchantment extends OrchidEnchantWrapper {
                     if (input.right()) {
                         vel = vel.add(new Vec3d(-base.z, 0, base.x));
                     }
-                    vel = vel.normalize().multiply(0.5);
+                    vel = vel.normalize().multiply(0.7);
                 }
                 e.setVelocity(vel);
                 EnchantmentUtils.addToTempLevel(e, OrchidEnchantments.HOVER, -1);

@@ -50,6 +50,7 @@ public class OrchidEnchantments {
     public static final RegistryKey<Enchantment> DASH;
     public static final RegistryKey<Enchantment> DOUBLE_JUMP;
     public static final RegistryKey<Enchantment> HOVER;
+    public static final RegistryKey<Enchantment> LUNGING;
     public static final RegistryKey<Enchantment> ROCKET;
     public static final RegistryKey<Enchantment> ENTROPY;
     public static final RegistryKey<Enchantment> SLIMED;
@@ -58,32 +59,38 @@ public class OrchidEnchantments {
     static {
 
         ACROBATIC = new AcrobaticEnchantment("acrobatic", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
-                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
+                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+                AttributeModifierSlot.FEET)
                 .translate("Acrobatic")
                 .build();
 
         AIR_DODGE = new AirDodgeEnchantment("air_dodge", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
-                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
+                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+                AttributeModifierSlot.FEET)
                 .translate("Air Dodge")
                 .build();
 
         BLINK = new BlinkEnchantment("blink", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
-                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
+                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+                AttributeModifierSlot.FEET)
                 .translate("Blink")
                 .build();
 
         DASH = new DashEnchantment("dash", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
-                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
+                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+                AttributeModifierSlot.FEET)
                 .translate("Dash")
                 .build();
 
         DOUBLE_JUMP = new DoubleJumpEnchantment("double_jump", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
-                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
+                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+                AttributeModifierSlot.FEET)
                 .translate("Double Jump")
                 .build();
 
         ENTROPY = new EntropyEnchantment("entropy", 4, ItemTags.FOOT_ARMOR_ENCHANTABLE,
-                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
+                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+                AttributeModifierSlot.FEET)
                 .translate("Entropy")
                 .build();
 
@@ -93,13 +100,22 @@ public class OrchidEnchantments {
                 .translate("Hover")
                 .build();
 
+
+        LUNGING = new LungingEnchantment("lunging", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
+                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+                AttributeModifierSlot.FEET)
+                .translate("Lunging")
+                .build();
+
         ROCKET = new RocketEnchantment("rocket", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
-                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
+                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+                AttributeModifierSlot.FEET)
                 .translate("Rocket")
                 .build();
 
         SLIMED = new SlimedEnchantment("slimed", 4, ItemTags.FOOT_ARMOR_ENCHANTABLE,
-                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
+                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+                AttributeModifierSlot.FEET)
                 .translate("Slimed")
                 .addAttribute(EntityAttributes.JUMP_STRENGTH, EnchantmentLevelBasedValue.constant(0.3f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
                 .addAttribute(EntityAttributes.SAFE_FALL_DISTANCE, EnchantmentLevelBasedValue.constant(10), EntityAttributeModifier.Operation.ADD_VALUE)
@@ -107,7 +123,8 @@ public class OrchidEnchantments {
                 .build();
 
         WINDSTEP = new OrchidEnchantWrapper("windstep", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
-                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
+                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
+                AttributeModifierSlot.FEET)
                 .translate("Windstep")
                 .addAttribute(EntityAttributes.MOVEMENT_SPEED, EnchantmentLevelBasedValue.linear(0.1f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
                 .addAttribute(EntityAttributes.STEP_HEIGHT, EnchantmentLevelBasedValue.linear(0.6f, 0.5f), EntityAttributeModifier.Operation.ADD_VALUE)

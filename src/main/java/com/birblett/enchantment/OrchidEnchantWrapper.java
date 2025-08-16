@@ -64,6 +64,7 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
     public final String translationKey;
     public final int processPriority;
     public final ArrayList<AttributeEnchantmentEffect> attributes = new ArrayList<>();
+    public TagKey<Enchantment> exclusiveSet = null;
     private RegistryKey<Enchantment> key;
 
     public OrchidEnchantWrapper(String id, int processPriority, TagKey<Item> supportedItems, TagKey<Item> primaryItems,
@@ -100,6 +101,11 @@ public class OrchidEnchantWrapper implements Translateable<OrchidEnchantWrapper>
 
     public OrchidEnchantWrapper curse() {
         OrchidEnchantmentTagProvider.addOrGetExisting(EnchantmentTags.CURSE).add(this.getOrCreateKey());
+        return this;
+    }
+
+    public OrchidEnchantWrapper exclusiveSet(TagKey<Enchantment> group) {
+        OrchidEnchantmentTagProvider.addOrGetExisting(this.exclusiveSet = group).add(this.getOrCreateKey());
         return this;
     }
 

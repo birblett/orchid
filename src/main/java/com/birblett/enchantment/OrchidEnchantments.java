@@ -1,5 +1,6 @@
 package com.birblett.enchantment;
 
+import com.birblett.Orchid;
 import com.birblett.datagen.OrchidItemTagProvider;
 import com.birblett.enchantment.impl.boots.*;
 import com.birblett.enchantment.impl.curse.*;
@@ -7,12 +8,12 @@ import com.birblett.enchantment.impl.projectile.*;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelBasedValue;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,6 +48,9 @@ public class OrchidEnchantments {
      * Boot Enchants
      */
 
+    private static final TagKey<Enchantment> BOOTS_PASSIVE_ENCHANTS = registerExclusiveSet("boots_passive");
+    private static final TagKey<Enchantment> BOOTS_ACTIVE_ENCHANTS = registerExclusiveSet("boots_active");
+
     public static final RegistryKey<Enchantment> ACROBATIC;
     public static final RegistryKey<Enchantment> AIR_DODGE;
     public static final RegistryKey<Enchantment> BLINK;
@@ -65,30 +69,35 @@ public class OrchidEnchantments {
         ACROBATIC = new AcrobaticEnchantment("acrobatic", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
                 AttributeModifierSlot.FEET)
+                .exclusiveSet(BOOTS_ACTIVE_ENCHANTS)
                 .translate("Acrobatic")
                 .build();
 
         AIR_DODGE = new AirDodgeEnchantment("air_dodge", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
                 AttributeModifierSlot.FEET)
+                .exclusiveSet(BOOTS_ACTIVE_ENCHANTS)
                 .translate("Air Dodge")
                 .build();
 
         BLINK = new BlinkEnchantment("blink", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
                 AttributeModifierSlot.FEET)
+                .exclusiveSet(BOOTS_ACTIVE_ENCHANTS)
                 .translate("Blink")
                 .build();
 
         DASH = new DashEnchantment("dash", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
                 AttributeModifierSlot.FEET)
+                .exclusiveSet(BOOTS_ACTIVE_ENCHANTS)
                 .translate("Dash")
                 .build();
 
         DOUBLE_JUMP = new DoubleJumpEnchantment("double_jump", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
                 AttributeModifierSlot.FEET)
+                .exclusiveSet(BOOTS_ACTIVE_ENCHANTS)
                 .translate("Double Jump")
                 .build();
 
@@ -96,11 +105,13 @@ public class OrchidEnchantments {
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
                 AttributeModifierSlot.FEET)
                 .translate("Entropy")
+                .exclusiveSet(BOOTS_PASSIVE_ENCHANTS)
                 .build();
 
         FEATHERWEIGHT = new FeatherweightEnchantment("featherweight", 4, ItemTags.FOOT_ARMOR_ENCHANTABLE,
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
                 AttributeModifierSlot.FEET)
+                .exclusiveSet(BOOTS_PASSIVE_ENCHANTS)
                 .addAttribute(KNOCKBACK_RESISTANCE, EnchantmentLevelBasedValue.constant(-1), ADD_MULTIPLIED_BASE)
                 .translate("Featherweight")
                 .build();
@@ -108,25 +119,28 @@ public class OrchidEnchantments {
         HOVER = new HoverEnchantment("hover", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
                 1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10),
                 1, AttributeModifierSlot.FEET)
+                .exclusiveSet(BOOTS_ACTIVE_ENCHANTS)
                 .translate("Hover")
                 .build();
-
 
         LUNGING = new LungingEnchantment("lunging", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
                 AttributeModifierSlot.FEET)
+                .exclusiveSet(BOOTS_PASSIVE_ENCHANTS)
                 .translate("Lunging")
                 .build();
 
         ROCKET = new RocketEnchantment("rocket", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
                 AttributeModifierSlot.FEET)
+                .exclusiveSet(BOOTS_ACTIVE_ENCHANTS)
                 .translate("Rocket")
                 .build();
 
         SLIMED = new SlimedEnchantment("slimed", 4, ItemTags.FOOT_ARMOR_ENCHANTABLE,
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
                 AttributeModifierSlot.FEET)
+                .exclusiveSet(BOOTS_PASSIVE_ENCHANTS)
                 .translate("Slimed")
                 .addAttribute(JUMP_STRENGTH, EnchantmentLevelBasedValue.constant(0.3f), ADD_MULTIPLIED_BASE)
                 .addAttribute(SAFE_FALL_DISTANCE, EnchantmentLevelBasedValue.constant(10), ADD_VALUE)
@@ -136,6 +150,7 @@ public class OrchidEnchantments {
         WINDSTEP = new OrchidEnchantWrapper("windstep", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
                 AttributeModifierSlot.FEET)
+                .exclusiveSet(BOOTS_PASSIVE_ENCHANTS)
                 .translate("Windstep")
                 .addAttribute(MOVEMENT_SPEED, EnchantmentLevelBasedValue.linear(0.1f), ADD_MULTIPLIED_TOTAL)
                 .addAttribute(STEP_HEIGHT, EnchantmentLevelBasedValue.linear(0.6f, 0.5f), ADD_VALUE)
@@ -292,6 +307,10 @@ public class OrchidEnchantments {
                 .curse()
                 .build();
 
+    }
+
+    private static TagKey<Enchantment> registerExclusiveSet(String id) {
+        return TagKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(Orchid.MOD_ID, "exclusive_set/" + id));
     }
 
 }

@@ -75,6 +75,4 @@ public class AcrobaticEnchantment extends OrchidEnchantWrapper {
         return !e.isOnGround() ? true : null;
     }
 
-
-
 }

@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+import static net.minecraft.entity.attribute.EntityAttributeModifier.Operation.*;
+import static net.minecraft.entity.attribute.EntityAttributes.*;
+
 public class OrchidEnchantments {
 
     public static final int PROCESS_PRIORITY_MAX = 10;
@@ -49,10 +52,11 @@ public class OrchidEnchantments {
     public static final RegistryKey<Enchantment> BLINK;
     public static final RegistryKey<Enchantment> DASH;
     public static final RegistryKey<Enchantment> DOUBLE_JUMP;
+    public static final RegistryKey<Enchantment> ENTROPY;
+    public static final RegistryKey<Enchantment> FEATHERWEIGHT;
     public static final RegistryKey<Enchantment> HOVER;
     public static final RegistryKey<Enchantment> LUNGING;
     public static final RegistryKey<Enchantment> ROCKET;
-    public static final RegistryKey<Enchantment> ENTROPY;
     public static final RegistryKey<Enchantment> SLIMED;
     public static final RegistryKey<Enchantment> WINDSTEP;
 
@@ -94,9 +98,16 @@ public class OrchidEnchantments {
                 .translate("Entropy")
                 .build();
 
-        HOVER = new HoverEnchantment("hover", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
-                1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10), 1,
+        FEATHERWEIGHT = new FeatherweightEnchantment("featherweight", 4, ItemTags.FOOT_ARMOR_ENCHANTABLE,
+                1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
                 AttributeModifierSlot.FEET)
+                .addAttribute(KNOCKBACK_RESISTANCE, EnchantmentLevelBasedValue.constant(-1), ADD_MULTIPLIED_BASE)
+                .translate("Featherweight")
+                .build();
+
+        HOVER = new HoverEnchantment("hover", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
+                1, 3, Enchantment.leveledCost(15, 10), Enchantment.leveledCost(25, 10),
+                1, AttributeModifierSlot.FEET)
                 .translate("Hover")
                 .build();
 
@@ -117,20 +128,20 @@ public class OrchidEnchantments {
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
                 AttributeModifierSlot.FEET)
                 .translate("Slimed")
-                .addAttribute(EntityAttributes.JUMP_STRENGTH, EnchantmentLevelBasedValue.constant(0.3f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
-                .addAttribute(EntityAttributes.SAFE_FALL_DISTANCE, EnchantmentLevelBasedValue.constant(10), EntityAttributeModifier.Operation.ADD_VALUE)
-                .addAttribute(EntityAttributes.FALL_DAMAGE_MULTIPLIER, EnchantmentLevelBasedValue.constant(0.4f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                .addAttribute(JUMP_STRENGTH, EnchantmentLevelBasedValue.constant(0.3f), ADD_MULTIPLIED_BASE)
+                .addAttribute(SAFE_FALL_DISTANCE, EnchantmentLevelBasedValue.constant(10), ADD_VALUE)
+                .addAttribute(FALL_DAMAGE_MULTIPLIER, EnchantmentLevelBasedValue.constant(0.4f), ADD_MULTIPLIED_BASE)
                 .build();
 
         WINDSTEP = new OrchidEnchantWrapper("windstep", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1,
                 AttributeModifierSlot.FEET)
                 .translate("Windstep")
-                .addAttribute(EntityAttributes.MOVEMENT_SPEED, EnchantmentLevelBasedValue.linear(0.1f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
-                .addAttribute(EntityAttributes.STEP_HEIGHT, EnchantmentLevelBasedValue.linear(0.6f, 0.5f), EntityAttributeModifier.Operation.ADD_VALUE)
-                .addAttribute(EntityAttributes.JUMP_STRENGTH, EnchantmentLevelBasedValue.linear(0.05f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
-                .addAttribute(EntityAttributes.GRAVITY, EnchantmentLevelBasedValue.constant(-0.1f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
-                .addAttribute(EntityAttributes.SAFE_FALL_DISTANCE, EnchantmentLevelBasedValue.linear(2), EntityAttributeModifier.Operation.ADD_VALUE)
+                .addAttribute(MOVEMENT_SPEED, EnchantmentLevelBasedValue.linear(0.1f), ADD_MULTIPLIED_TOTAL)
+                .addAttribute(STEP_HEIGHT, EnchantmentLevelBasedValue.linear(0.6f, 0.5f), ADD_VALUE)
+                .addAttribute(JUMP_STRENGTH, EnchantmentLevelBasedValue.linear(0.05f), ADD_MULTIPLIED_BASE)
+                .addAttribute(GRAVITY, EnchantmentLevelBasedValue.constant(-0.1f), ADD_MULTIPLIED_BASE)
+                .addAttribute(SAFE_FALL_DISTANCE, EnchantmentLevelBasedValue.linear(2), ADD_VALUE)
                 .build();
 
     }
@@ -243,20 +254,20 @@ public class OrchidEnchantments {
         BUNNY_HOP = new BunnyHopEnchantment("bunny_hop", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
                 .translate("Bunny Hop")
-                .addAttribute(EntityAttributes.MOVEMENT_SPEED, EnchantmentLevelBasedValue.constant(-0.3f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
-                .addAttribute(EntityAttributes.JUMP_STRENGTH, EnchantmentLevelBasedValue.constant(-0.3f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
-                .addAttribute(EntityAttributes.STEP_HEIGHT, EnchantmentLevelBasedValue.constant(0.2f), EntityAttributeModifier.Operation.ADD_VALUE)
+                .addAttribute(MOVEMENT_SPEED, EnchantmentLevelBasedValue.constant(-0.3f), ADD_MULTIPLIED_BASE)
+                .addAttribute(JUMP_STRENGTH, EnchantmentLevelBasedValue.constant(-0.3f), ADD_MULTIPLIED_BASE)
+                .addAttribute(STEP_HEIGHT, EnchantmentLevelBasedValue.constant(0.2f), ADD_VALUE)
                 .curse()
                 .build();
 
         CONCRETE_SHOES = new ConcreteShoesEnchantment("concrete_shoes", 1, ItemTags.FOOT_ARMOR_ENCHANTABLE,
                 1, 1, Enchantment.constantCost(25), Enchantment.constantCost(50), 1, AttributeModifierSlot.FEET)
                 .translate("Concrete Shoes")
-                .addAttribute(EntityAttributes.MOVEMENT_SPEED, EnchantmentLevelBasedValue.constant(-0.1f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
-                .addAttribute(EntityAttributes.JUMP_STRENGTH, EnchantmentLevelBasedValue.constant(0.1f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
-                .addAttribute(EntityAttributes.GRAVITY, EnchantmentLevelBasedValue.constant(0.35f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
-                .addAttribute(EntityAttributes.STEP_HEIGHT, EnchantmentLevelBasedValue.constant(-1), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
-                .addAttribute(EntityAttributes.ATTACK_DAMAGE, EnchantmentLevelBasedValue.constant(-0.2f), EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                .addAttribute(MOVEMENT_SPEED, EnchantmentLevelBasedValue.constant(-0.1f), ADD_MULTIPLIED_BASE)
+                .addAttribute(JUMP_STRENGTH, EnchantmentLevelBasedValue.constant(0.1f), ADD_MULTIPLIED_BASE)
+                .addAttribute(GRAVITY, EnchantmentLevelBasedValue.constant(0.35f), ADD_MULTIPLIED_BASE)
+                .addAttribute(STEP_HEIGHT, EnchantmentLevelBasedValue.constant(-1), ADD_MULTIPLIED_BASE)
+                .addAttribute(ATTACK_DAMAGE, EnchantmentLevelBasedValue.constant(-0.2f), ADD_MULTIPLIED_BASE)
                 .curse()
                 .build();
 

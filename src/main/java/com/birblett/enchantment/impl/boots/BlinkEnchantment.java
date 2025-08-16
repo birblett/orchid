@@ -47,7 +47,7 @@ public class BlinkEnchantment extends OrchidEnchantWrapper {
             Box box = e.getBoundingBox();
             Vec3d finalPos = e.getPos();
             Vec3d prev = e.getPos();
-            for (int i = 0; i < 80; ++i) {
+            for (int i = 0; i < 60 + level * 20; ++i) {
                 if (!world.getBlockCollisions(null, box).iterator().hasNext()) {
                     finalPos = box.getCenter();
                     finalPos = new Vec3d(finalPos.x, box.minY, finalPos.z);
